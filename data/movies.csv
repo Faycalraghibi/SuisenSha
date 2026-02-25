@@ -1,0 +1,1683 @@
+item_id,title,release_date,genres,description
+1,Toy Story (1995),01-Jan-1995,"Animation, Children, Comedy","Toy Story (1995) — Genres: Animation, Children, Comedy"
+2,GoldenEye (1995),01-Jan-1995,"Action, Adventure, Thriller","GoldenEye (1995) — Genres: Action, Adventure, Thriller"
+3,Four Rooms (1995),01-Jan-1995,Thriller,Four Rooms (1995) — Genres: Thriller
+4,Get Shorty (1995),01-Jan-1995,"Action, Comedy, Drama","Get Shorty (1995) — Genres: Action, Comedy, Drama"
+5,Copycat (1995),01-Jan-1995,"Crime, Drama, Thriller","Copycat (1995) — Genres: Crime, Drama, Thriller"
+6,Shanghai Triad (Yao a yao yao dao waipo qiao) (1995),01-Jan-1995,Drama,Shanghai Triad (Yao a yao yao dao waipo qiao) (1995) — Genres: Drama
+7,Twelve Monkeys (1995),01-Jan-1995,"Drama, Sci-Fi","Twelve Monkeys (1995) — Genres: Drama, Sci-Fi"
+8,Babe (1995),01-Jan-1995,"Children, Comedy, Drama","Babe (1995) — Genres: Children, Comedy, Drama"
+9,Dead Man Walking (1995),01-Jan-1995,Drama,Dead Man Walking (1995) — Genres: Drama
+10,Richard III (1995),22-Jan-1996,"Drama, War","Richard III (1995) — Genres: Drama, War"
+11,Seven (Se7en) (1995),01-Jan-1995,"Crime, Thriller","Seven (Se7en) (1995) — Genres: Crime, Thriller"
+12,"Usual Suspects, The (1995)",14-Aug-1995,"Crime, Thriller","Usual Suspects, The (1995) — Genres: Crime, Thriller"
+13,Mighty Aphrodite (1995),30-Oct-1995,Comedy,Mighty Aphrodite (1995) — Genres: Comedy
+14,"Postino, Il (1994)",01-Jan-1994,"Drama, Romance","Postino, Il (1994) — Genres: Drama, Romance"
+15,Mr. Holland's Opus (1995),29-Jan-1996,Drama,Mr. Holland's Opus (1995) — Genres: Drama
+16,French Twist (Gazon maudit) (1995),01-Jan-1995,"Comedy, Romance","French Twist (Gazon maudit) (1995) — Genres: Comedy, Romance"
+17,From Dusk Till Dawn (1996),05-Feb-1996,"Action, Comedy, Crime, Horror, Thriller","From Dusk Till Dawn (1996) — Genres: Action, Comedy, Crime, Horror, Thriller"
+18,"White Balloon, The (1995)",01-Jan-1995,Drama,"White Balloon, The (1995) — Genres: Drama"
+19,Antonia's Line (1995),01-Jan-1995,Drama,Antonia's Line (1995) — Genres: Drama
+20,Angels and Insects (1995),01-Jan-1995,"Drama, Romance","Angels and Insects (1995) — Genres: Drama, Romance"
+21,Muppet Treasure Island (1996),16-Feb-1996,"Action, Adventure, Comedy, Musical, Thriller","Muppet Treasure Island (1996) — Genres: Action, Adventure, Comedy, Musical, Thriller"
+22,Braveheart (1995),16-Feb-1996,"Action, Drama, War","Braveheart (1995) — Genres: Action, Drama, War"
+23,Taxi Driver (1976),16-Feb-1996,"Drama, Thriller","Taxi Driver (1976) — Genres: Drama, Thriller"
+24,Rumble in the Bronx (1995),23-Feb-1996,"Action, Adventure, Crime","Rumble in the Bronx (1995) — Genres: Action, Adventure, Crime"
+25,"Birdcage, The (1996)",08-Mar-1996,Comedy,"Birdcage, The (1996) — Genres: Comedy"
+26,"Brothers McMullen, The (1995)",01-Jan-1995,Comedy,"Brothers McMullen, The (1995) — Genres: Comedy"
+27,Bad Boys (1995),01-Jan-1995,Action,Bad Boys (1995) — Genres: Action
+28,Apollo 13 (1995),01-Jan-1995,"Action, Drama, Thriller","Apollo 13 (1995) — Genres: Action, Drama, Thriller"
+29,Batman Forever (1995),01-Jan-1995,"Action, Adventure, Comedy, Crime","Batman Forever (1995) — Genres: Action, Adventure, Comedy, Crime"
+30,Belle de jour (1967),01-Jan-1967,Drama,Belle de jour (1967) — Genres: Drama
+31,Crimson Tide (1995),01-Jan-1995,"Drama, Thriller, War","Crimson Tide (1995) — Genres: Drama, Thriller, War"
+32,Crumb (1994),01-Jan-1994,Documentary,Crumb (1994) — Genres: Documentary
+33,Desperado (1995),01-Jan-1995,"Action, Romance, Thriller","Desperado (1995) — Genres: Action, Romance, Thriller"
+34,"Doom Generation, The (1995)",01-Jan-1995,"Comedy, Drama","Doom Generation, The (1995) — Genres: Comedy, Drama"
+35,Free Willy 2: The Adventure Home (1995),01-Jan-1995,"Adventure, Children, Drama","Free Willy 2: The Adventure Home (1995) — Genres: Adventure, Children, Drama"
+36,Mad Love (1995),01-Jan-1995,"Drama, Romance","Mad Love (1995) — Genres: Drama, Romance"
+37,Nadja (1994),01-Jan-1994,Drama,Nadja (1994) — Genres: Drama
+38,"Net, The (1995)",01-Jan-1995,"Sci-Fi, Thriller","Net, The (1995) — Genres: Sci-Fi, Thriller"
+39,Strange Days (1995),01-Jan-1995,"Action, Crime, Sci-Fi","Strange Days (1995) — Genres: Action, Crime, Sci-Fi"
+40,"To Wong Foo, Thanks for Everything! Julie Newmar (1995)",01-Jan-1995,Comedy,"To Wong Foo, Thanks for Everything! Julie Newmar (1995) — Genres: Comedy"
+41,Billy Madison (1995),01-Jan-1995,Comedy,Billy Madison (1995) — Genres: Comedy
+42,Clerks (1994),01-Jan-1994,Comedy,Clerks (1994) — Genres: Comedy
+43,Disclosure (1994),01-Jan-1994,"Drama, Thriller","Disclosure (1994) — Genres: Drama, Thriller"
+44,Dolores Claiborne (1994),01-Jan-1994,"Drama, Thriller","Dolores Claiborne (1994) — Genres: Drama, Thriller"
+45,Eat Drink Man Woman (1994),01-Jan-1994,"Comedy, Drama","Eat Drink Man Woman (1994) — Genres: Comedy, Drama"
+46,Exotica (1994),01-Jan-1994,Drama,Exotica (1994) — Genres: Drama
+47,Ed Wood (1994),01-Jan-1994,"Comedy, Drama","Ed Wood (1994) — Genres: Comedy, Drama"
+48,Hoop Dreams (1994),01-Jan-1994,Documentary,Hoop Dreams (1994) — Genres: Documentary
+49,I.Q. (1994),01-Jan-1994,"Comedy, Romance","I.Q. (1994) — Genres: Comedy, Romance"
+50,Star Wars (1977),01-Jan-1977,"Action, Adventure, Romance, Sci-Fi, War","Star Wars (1977) — Genres: Action, Adventure, Romance, Sci-Fi, War"
+51,Legends of the Fall (1994),01-Jan-1994,"Drama, Romance, War, Western","Legends of the Fall (1994) — Genres: Drama, Romance, War, Western"
+52,"Madness of King George, The (1994)",01-Jan-1994,Drama,"Madness of King George, The (1994) — Genres: Drama"
+53,Natural Born Killers (1994),01-Jan-1994,"Action, Thriller","Natural Born Killers (1994) — Genres: Action, Thriller"
+54,Outbreak (1995),01-Jan-1995,"Action, Drama, Thriller","Outbreak (1995) — Genres: Action, Drama, Thriller"
+55,"Professional, The (1994)",01-Jan-1994,"Crime, Drama, Romance, Thriller","Professional, The (1994) — Genres: Crime, Drama, Romance, Thriller"
+56,Pulp Fiction (1994),01-Jan-1994,"Crime, Drama","Pulp Fiction (1994) — Genres: Crime, Drama"
+57,Priest (1994),01-Jan-1994,Drama,Priest (1994) — Genres: Drama
+58,Quiz Show (1994),01-Jan-1994,Drama,Quiz Show (1994) — Genres: Drama
+59,Three Colors: Red (1994),01-Jan-1994,Drama,Three Colors: Red (1994) — Genres: Drama
+60,Three Colors: Blue (1993),01-Jan-1993,Drama,Three Colors: Blue (1993) — Genres: Drama
+61,Three Colors: White (1994),01-Jan-1994,Drama,Three Colors: White (1994) — Genres: Drama
+62,Stargate (1994),01-Jan-1994,"Action, Adventure, Sci-Fi","Stargate (1994) — Genres: Action, Adventure, Sci-Fi"
+63,"Santa Clause, The (1994)",01-Jan-1994,"Children, Comedy","Santa Clause, The (1994) — Genres: Children, Comedy"
+64,"Shawshank Redemption, The (1994)",01-Jan-1994,Drama,"Shawshank Redemption, The (1994) — Genres: Drama"
+65,What's Eating Gilbert Grape (1993),01-Jan-1993,"Comedy, Drama","What's Eating Gilbert Grape (1993) — Genres: Comedy, Drama"
+66,While You Were Sleeping (1995),01-Jan-1995,"Comedy, Romance","While You Were Sleeping (1995) — Genres: Comedy, Romance"
+67,Ace Ventura: Pet Detective (1994),01-Jan-1994,Comedy,Ace Ventura: Pet Detective (1994) — Genres: Comedy
+68,"Crow, The (1994)",01-Jan-1994,"Action, Romance, Thriller","Crow, The (1994) — Genres: Action, Romance, Thriller"
+69,Forrest Gump (1994),01-Jan-1994,"Comedy, Romance, War","Forrest Gump (1994) — Genres: Comedy, Romance, War"
+70,Four Weddings and a Funeral (1994),01-Jan-1994,"Comedy, Romance","Four Weddings and a Funeral (1994) — Genres: Comedy, Romance"
+71,"Lion King, The (1994)",01-Jan-1994,"Animation, Children, Musical","Lion King, The (1994) — Genres: Animation, Children, Musical"
+72,"Mask, The (1994)",01-Jan-1994,"Comedy, Crime, Fantasy","Mask, The (1994) — Genres: Comedy, Crime, Fantasy"
+73,Maverick (1994),01-Jan-1994,"Action, Comedy, Western","Maverick (1994) — Genres: Action, Comedy, Western"
+74,Faster Pussycat! Kill! Kill! (1965),01-Jan-1965,"Action, Comedy, Drama","Faster Pussycat! Kill! Kill! (1965) — Genres: Action, Comedy, Drama"
+75,Brother Minister: The Assassination of Malcolm X (1994),01-Jan-1994,Documentary,Brother Minister: The Assassination of Malcolm X (1994) — Genres: Documentary
+76,Carlito's Way (1993),01-Jan-1993,"Crime, Drama","Carlito's Way (1993) — Genres: Crime, Drama"
+77,"Firm, The (1993)",01-Jan-1993,"Drama, Thriller","Firm, The (1993) — Genres: Drama, Thriller"
+78,Free Willy (1993),01-Jan-1993,"Adventure, Children, Drama","Free Willy (1993) — Genres: Adventure, Children, Drama"
+79,"Fugitive, The (1993)",01-Jan-1993,"Action, Thriller","Fugitive, The (1993) — Genres: Action, Thriller"
+80,Hot Shots! Part Deux (1993),01-Jan-1993,"Action, Comedy, War","Hot Shots! Part Deux (1993) — Genres: Action, Comedy, War"
+81,"Hudsucker Proxy, The (1994)",01-Jan-1994,"Comedy, Romance","Hudsucker Proxy, The (1994) — Genres: Comedy, Romance"
+82,Jurassic Park (1993),01-Jan-1993,"Action, Adventure, Sci-Fi","Jurassic Park (1993) — Genres: Action, Adventure, Sci-Fi"
+83,Much Ado About Nothing (1993),01-Jan-1993,"Comedy, Romance","Much Ado About Nothing (1993) — Genres: Comedy, Romance"
+84,Robert A. Heinlein's The Puppet Masters (1994),01-Jan-1994,"Horror, Sci-Fi","Robert A. Heinlein's The Puppet Masters (1994) — Genres: Horror, Sci-Fi"
+85,"Ref, The (1994)",01-Jan-1994,Comedy,"Ref, The (1994) — Genres: Comedy"
+86,"Remains of the Day, The (1993)",01-Jan-1993,Drama,"Remains of the Day, The (1993) — Genres: Drama"
+87,Searching for Bobby Fischer (1993),01-Jan-1993,Drama,Searching for Bobby Fischer (1993) — Genres: Drama
+88,Sleepless in Seattle (1993),01-Jan-1993,"Comedy, Romance","Sleepless in Seattle (1993) — Genres: Comedy, Romance"
+89,Blade Runner (1982),01-Jan-1982,"Film-Noir, Sci-Fi","Blade Runner (1982) — Genres: Film-Noir, Sci-Fi"
+90,So I Married an Axe Murderer (1993),01-Jan-1993,"Comedy, Romance, Thriller","So I Married an Axe Murderer (1993) — Genres: Comedy, Romance, Thriller"
+91,"Nightmare Before Christmas, The (1993)",01-Jan-1993,"Children, Comedy, Musical","Nightmare Before Christmas, The (1993) — Genres: Children, Comedy, Musical"
+92,True Romance (1993),01-Jan-1993,"Action, Crime, Romance","True Romance (1993) — Genres: Action, Crime, Romance"
+93,Welcome to the Dollhouse (1995),24-May-1996,"Comedy, Drama","Welcome to the Dollhouse (1995) — Genres: Comedy, Drama"
+94,Home Alone (1990),01-Jan-1990,"Children, Comedy","Home Alone (1990) — Genres: Children, Comedy"
+95,Aladdin (1992),01-Jan-1992,"Animation, Children, Comedy, Musical","Aladdin (1992) — Genres: Animation, Children, Comedy, Musical"
+96,Terminator 2: Judgment Day (1991),01-Jan-1991,"Action, Sci-Fi, Thriller","Terminator 2: Judgment Day (1991) — Genres: Action, Sci-Fi, Thriller"
+97,Dances with Wolves (1990),01-Jan-1990,"Adventure, Drama, Western","Dances with Wolves (1990) — Genres: Adventure, Drama, Western"
+98,"Silence of the Lambs, The (1991)",01-Jan-1991,"Drama, Thriller","Silence of the Lambs, The (1991) — Genres: Drama, Thriller"
+99,Snow White and the Seven Dwarfs (1937),01-Jan-1937,"Animation, Children, Musical","Snow White and the Seven Dwarfs (1937) — Genres: Animation, Children, Musical"
+100,Fargo (1996),14-Feb-1997,"Crime, Drama, Thriller","Fargo (1996) — Genres: Crime, Drama, Thriller"
+101,Heavy Metal (1981),08-Mar-1981,"Action, Adventure, Animation, Horror, Sci-Fi","Heavy Metal (1981) — Genres: Action, Adventure, Animation, Horror, Sci-Fi"
+102,"Aristocats, The (1970)",01-Jan-1970,"Animation, Children","Aristocats, The (1970) — Genres: Animation, Children"
+103,All Dogs Go to Heaven 2 (1996),29-Mar-1996,"Animation, Children, Musical","All Dogs Go to Heaven 2 (1996) — Genres: Animation, Children, Musical"
+104,Theodore Rex (1995),29-Mar-1996,Comedy,Theodore Rex (1995) — Genres: Comedy
+105,Sgt. Bilko (1996),29-Mar-1996,Comedy,Sgt. Bilko (1996) — Genres: Comedy
+106,Diabolique (1996),01-Jan-1996,"Drama, Thriller","Diabolique (1996) — Genres: Drama, Thriller"
+107,Moll Flanders (1996),14-Jun-1996,Drama,Moll Flanders (1996) — Genres: Drama
+108,Kids in the Hall: Brain Candy (1996),12-Apr-1996,Comedy,Kids in the Hall: Brain Candy (1996) — Genres: Comedy
+109,Mystery Science Theater 3000: The Movie (1996),19-Apr-1996,"Comedy, Sci-Fi","Mystery Science Theater 3000: The Movie (1996) — Genres: Comedy, Sci-Fi"
+110,Operation Dumbo Drop (1995),01-Jan-1995,"Action, Adventure, Comedy, War","Operation Dumbo Drop (1995) — Genres: Action, Adventure, Comedy, War"
+111,"Truth About Cats & Dogs, The (1996)",26-Apr-1996,"Comedy, Romance","Truth About Cats & Dogs, The (1996) — Genres: Comedy, Romance"
+112,Flipper (1996),10-May-1996,"Adventure, Children","Flipper (1996) — Genres: Adventure, Children"
+113,"Horseman on the Roof, The (Hussard sur le toit, Le) (1995)",19-Apr-1996,Drama,"Horseman on the Roof, The (Hussard sur le toit, Le) (1995) — Genres: Drama"
+114,Wallace & Gromit: The Best of Aardman Animation (1996),05-Apr-1996,Animation,Wallace & Gromit: The Best of Aardman Animation (1996) — Genres: Animation
+115,"Haunted World of Edward D. Wood Jr., The (1995)",26-Apr-1996,Documentary,"Haunted World of Edward D. Wood Jr., The (1995) — Genres: Documentary"
+116,Cold Comfort Farm (1995),23-Apr-1996,Comedy,Cold Comfort Farm (1995) — Genres: Comedy
+117,"Rock, The (1996)",07-Jun-1996,"Action, Adventure, Thriller","Rock, The (1996) — Genres: Action, Adventure, Thriller"
+118,Twister (1996),10-May-1996,"Action, Adventure, Thriller","Twister (1996) — Genres: Action, Adventure, Thriller"
+119,Maya Lin: A Strong Clear Vision (1994),01-Jan-1994,Documentary,Maya Lin: A Strong Clear Vision (1994) — Genres: Documentary
+120,Striptease (1996),28-Jun-1996,"Comedy, Crime","Striptease (1996) — Genres: Comedy, Crime"
+121,Independence Day (ID4) (1996),03-Jul-1996,"Action, Sci-Fi, War","Independence Day (ID4) (1996) — Genres: Action, Sci-Fi, War"
+122,"Cable Guy, The (1996)",14-Jun-1996,Comedy,"Cable Guy, The (1996) — Genres: Comedy"
+123,"Frighteners, The (1996)",19-Jul-1996,"Comedy, Horror","Frighteners, The (1996) — Genres: Comedy, Horror"
+124,Lone Star (1996),21-Jun-1996,"Drama, Mystery","Lone Star (1996) — Genres: Drama, Mystery"
+125,Phenomenon (1996),29-Jun-1996,"Drama, Romance","Phenomenon (1996) — Genres: Drama, Romance"
+126,"Spitfire Grill, The (1996)",06-Sep-1996,Drama,"Spitfire Grill, The (1996) — Genres: Drama"
+127,"Godfather, The (1972)",01-Jan-1972,"Action, Crime, Drama","Godfather, The (1972) — Genres: Action, Crime, Drama"
+128,Supercop (1992),26-Jul-1996,"Action, Thriller","Supercop (1992) — Genres: Action, Thriller"
+129,Bound (1996),04-Oct-1996,"Crime, Drama, Romance, Thriller","Bound (1996) — Genres: Crime, Drama, Romance, Thriller"
+130,Kansas City (1996),16-Aug-1996,Crime,Kansas City (1996) — Genres: Crime
+131,Breakfast at Tiffany's (1961),01-Jan-1961,"Drama, Romance","Breakfast at Tiffany's (1961) — Genres: Drama, Romance"
+132,"Wizard of Oz, The (1939)",01-Jan-1939,"Adventure, Children, Drama, Musical","Wizard of Oz, The (1939) — Genres: Adventure, Children, Drama, Musical"
+133,Gone with the Wind (1939),01-Jan-1939,"Drama, Romance, War","Gone with the Wind (1939) — Genres: Drama, Romance, War"
+134,Citizen Kane (1941),01-Jan-1941,Drama,Citizen Kane (1941) — Genres: Drama
+135,2001: A Space Odyssey (1968),01-Jan-1968,"Drama, Mystery, Sci-Fi, Thriller","2001: A Space Odyssey (1968) — Genres: Drama, Mystery, Sci-Fi, Thriller"
+136,Mr. Smith Goes to Washington (1939),01-Jan-1939,Drama,Mr. Smith Goes to Washington (1939) — Genres: Drama
+137,Big Night (1996),20-Sep-1996,Drama,Big Night (1996) — Genres: Drama
+138,D3: The Mighty Ducks (1996),04-Oct-1996,"Children, Comedy","D3: The Mighty Ducks (1996) — Genres: Children, Comedy"
+139,"Love Bug, The (1969)",01-Jan-1969,"Children, Comedy","Love Bug, The (1969) — Genres: Children, Comedy"
+140,Homeward Bound: The Incredible Journey (1993),01-Jan-1993,"Adventure, Children","Homeward Bound: The Incredible Journey (1993) — Genres: Adventure, Children"
+141,"20,000 Leagues Under the Sea (1954)",01-Jan-1954,"Adventure, Children, Fantasy, Sci-Fi","20,000 Leagues Under the Sea (1954) — Genres: Adventure, Children, Fantasy, Sci-Fi"
+142,Bedknobs and Broomsticks (1971),01-Jan-1971,"Adventure, Children, Musical","Bedknobs and Broomsticks (1971) — Genres: Adventure, Children, Musical"
+143,"Sound of Music, The (1965)",01-Jan-1965,Musical,"Sound of Music, The (1965) — Genres: Musical"
+144,Die Hard (1988),01-Jan-1988,"Action, Thriller","Die Hard (1988) — Genres: Action, Thriller"
+145,"Lawnmower Man, The (1992)",01-Jan-1992,"Action, Sci-Fi, Thriller","Lawnmower Man, The (1992) — Genres: Action, Sci-Fi, Thriller"
+146,Unhook the Stars (1996),30-Oct-1996,Drama,Unhook the Stars (1996) — Genres: Drama
+147,"Long Kiss Goodnight, The (1996)",05-Oct-1996,"Action, Thriller","Long Kiss Goodnight, The (1996) — Genres: Action, Thriller"
+148,"Ghost and the Darkness, The (1996)",11-Oct-1996,"Action, Adventure","Ghost and the Darkness, The (1996) — Genres: Action, Adventure"
+149,Jude (1996),01-Nov-1996,Drama,Jude (1996) — Genres: Drama
+150,Swingers (1996),18-Oct-1996,"Comedy, Drama","Swingers (1996) — Genres: Comedy, Drama"
+151,Willy Wonka and the Chocolate Factory (1971),01-Jan-1971,"Adventure, Children, Comedy","Willy Wonka and the Chocolate Factory (1971) — Genres: Adventure, Children, Comedy"
+152,Sleeper (1973),01-Jan-1973,"Comedy, Sci-Fi","Sleeper (1973) — Genres: Comedy, Sci-Fi"
+153,"Fish Called Wanda, A (1988)",01-Jan-1988,Comedy,"Fish Called Wanda, A (1988) — Genres: Comedy"
+154,Monty Python's Life of Brian (1979),01-Jan-1979,Comedy,Monty Python's Life of Brian (1979) — Genres: Comedy
+155,Dirty Dancing (1987),01-Jan-1987,"Musical, Romance","Dirty Dancing (1987) — Genres: Musical, Romance"
+156,Reservoir Dogs (1992),01-Jan-1992,"Crime, Thriller","Reservoir Dogs (1992) — Genres: Crime, Thriller"
+157,Platoon (1986),01-Jan-1986,"Drama, War","Platoon (1986) — Genres: Drama, War"
+158,Weekend at Bernie's (1989),01-Jan-1989,Comedy,Weekend at Bernie's (1989) — Genres: Comedy
+159,Basic Instinct (1992),01-Jan-1992,"Mystery, Thriller","Basic Instinct (1992) — Genres: Mystery, Thriller"
+160,Glengarry Glen Ross (1992),01-Jan-1992,Drama,Glengarry Glen Ross (1992) — Genres: Drama
+161,Top Gun (1986),01-Jan-1986,"Action, Romance","Top Gun (1986) — Genres: Action, Romance"
+162,On Golden Pond (1981),01-Jan-1981,Drama,On Golden Pond (1981) — Genres: Drama
+163,"Return of the Pink Panther, The (1974)",01-Jan-1974,Comedy,"Return of the Pink Panther, The (1974) — Genres: Comedy"
+164,"Abyss, The (1989)",01-Jan-1989,"Action, Adventure, Sci-Fi, Thriller","Abyss, The (1989) — Genres: Action, Adventure, Sci-Fi, Thriller"
+165,Jean de Florette (1986),01-Jan-1986,Drama,Jean de Florette (1986) — Genres: Drama
+166,Manon of the Spring (Manon des sources) (1986),01-Jan-1986,Drama,Manon of the Spring (Manon des sources) (1986) — Genres: Drama
+167,Private Benjamin (1980),01-Jan-1980,Comedy,Private Benjamin (1980) — Genres: Comedy
+168,Monty Python and the Holy Grail (1974),01-Jan-1974,Comedy,Monty Python and the Holy Grail (1974) — Genres: Comedy
+169,"Wrong Trousers, The (1993)",01-Jan-1993,"Animation, Comedy","Wrong Trousers, The (1993) — Genres: Animation, Comedy"
+170,Cinema Paradiso (1988),01-Jan-1988,"Comedy, Drama, Romance","Cinema Paradiso (1988) — Genres: Comedy, Drama, Romance"
+171,Delicatessen (1991),01-Jan-1991,"Comedy, Sci-Fi","Delicatessen (1991) — Genres: Comedy, Sci-Fi"
+172,"Empire Strikes Back, The (1980)",01-Jan-1980,"Action, Adventure, Drama, Romance, Sci-Fi, War","Empire Strikes Back, The (1980) — Genres: Action, Adventure, Drama, Romance, Sci-Fi, War"
+173,"Princess Bride, The (1987)",01-Jan-1987,"Action, Adventure, Comedy, Romance","Princess Bride, The (1987) — Genres: Action, Adventure, Comedy, Romance"
+174,Raiders of the Lost Ark (1981),01-Jan-1981,"Action, Adventure","Raiders of the Lost Ark (1981) — Genres: Action, Adventure"
+175,Brazil (1985),01-Jan-1985,Sci-Fi,Brazil (1985) — Genres: Sci-Fi
+176,Aliens (1986),01-Jan-1986,"Action, Sci-Fi, Thriller, War","Aliens (1986) — Genres: Action, Sci-Fi, Thriller, War"
+177,"Good, The Bad and The Ugly, The (1966)",01-Jan-1966,"Action, Western","Good, The Bad and The Ugly, The (1966) — Genres: Action, Western"
+178,12 Angry Men (1957),01-Jan-1957,Drama,12 Angry Men (1957) — Genres: Drama
+179,"Clockwork Orange, A (1971)",01-Jan-1971,Sci-Fi,"Clockwork Orange, A (1971) — Genres: Sci-Fi"
+180,Apocalypse Now (1979),01-Jan-1979,"Drama, War","Apocalypse Now (1979) — Genres: Drama, War"
+181,Return of the Jedi (1983),14-Mar-1997,"Action, Adventure, Romance, Sci-Fi, War","Return of the Jedi (1983) — Genres: Action, Adventure, Romance, Sci-Fi, War"
+182,GoodFellas (1990),01-Jan-1990,"Crime, Drama","GoodFellas (1990) — Genres: Crime, Drama"
+183,Alien (1979),01-Jan-1979,"Action, Horror, Sci-Fi, Thriller","Alien (1979) — Genres: Action, Horror, Sci-Fi, Thriller"
+184,Army of Darkness (1993),01-Jan-1993,"Action, Adventure, Comedy, Horror, Sci-Fi","Army of Darkness (1993) — Genres: Action, Adventure, Comedy, Horror, Sci-Fi"
+185,Psycho (1960),01-Jan-1960,"Horror, Romance, Thriller","Psycho (1960) — Genres: Horror, Romance, Thriller"
+186,"Blues Brothers, The (1980)",01-Jan-1980,"Action, Comedy, Musical","Blues Brothers, The (1980) — Genres: Action, Comedy, Musical"
+187,"Godfather: Part II, The (1974)",01-Jan-1974,"Action, Crime, Drama","Godfather: Part II, The (1974) — Genres: Action, Crime, Drama"
+188,Full Metal Jacket (1987),01-Jan-1987,"Action, Drama, War","Full Metal Jacket (1987) — Genres: Action, Drama, War"
+189,"Grand Day Out, A (1992)",01-Jan-1992,"Animation, Comedy","Grand Day Out, A (1992) — Genres: Animation, Comedy"
+190,Henry V (1989),01-Jan-1989,"Drama, War","Henry V (1989) — Genres: Drama, War"
+191,Amadeus (1984),01-Jan-1984,"Drama, Mystery","Amadeus (1984) — Genres: Drama, Mystery"
+192,Raging Bull (1980),01-Jan-1980,Drama,Raging Bull (1980) — Genres: Drama
+193,"Right Stuff, The (1983)",01-Jan-1983,Drama,"Right Stuff, The (1983) — Genres: Drama"
+194,"Sting, The (1973)",01-Jan-1973,"Comedy, Crime","Sting, The (1973) — Genres: Comedy, Crime"
+195,"Terminator, The (1984)",01-Jan-1984,"Action, Sci-Fi, Thriller","Terminator, The (1984) — Genres: Action, Sci-Fi, Thriller"
+196,Dead Poets Society (1989),01-Jan-1989,Drama,Dead Poets Society (1989) — Genres: Drama
+197,"Graduate, The (1967)",01-Jan-1967,"Drama, Romance","Graduate, The (1967) — Genres: Drama, Romance"
+198,Nikita (La Femme Nikita) (1990),01-Jan-1990,Thriller,Nikita (La Femme Nikita) (1990) — Genres: Thriller
+199,"Bridge on the River Kwai, The (1957)",01-Jan-1957,"Drama, War","Bridge on the River Kwai, The (1957) — Genres: Drama, War"
+200,"Shining, The (1980)",01-Jan-1980,Horror,"Shining, The (1980) — Genres: Horror"
+201,Evil Dead II (1987),01-Jan-1987,"Action, Adventure, Comedy, Horror","Evil Dead II (1987) — Genres: Action, Adventure, Comedy, Horror"
+202,Groundhog Day (1993),01-Jan-1993,"Comedy, Romance","Groundhog Day (1993) — Genres: Comedy, Romance"
+203,Unforgiven (1992),01-Jan-1992,Western,Unforgiven (1992) — Genres: Western
+204,Back to the Future (1985),01-Jan-1985,"Comedy, Sci-Fi","Back to the Future (1985) — Genres: Comedy, Sci-Fi"
+205,Patton (1970),01-Jan-1970,"Drama, War","Patton (1970) — Genres: Drama, War"
+206,Akira (1988),01-Jan-1988,"Adventure, Animation, Sci-Fi, Thriller","Akira (1988) — Genres: Adventure, Animation, Sci-Fi, Thriller"
+207,Cyrano de Bergerac (1990),01-Jan-1990,"Action, Drama, Romance","Cyrano de Bergerac (1990) — Genres: Action, Drama, Romance"
+208,Young Frankenstein (1974),01-Jan-1974,"Comedy, Horror","Young Frankenstein (1974) — Genres: Comedy, Horror"
+209,This Is Spinal Tap (1984),01-Jan-1984,"Comedy, Drama, Musical","This Is Spinal Tap (1984) — Genres: Comedy, Drama, Musical"
+210,Indiana Jones and the Last Crusade (1989),01-Jan-1989,"Action, Adventure","Indiana Jones and the Last Crusade (1989) — Genres: Action, Adventure"
+211,M*A*S*H (1970),01-Jan-1970,"Comedy, War","M*A*S*H (1970) — Genres: Comedy, War"
+212,"Unbearable Lightness of Being, The (1988)",01-Jan-1988,Drama,"Unbearable Lightness of Being, The (1988) — Genres: Drama"
+213,"Room with a View, A (1986)",01-Jan-1986,"Drama, Romance","Room with a View, A (1986) — Genres: Drama, Romance"
+214,Pink Floyd - The Wall (1982),01-Jan-1982,"Drama, Musical, War","Pink Floyd - The Wall (1982) — Genres: Drama, Musical, War"
+215,Field of Dreams (1989),01-Jan-1989,Drama,Field of Dreams (1989) — Genres: Drama
+216,When Harry Met Sally... (1989),01-Jan-1989,"Comedy, Romance","When Harry Met Sally... (1989) — Genres: Comedy, Romance"
+217,Bram Stoker's Dracula (1992),01-Jan-1992,"Horror, Romance","Bram Stoker's Dracula (1992) — Genres: Horror, Romance"
+218,Cape Fear (1991),01-Jan-1991,Thriller,Cape Fear (1991) — Genres: Thriller
+219,"Nightmare on Elm Street, A (1984)",01-Jan-1984,Horror,"Nightmare on Elm Street, A (1984) — Genres: Horror"
+220,"Mirror Has Two Faces, The (1996)",15-Nov-1996,"Comedy, Romance","Mirror Has Two Faces, The (1996) — Genres: Comedy, Romance"
+221,Breaking the Waves (1996),15-Nov-1996,Drama,Breaking the Waves (1996) — Genres: Drama
+222,Star Trek: First Contact (1996),22-Nov-1996,"Action, Adventure, Sci-Fi","Star Trek: First Contact (1996) — Genres: Action, Adventure, Sci-Fi"
+223,Sling Blade (1996),22-Nov-1996,"Drama, Thriller","Sling Blade (1996) — Genres: Drama, Thriller"
+224,Ridicule (1996),27-Nov-1996,Drama,Ridicule (1996) — Genres: Drama
+225,101 Dalmatians (1996),27-Nov-1996,"Children, Comedy","101 Dalmatians (1996) — Genres: Children, Comedy"
+226,Die Hard 2 (1990),01-Jan-1990,"Action, Thriller","Die Hard 2 (1990) — Genres: Action, Thriller"
+227,Star Trek VI: The Undiscovered Country (1991),01-Jan-1991,"Action, Adventure, Sci-Fi","Star Trek VI: The Undiscovered Country (1991) — Genres: Action, Adventure, Sci-Fi"
+228,Star Trek: The Wrath of Khan (1982),01-Jan-1982,"Action, Adventure, Sci-Fi","Star Trek: The Wrath of Khan (1982) — Genres: Action, Adventure, Sci-Fi"
+229,Star Trek III: The Search for Spock (1984),01-Jan-1984,"Action, Adventure, Sci-Fi","Star Trek III: The Search for Spock (1984) — Genres: Action, Adventure, Sci-Fi"
+230,Star Trek IV: The Voyage Home (1986),01-Jan-1986,"Action, Adventure, Sci-Fi","Star Trek IV: The Voyage Home (1986) — Genres: Action, Adventure, Sci-Fi"
+231,Batman Returns (1992),01-Jan-1992,"Action, Adventure, Comedy, Crime","Batman Returns (1992) — Genres: Action, Adventure, Comedy, Crime"
+232,Young Guns (1988),01-Jan-1988,"Action, Comedy, Western","Young Guns (1988) — Genres: Action, Comedy, Western"
+233,Under Siege (1992),01-Jan-1992,Action,Under Siege (1992) — Genres: Action
+234,Jaws (1975),01-Jan-1975,"Action, Horror","Jaws (1975) — Genres: Action, Horror"
+235,Mars Attacks! (1996),13-Dec-1996,"Action, Comedy, Sci-Fi, War","Mars Attacks! (1996) — Genres: Action, Comedy, Sci-Fi, War"
+236,Citizen Ruth (1996),13-Dec-1996,"Comedy, Drama","Citizen Ruth (1996) — Genres: Comedy, Drama"
+237,Jerry Maguire (1996),13-Dec-1996,"Drama, Romance","Jerry Maguire (1996) — Genres: Drama, Romance"
+238,Raising Arizona (1987),01-Jan-1987,Comedy,Raising Arizona (1987) — Genres: Comedy
+239,Sneakers (1992),01-Jan-1992,"Crime, Drama, Sci-Fi","Sneakers (1992) — Genres: Crime, Drama, Sci-Fi"
+240,Beavis and Butt-head Do America (1996),20-Dec-1996,"Animation, Comedy","Beavis and Butt-head Do America (1996) — Genres: Animation, Comedy"
+241,"Last of the Mohicans, The (1992)",01-Jan-1992,"Action, Romance, War","Last of the Mohicans, The (1992) — Genres: Action, Romance, War"
+242,Kolya (1996),24-Jan-1997,Comedy,Kolya (1996) — Genres: Comedy
+243,Jungle2Jungle (1997),07-Mar-1997,"Children, Comedy","Jungle2Jungle (1997) — Genres: Children, Comedy"
+244,Smilla's Sense of Snow (1997),14-Mar-1997,"Action, Drama, Thriller","Smilla's Sense of Snow (1997) — Genres: Action, Drama, Thriller"
+245,"Devil's Own, The (1997)",26-Mar-1997,"Action, Drama, Thriller, War","Devil's Own, The (1997) — Genres: Action, Drama, Thriller, War"
+246,Chasing Amy (1997),01-Jan-1997,"Drama, Romance","Chasing Amy (1997) — Genres: Drama, Romance"
+247,Turbo: A Power Rangers Movie (1997),28-Mar-1997,"Action, Adventure, Children","Turbo: A Power Rangers Movie (1997) — Genres: Action, Adventure, Children"
+248,Grosse Pointe Blank (1997),11-Apr-1997,"Comedy, Crime","Grosse Pointe Blank (1997) — Genres: Comedy, Crime"
+249,Austin Powers: International Man of Mystery (1997),02-May-1997,Comedy,Austin Powers: International Man of Mystery (1997) — Genres: Comedy
+250,"Fifth Element, The (1997)",09-May-1997,"Action, Sci-Fi","Fifth Element, The (1997) — Genres: Action, Sci-Fi"
+251,Shall We Dance? (1996),11-Jul-1997,Comedy,Shall We Dance? (1996) — Genres: Comedy
+252,"Lost World: Jurassic Park, The (1997)",23-May-1997,"Action, Adventure, Sci-Fi, Thriller","Lost World: Jurassic Park, The (1997) — Genres: Action, Adventure, Sci-Fi, Thriller"
+253,"Pillow Book, The (1995)",13-Jun-1997,"Drama, Romance","Pillow Book, The (1995) — Genres: Drama, Romance"
+254,Batman & Robin (1997),20-Jun-1997,"Action, Adventure, Crime","Batman & Robin (1997) — Genres: Action, Adventure, Crime"
+255,My Best Friend's Wedding (1997),20-Jun-1997,"Comedy, Romance","My Best Friend's Wedding (1997) — Genres: Comedy, Romance"
+256,When the Cats Away (Chacun cherche son chat) (1996),20-Jun-1997,"Comedy, Romance","When the Cats Away (Chacun cherche son chat) (1996) — Genres: Comedy, Romance"
+257,Men in Black (1997),04-Jul-1997,"Action, Adventure, Comedy, Sci-Fi","Men in Black (1997) — Genres: Action, Adventure, Comedy, Sci-Fi"
+258,Contact (1997),11-Jul-1997,"Drama, Sci-Fi","Contact (1997) — Genres: Drama, Sci-Fi"
+259,George of the Jungle (1997),01-Jan-1997,"Children, Comedy","George of the Jungle (1997) — Genres: Children, Comedy"
+260,Event Horizon (1997),01-Jan-1997,"Action, Mystery, Sci-Fi, Thriller","Event Horizon (1997) — Genres: Action, Mystery, Sci-Fi, Thriller"
+261,Air Bud (1997),01-Aug-1997,"Children, Comedy","Air Bud (1997) — Genres: Children, Comedy"
+262,In the Company of Men (1997),01-Aug-1997,Drama,In the Company of Men (1997) — Genres: Drama
+263,Steel (1997),15-Aug-1997,Action,Steel (1997) — Genres: Action
+264,Mimic (1997),22-Aug-1997,"Sci-Fi, Thriller","Mimic (1997) — Genres: Sci-Fi, Thriller"
+265,"Hunt for Red October, The (1990)",01-Jan-1990,"Action, Thriller","Hunt for Red October, The (1990) — Genres: Action, Thriller"
+266,Kull the Conqueror (1997),29-Aug-1997,"Action, Adventure","Kull the Conqueror (1997) — Genres: Action, Adventure"
+267,unknown,,unknown,unknown — Genres: unknown
+268,Chasing Amy (1997),01-Jan-1997,"Drama, Romance","Chasing Amy (1997) — Genres: Drama, Romance"
+269,"Full Monty, The (1997)",01-Jan-1997,Comedy,"Full Monty, The (1997) — Genres: Comedy"
+270,Gattaca (1997),01-Jan-1997,"Drama, Sci-Fi, Thriller","Gattaca (1997) — Genres: Drama, Sci-Fi, Thriller"
+271,Starship Troopers (1997),01-Jan-1997,"Action, Adventure, Sci-Fi, War","Starship Troopers (1997) — Genres: Action, Adventure, Sci-Fi, War"
+272,Good Will Hunting (1997),01-Jan-1997,Drama,Good Will Hunting (1997) — Genres: Drama
+273,Heat (1995),01-Jan-1995,"Action, Crime, Thriller","Heat (1995) — Genres: Action, Crime, Thriller"
+274,Sabrina (1995),01-Jan-1995,"Comedy, Romance","Sabrina (1995) — Genres: Comedy, Romance"
+275,Sense and Sensibility (1995),01-Jan-1995,"Drama, Romance","Sense and Sensibility (1995) — Genres: Drama, Romance"
+276,Leaving Las Vegas (1995),01-Jan-1995,"Drama, Romance","Leaving Las Vegas (1995) — Genres: Drama, Romance"
+277,Restoration (1995),01-Jan-1995,Drama,Restoration (1995) — Genres: Drama
+278,Bed of Roses (1996),01-Jan-1996,"Drama, Romance","Bed of Roses (1996) — Genres: Drama, Romance"
+279,Once Upon a Time... When We Were Colored (1995),01-Jan-1995,Drama,Once Upon a Time... When We Were Colored (1995) — Genres: Drama
+280,Up Close and Personal (1996),01-Mar-1996,"Drama, Romance","Up Close and Personal (1996) — Genres: Drama, Romance"
+281,"River Wild, The (1994)",01-Jan-1994,"Action, Thriller","River Wild, The (1994) — Genres: Action, Thriller"
+282,"Time to Kill, A (1996)",13-Jul-1996,Drama,"Time to Kill, A (1996) — Genres: Drama"
+283,Emma (1996),02-Aug-1996,"Drama, Romance","Emma (1996) — Genres: Drama, Romance"
+284,Tin Cup (1996),16-Aug-1996,"Comedy, Romance","Tin Cup (1996) — Genres: Comedy, Romance"
+285,Secrets & Lies (1996),04-Oct-1996,Drama,Secrets & Lies (1996) — Genres: Drama
+286,"English Patient, The (1996)",15-Nov-1996,"Drama, Romance, War","English Patient, The (1996) — Genres: Drama, Romance, War"
+287,Marvin's Room (1996),18-Dec-1996,Drama,Marvin's Room (1996) — Genres: Drama
+288,Scream (1996),20-Dec-1996,"Horror, Thriller","Scream (1996) — Genres: Horror, Thriller"
+289,Evita (1996),25-Dec-1996,"Drama, Musical","Evita (1996) — Genres: Drama, Musical"
+290,Fierce Creatures (1997),10-Jan-1997,Comedy,Fierce Creatures (1997) — Genres: Comedy
+291,Absolute Power (1997),14-Feb-1997,"Mystery, Thriller","Absolute Power (1997) — Genres: Mystery, Thriller"
+292,Rosewood (1997),21-Feb-1997,Drama,Rosewood (1997) — Genres: Drama
+293,Donnie Brasco (1997),28-Feb-1997,"Crime, Drama","Donnie Brasco (1997) — Genres: Crime, Drama"
+294,Liar Liar (1997),21-Mar-1997,Comedy,Liar Liar (1997) — Genres: Comedy
+295,Breakdown (1997),02-May-1997,"Action, Thriller","Breakdown (1997) — Genres: Action, Thriller"
+296,"Promesse, La (1996)",16-May-1997,Drama,"Promesse, La (1996) — Genres: Drama"
+297,Ulee's Gold (1997),01-Jan-1997,Drama,Ulee's Gold (1997) — Genres: Drama
+298,Face/Off (1997),27-Jun-1997,"Action, Sci-Fi, Thriller","Face/Off (1997) — Genres: Action, Sci-Fi, Thriller"
+299,Hoodlum (1997),22-Aug-1997,"Crime, Drama, Film-Noir","Hoodlum (1997) — Genres: Crime, Drama, Film-Noir"
+300,Air Force One (1997),01-Jan-1997,"Action, Thriller","Air Force One (1997) — Genres: Action, Thriller"
+301,In & Out (1997),19-Sep-1997,Comedy,In & Out (1997) — Genres: Comedy
+302,L.A. Confidential (1997),01-Jan-1997,"Crime, Film-Noir, Mystery, Thriller","L.A. Confidential (1997) — Genres: Crime, Film-Noir, Mystery, Thriller"
+303,Ulee's Gold (1997),01-Jan-1997,Drama,Ulee's Gold (1997) — Genres: Drama
+304,Fly Away Home (1996),13-Sep-1996,"Adventure, Children","Fly Away Home (1996) — Genres: Adventure, Children"
+305,"Ice Storm, The (1997)",01-Jan-1997,Drama,"Ice Storm, The (1997) — Genres: Drama"
+306,"Mrs. Brown (Her Majesty, Mrs. Brown) (1997)",01-Jan-1997,"Drama, Romance","Mrs. Brown (Her Majesty, Mrs. Brown) (1997) — Genres: Drama, Romance"
+307,"Devil's Advocate, The (1997)",01-Jan-1997,"Crime, Horror, Mystery, Thriller","Devil's Advocate, The (1997) — Genres: Crime, Horror, Mystery, Thriller"
+308,FairyTale: A True Story (1997),01-Jan-1997,"Children, Drama, Fantasy","FairyTale: A True Story (1997) — Genres: Children, Drama, Fantasy"
+309,Deceiver (1997),01-Jan-1997,Crime,Deceiver (1997) — Genres: Crime
+310,"Rainmaker, The (1997)",01-Jan-1997,Drama,"Rainmaker, The (1997) — Genres: Drama"
+311,"Wings of the Dove, The (1997)",01-Jan-1997,"Drama, Romance, Thriller","Wings of the Dove, The (1997) — Genres: Drama, Romance, Thriller"
+312,Midnight in the Garden of Good and Evil (1997),01-Jan-1997,"Comedy, Crime, Drama, Mystery","Midnight in the Garden of Good and Evil (1997) — Genres: Comedy, Crime, Drama, Mystery"
+313,Titanic (1997),01-Jan-1997,"Action, Drama, Romance","Titanic (1997) — Genres: Action, Drama, Romance"
+314,3 Ninjas: High Noon At Mega Mountain (1998),01-Jan-1997,"Action, Children","3 Ninjas: High Noon At Mega Mountain (1998) — Genres: Action, Children"
+315,Apt Pupil (1998),23-Oct-1998,"Drama, Thriller","Apt Pupil (1998) — Genres: Drama, Thriller"
+316,As Good As It Gets (1997),23-Dec-1997,"Comedy, Drama","As Good As It Gets (1997) — Genres: Comedy, Drama"
+317,In the Name of the Father (1993),01-Jan-1993,Drama,In the Name of the Father (1993) — Genres: Drama
+318,Schindler's List (1993),01-Jan-1993,"Drama, War","Schindler's List (1993) — Genres: Drama, War"
+319,Everyone Says I Love You (1996),06-Dec-1996,"Comedy, Musical, Romance","Everyone Says I Love You (1996) — Genres: Comedy, Musical, Romance"
+320,Paradise Lost: The Child Murders at Robin Hood Hills (1996),06-Dec-1996,Documentary,Paradise Lost: The Child Murders at Robin Hood Hills (1996) — Genres: Documentary
+321,Mother (1996),25-Dec-1996,Comedy,Mother (1996) — Genres: Comedy
+322,Murder at 1600 (1997),18-Apr-1997,"Mystery, Thriller","Murder at 1600 (1997) — Genres: Mystery, Thriller"
+323,Dante's Peak (1997),07-Feb-1997,"Action, Thriller","Dante's Peak (1997) — Genres: Action, Thriller"
+324,Lost Highway (1997),21-Feb-1997,Mystery,Lost Highway (1997) — Genres: Mystery
+325,Crash (1996),21-Mar-1997,"Drama, Thriller","Crash (1996) — Genres: Drama, Thriller"
+326,G.I. Jane (1997),01-Jan-1997,"Action, Drama, War","G.I. Jane (1997) — Genres: Action, Drama, War"
+327,Cop Land (1997),01-Jan-1997,"Crime, Drama, Mystery","Cop Land (1997) — Genres: Crime, Drama, Mystery"
+328,Conspiracy Theory (1997),08-Aug-1997,"Action, Mystery, Romance, Thriller","Conspiracy Theory (1997) — Genres: Action, Mystery, Romance, Thriller"
+329,Desperate Measures (1998),30-Jan-1998,"Crime, Drama, Thriller","Desperate Measures (1998) — Genres: Crime, Drama, Thriller"
+330,187 (1997),01-Jan-1997,Drama,187 (1997) — Genres: Drama
+331,"Edge, The (1997)",26-Sep-1997,"Adventure, Thriller","Edge, The (1997) — Genres: Adventure, Thriller"
+332,Kiss the Girls (1997),01-Jan-1997,"Crime, Drama, Thriller","Kiss the Girls (1997) — Genres: Crime, Drama, Thriller"
+333,"Game, The (1997)",01-Jan-1997,"Mystery, Thriller","Game, The (1997) — Genres: Mystery, Thriller"
+334,U Turn (1997),01-Jan-1997,"Action, Crime, Mystery","U Turn (1997) — Genres: Action, Crime, Mystery"
+335,How to Be a Player (1997),01-Jan-1997,Comedy,How to Be a Player (1997) — Genres: Comedy
+336,Playing God (1997),01-Jan-1997,"Crime, Thriller","Playing God (1997) — Genres: Crime, Thriller"
+337,"House of Yes, The (1997)",01-Jan-1997,"Comedy, Drama, Thriller","House of Yes, The (1997) — Genres: Comedy, Drama, Thriller"
+338,Bean (1997),01-Jan-1997,Comedy,Bean (1997) — Genres: Comedy
+339,Mad City (1997),01-Jan-1997,"Action, Drama","Mad City (1997) — Genres: Action, Drama"
+340,Boogie Nights (1997),01-Jan-1997,Drama,Boogie Nights (1997) — Genres: Drama
+341,Critical Care (1997),01-Jan-1997,Comedy,Critical Care (1997) — Genres: Comedy
+342,"Man Who Knew Too Little, The (1997)",01-Jan-1997,"Comedy, Mystery","Man Who Knew Too Little, The (1997) — Genres: Comedy, Mystery"
+343,Alien: Resurrection (1997),01-Jan-1997,"Action, Horror, Sci-Fi","Alien: Resurrection (1997) — Genres: Action, Horror, Sci-Fi"
+344,"Apostle, The (1997)",18-Dec-1997,Drama,"Apostle, The (1997) — Genres: Drama"
+345,Deconstructing Harry (1997),01-Jan-1997,"Comedy, Drama","Deconstructing Harry (1997) — Genres: Comedy, Drama"
+346,Jackie Brown (1997),01-Jan-1997,"Crime, Drama","Jackie Brown (1997) — Genres: Crime, Drama"
+347,Wag the Dog (1997),09-Jan-1998,"Comedy, Drama","Wag the Dog (1997) — Genres: Comedy, Drama"
+348,Desperate Measures (1998),30-Jan-1998,"Crime, Drama, Thriller","Desperate Measures (1998) — Genres: Crime, Drama, Thriller"
+349,Hard Rain (1998),16-Jan-1998,"Action, Thriller","Hard Rain (1998) — Genres: Action, Thriller"
+350,Fallen (1998),16-Jan-1998,"Action, Mystery, Thriller","Fallen (1998) — Genres: Action, Mystery, Thriller"
+351,"Prophecy II, The (1998)",16-Jan-1998,Horror,"Prophecy II, The (1998) — Genres: Horror"
+352,Spice World (1997),01-Jan-1997,"Comedy, Musical","Spice World (1997) — Genres: Comedy, Musical"
+353,Deep Rising (1998),30-Jan-1998,"Action, Horror, Sci-Fi","Deep Rising (1998) — Genres: Action, Horror, Sci-Fi"
+354,"Wedding Singer, The (1998)",13-Feb-1998,"Comedy, Romance","Wedding Singer, The (1998) — Genres: Comedy, Romance"
+355,Sphere (1998),13-Feb-1998,"Adventure, Sci-Fi, Thriller","Sphere (1998) — Genres: Adventure, Sci-Fi, Thriller"
+356,"Client, The (1994)",01-Jan-1994,"Drama, Mystery, Thriller","Client, The (1994) — Genres: Drama, Mystery, Thriller"
+357,One Flew Over the Cuckoo's Nest (1975),01-Jan-1975,Drama,One Flew Over the Cuckoo's Nest (1975) — Genres: Drama
+358,Spawn (1997),01-Aug-1997,"Action, Adventure, Sci-Fi, Thriller","Spawn (1997) — Genres: Action, Adventure, Sci-Fi, Thriller"
+359,"Assignment, The (1997)",01-Jan-1997,Thriller,"Assignment, The (1997) — Genres: Thriller"
+360,Wonderland (1997),01-Jan-1997,Documentary,Wonderland (1997) — Genres: Documentary
+361,Incognito (1997),01-Jan-1997,"Crime, Thriller","Incognito (1997) — Genres: Crime, Thriller"
+362,Blues Brothers 2000 (1998),06-Feb-1998,"Action, Comedy, Musical","Blues Brothers 2000 (1998) — Genres: Action, Comedy, Musical"
+363,Sudden Death (1995),01-Jan-1995,Action,Sudden Death (1995) — Genres: Action
+364,Ace Ventura: When Nature Calls (1995),01-Jan-1995,Comedy,Ace Ventura: When Nature Calls (1995) — Genres: Comedy
+365,Powder (1995),01-Jan-1995,Drama,Powder (1995) — Genres: Drama
+366,Dangerous Minds (1995),01-Jan-1995,Drama,Dangerous Minds (1995) — Genres: Drama
+367,Clueless (1995),01-Jan-1995,Comedy,Clueless (1995) — Genres: Comedy
+368,Bio-Dome (1996),01-Jan-1996,Comedy,Bio-Dome (1996) — Genres: Comedy
+369,Black Sheep (1996),02-Feb-1996,Comedy,Black Sheep (1996) — Genres: Comedy
+370,Mary Reilly (1996),23-Feb-1996,"Drama, Thriller","Mary Reilly (1996) — Genres: Drama, Thriller"
+371,"Bridges of Madison County, The (1995)",09-Feb-1996,"Drama, Romance","Bridges of Madison County, The (1995) — Genres: Drama, Romance"
+372,Jeffrey (1995),01-Jan-1995,Comedy,Jeffrey (1995) — Genres: Comedy
+373,Judge Dredd (1995),01-Jan-1995,"Action, Adventure, Sci-Fi","Judge Dredd (1995) — Genres: Action, Adventure, Sci-Fi"
+374,Mighty Morphin Power Rangers: The Movie (1995),01-Jan-1995,"Action, Children","Mighty Morphin Power Rangers: The Movie (1995) — Genres: Action, Children"
+375,Showgirls (1995),01-Jan-1995,Drama,Showgirls (1995) — Genres: Drama
+376,Houseguest (1994),01-Jan-1994,Comedy,Houseguest (1994) — Genres: Comedy
+377,Heavyweights (1994),01-Jan-1994,"Children, Comedy","Heavyweights (1994) — Genres: Children, Comedy"
+378,Miracle on 34th Street (1994),01-Jan-1994,Drama,Miracle on 34th Street (1994) — Genres: Drama
+379,Tales From the Crypt Presents: Demon Knight (1995),01-Jan-1995,Horror,Tales From the Crypt Presents: Demon Knight (1995) — Genres: Horror
+380,Star Trek: Generations (1994),01-Jan-1994,"Action, Adventure, Sci-Fi","Star Trek: Generations (1994) — Genres: Action, Adventure, Sci-Fi"
+381,Muriel's Wedding (1994),01-Jan-1994,"Comedy, Romance","Muriel's Wedding (1994) — Genres: Comedy, Romance"
+382,"Adventures of Priscilla, Queen of the Desert, The (1994)",01-Jan-1994,"Comedy, Drama","Adventures of Priscilla, Queen of the Desert, The (1994) — Genres: Comedy, Drama"
+383,"Flintstones, The (1994)",01-Jan-1994,"Children, Comedy","Flintstones, The (1994) — Genres: Children, Comedy"
+384,Naked Gun 33 1/3: The Final Insult (1994),01-Jan-1994,Comedy,Naked Gun 33 1/3: The Final Insult (1994) — Genres: Comedy
+385,True Lies (1994),01-Jan-1994,"Action, Adventure, Comedy, Romance","True Lies (1994) — Genres: Action, Adventure, Comedy, Romance"
+386,Addams Family Values (1993),01-Jan-1993,Comedy,Addams Family Values (1993) — Genres: Comedy
+387,"Age of Innocence, The (1993)",01-Jan-1993,Drama,"Age of Innocence, The (1993) — Genres: Drama"
+388,Beverly Hills Cop III (1994),01-Jan-1994,"Action, Comedy","Beverly Hills Cop III (1994) — Genres: Action, Comedy"
+389,Black Beauty (1994),01-Jan-1994,"Adventure, Children","Black Beauty (1994) — Genres: Adventure, Children"
+390,Fear of a Black Hat (1993),01-Jan-1993,Comedy,Fear of a Black Hat (1993) — Genres: Comedy
+391,Last Action Hero (1993),01-Jan-1993,"Action, Comedy","Last Action Hero (1993) — Genres: Action, Comedy"
+392,"Man Without a Face, The (1993)",01-Jan-1993,Drama,"Man Without a Face, The (1993) — Genres: Drama"
+393,Mrs. Doubtfire (1993),01-Jan-1993,Comedy,Mrs. Doubtfire (1993) — Genres: Comedy
+394,Radioland Murders (1994),01-Jan-1994,"Comedy, Mystery, Romance","Radioland Murders (1994) — Genres: Comedy, Mystery, Romance"
+395,Robin Hood: Men in Tights (1993),01-Jan-1993,Comedy,Robin Hood: Men in Tights (1993) — Genres: Comedy
+396,Serial Mom (1994),01-Jan-1994,"Comedy, Crime, Horror","Serial Mom (1994) — Genres: Comedy, Crime, Horror"
+397,Striking Distance (1993),01-Jan-1993,Action,Striking Distance (1993) — Genres: Action
+398,Super Mario Bros. (1993),01-Jan-1993,"Action, Adventure, Children, Sci-Fi","Super Mario Bros. (1993) — Genres: Action, Adventure, Children, Sci-Fi"
+399,"Three Musketeers, The (1993)",01-Jan-1993,"Action, Adventure, Comedy","Three Musketeers, The (1993) — Genres: Action, Adventure, Comedy"
+400,"Little Rascals, The (1994)",01-Jan-1994,"Children, Comedy","Little Rascals, The (1994) — Genres: Children, Comedy"
+401,"Brady Bunch Movie, The (1995)",01-Jan-1995,Comedy,"Brady Bunch Movie, The (1995) — Genres: Comedy"
+402,Ghost (1990),01-Jan-1990,"Comedy, Romance, Thriller","Ghost (1990) — Genres: Comedy, Romance, Thriller"
+403,Batman (1989),01-Jan-1989,"Action, Adventure, Crime, Drama","Batman (1989) — Genres: Action, Adventure, Crime, Drama"
+404,Pinocchio (1940),01-Jan-1940,"Animation, Children","Pinocchio (1940) — Genres: Animation, Children"
+405,Mission: Impossible (1996),22-May-1996,"Action, Adventure, Mystery","Mission: Impossible (1996) — Genres: Action, Adventure, Mystery"
+406,Thinner (1996),25-Oct-1996,"Horror, Thriller","Thinner (1996) — Genres: Horror, Thriller"
+407,Spy Hard (1996),24-May-1996,Comedy,Spy Hard (1996) — Genres: Comedy
+408,"Close Shave, A (1995)",28-Apr-1996,"Animation, Comedy, Thriller","Close Shave, A (1995) — Genres: Animation, Comedy, Thriller"
+409,Jack (1996),07-Aug-1996,"Comedy, Drama","Jack (1996) — Genres: Comedy, Drama"
+410,Kingpin (1996),12-Jul-1996,Comedy,Kingpin (1996) — Genres: Comedy
+411,"Nutty Professor, The (1996)",28-Jun-1996,"Comedy, Fantasy, Romance, Sci-Fi","Nutty Professor, The (1996) — Genres: Comedy, Fantasy, Romance, Sci-Fi"
+412,"Very Brady Sequel, A (1996)",23-Aug-1996,Comedy,"Very Brady Sequel, A (1996) — Genres: Comedy"
+413,Tales from the Crypt Presents: Bordello of Blood (1996),19-Jul-1996,Horror,Tales from the Crypt Presents: Bordello of Blood (1996) — Genres: Horror
+414,My Favorite Year (1982),01-Jan-1982,Comedy,My Favorite Year (1982) — Genres: Comedy
+415,"Apple Dumpling Gang, The (1975)",01-Jan-1975,"Children, Comedy, Western","Apple Dumpling Gang, The (1975) — Genres: Children, Comedy, Western"
+416,Old Yeller (1957),01-Jan-1957,"Children, Drama","Old Yeller (1957) — Genres: Children, Drama"
+417,"Parent Trap, The (1961)",01-Jan-1961,"Children, Drama","Parent Trap, The (1961) — Genres: Children, Drama"
+418,Cinderella (1950),01-Jan-1950,"Animation, Children, Musical","Cinderella (1950) — Genres: Animation, Children, Musical"
+419,Mary Poppins (1964),01-Jan-1964,"Children, Comedy, Musical","Mary Poppins (1964) — Genres: Children, Comedy, Musical"
+420,Alice in Wonderland (1951),01-Jan-1951,"Animation, Children, Musical","Alice in Wonderland (1951) — Genres: Animation, Children, Musical"
+421,William Shakespeare's Romeo and Juliet (1996),25-Oct-1996,"Drama, Romance","William Shakespeare's Romeo and Juliet (1996) — Genres: Drama, Romance"
+422,Aladdin and the King of Thieves (1996),01-Jan-1996,"Animation, Children, Comedy","Aladdin and the King of Thieves (1996) — Genres: Animation, Children, Comedy"
+423,E.T. the Extra-Terrestrial (1982),01-Jan-1982,"Children, Drama, Fantasy, Sci-Fi","E.T. the Extra-Terrestrial (1982) — Genres: Children, Drama, Fantasy, Sci-Fi"
+424,Children of the Corn: The Gathering (1996),01-Jan-1996,Horror,Children of the Corn: The Gathering (1996) — Genres: Horror
+425,Bob Roberts (1992),01-Jan-1992,Comedy,Bob Roberts (1992) — Genres: Comedy
+426,"Transformers: The Movie, The (1986)",01-Jan-1986,"Action, Animation, Children, Sci-Fi, Thriller, War","Transformers: The Movie, The (1986) — Genres: Action, Animation, Children, Sci-Fi, Thriller, War"
+427,To Kill a Mockingbird (1962),01-Jan-1962,Drama,To Kill a Mockingbird (1962) — Genres: Drama
+428,Harold and Maude (1971),01-Jan-1971,Comedy,Harold and Maude (1971) — Genres: Comedy
+429,"Day the Earth Stood Still, The (1951)",01-Jan-1951,"Drama, Sci-Fi","Day the Earth Stood Still, The (1951) — Genres: Drama, Sci-Fi"
+430,Duck Soup (1933),01-Jan-1933,"Comedy, War","Duck Soup (1933) — Genres: Comedy, War"
+431,Highlander (1986),01-Jan-1986,"Action, Adventure","Highlander (1986) — Genres: Action, Adventure"
+432,Fantasia (1940),01-Jan-1940,"Animation, Children, Musical","Fantasia (1940) — Genres: Animation, Children, Musical"
+433,Heathers (1989),01-Jan-1989,Comedy,Heathers (1989) — Genres: Comedy
+434,Forbidden Planet (1956),01-Jan-1956,Sci-Fi,Forbidden Planet (1956) — Genres: Sci-Fi
+435,Butch Cassidy and the Sundance Kid (1969),01-Jan-1969,"Action, Comedy, Western","Butch Cassidy and the Sundance Kid (1969) — Genres: Action, Comedy, Western"
+436,"American Werewolf in London, An (1981)",01-Jan-1981,Horror,"American Werewolf in London, An (1981) — Genres: Horror"
+437,Amityville 1992: It's About Time (1992),01-Jan-1992,Horror,Amityville 1992: It's About Time (1992) — Genres: Horror
+438,Amityville 3-D (1983),01-Jan-1983,Horror,Amityville 3-D (1983) — Genres: Horror
+439,Amityville: A New Generation (1993),01-Jan-1993,Horror,Amityville: A New Generation (1993) — Genres: Horror
+440,Amityville II: The Possession (1982),01-Jan-1982,Horror,Amityville II: The Possession (1982) — Genres: Horror
+441,"Amityville Horror, The (1979)",01-Jan-1979,Horror,"Amityville Horror, The (1979) — Genres: Horror"
+442,"Amityville Curse, The (1990)",01-Jan-1990,Horror,"Amityville Curse, The (1990) — Genres: Horror"
+443,"Birds, The (1963)",01-Jan-1963,Horror,"Birds, The (1963) — Genres: Horror"
+444,"Blob, The (1958)",01-Jan-1958,"Horror, Sci-Fi","Blob, The (1958) — Genres: Horror, Sci-Fi"
+445,"Body Snatcher, The (1945)",01-Jan-1945,Horror,"Body Snatcher, The (1945) — Genres: Horror"
+446,Burnt Offerings (1976),01-Jan-1976,Horror,Burnt Offerings (1976) — Genres: Horror
+447,Carrie (1976),01-Jan-1976,Horror,Carrie (1976) — Genres: Horror
+448,"Omen, The (1976)",01-Jan-1976,Horror,"Omen, The (1976) — Genres: Horror"
+449,Star Trek: The Motion Picture (1979),01-Jan-1979,"Action, Adventure, Sci-Fi","Star Trek: The Motion Picture (1979) — Genres: Action, Adventure, Sci-Fi"
+450,Star Trek V: The Final Frontier (1989),01-Jan-1989,"Action, Adventure, Sci-Fi","Star Trek V: The Final Frontier (1989) — Genres: Action, Adventure, Sci-Fi"
+451,Grease (1978),01-Jan-1978,"Comedy, Musical, Romance","Grease (1978) — Genres: Comedy, Musical, Romance"
+452,Jaws 2 (1978),01-Jan-1978,"Action, Horror","Jaws 2 (1978) — Genres: Action, Horror"
+453,Jaws 3-D (1983),01-Jan-1983,"Action, Horror","Jaws 3-D (1983) — Genres: Action, Horror"
+454,Bastard Out of Carolina (1996),15-Dec-1996,Drama,Bastard Out of Carolina (1996) — Genres: Drama
+455,Jackie Chan's First Strike (1996),10-Jan-1997,Action,Jackie Chan's First Strike (1996) — Genres: Action
+456,Beverly Hills Ninja (1997),17-Jan-1997,"Action, Comedy","Beverly Hills Ninja (1997) — Genres: Action, Comedy"
+457,Free Willy 3: The Rescue (1997),08-Aug-1997,"Adventure, Children, Drama","Free Willy 3: The Rescue (1997) — Genres: Adventure, Children, Drama"
+458,Nixon (1995),01-Jan-1995,Drama,Nixon (1995) — Genres: Drama
+459,"Cry, the Beloved Country (1995)",01-Jan-1995,Drama,"Cry, the Beloved Country (1995) — Genres: Drama"
+460,"Crossing Guard, The (1995)",01-Jan-1995,Drama,"Crossing Guard, The (1995) — Genres: Drama"
+461,Smoke (1995),01-Jan-1995,Drama,Smoke (1995) — Genres: Drama
+462,Like Water For Chocolate (Como agua para chocolate) (1992),01-Jan-1992,"Drama, Romance","Like Water For Chocolate (Como agua para chocolate) (1992) — Genres: Drama, Romance"
+463,"Secret of Roan Inish, The (1994)",01-Jan-1994,Adventure,"Secret of Roan Inish, The (1994) — Genres: Adventure"
+464,Vanya on 42nd Street (1994),01-Jan-1994,Drama,Vanya on 42nd Street (1994) — Genres: Drama
+465,"Jungle Book, The (1994)",01-Jan-1994,"Adventure, Children, Romance","Jungle Book, The (1994) — Genres: Adventure, Children, Romance"
+466,Red Rock West (1992),01-Jan-1992,Thriller,Red Rock West (1992) — Genres: Thriller
+467,"Bronx Tale, A (1993)",01-Jan-1993,Drama,"Bronx Tale, A (1993) — Genres: Drama"
+468,Rudy (1993),01-Jan-1993,Drama,Rudy (1993) — Genres: Drama
+469,Short Cuts (1993),01-Jan-1993,Drama,Short Cuts (1993) — Genres: Drama
+470,Tombstone (1993),01-Jan-1993,Western,Tombstone (1993) — Genres: Western
+471,Courage Under Fire (1996),08-Mar-1996,"Drama, War","Courage Under Fire (1996) — Genres: Drama, War"
+472,Dragonheart (1996),31-May-1996,"Action, Adventure, Fantasy","Dragonheart (1996) — Genres: Action, Adventure, Fantasy"
+473,James and the Giant Peach (1996),12-Apr-1996,"Animation, Children, Musical","James and the Giant Peach (1996) — Genres: Animation, Children, Musical"
+474,Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (1963),01-Jan-1963,"Sci-Fi, War","Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (1963) — Genres: Sci-Fi, War"
+475,Trainspotting (1996),19-Jul-1996,Drama,Trainspotting (1996) — Genres: Drama
+476,"First Wives Club, The (1996)",14-Sep-1996,Comedy,"First Wives Club, The (1996) — Genres: Comedy"
+477,Matilda (1996),02-Aug-1996,"Children, Comedy","Matilda (1996) — Genres: Children, Comedy"
+478,"Philadelphia Story, The (1940)",01-Jan-1940,"Comedy, Romance","Philadelphia Story, The (1940) — Genres: Comedy, Romance"
+479,Vertigo (1958),01-Jan-1958,"Mystery, Thriller","Vertigo (1958) — Genres: Mystery, Thriller"
+480,North by Northwest (1959),01-Jan-1959,"Comedy, Thriller","North by Northwest (1959) — Genres: Comedy, Thriller"
+481,"Apartment, The (1960)",01-Jan-1960,"Comedy, Drama","Apartment, The (1960) — Genres: Comedy, Drama"
+482,Some Like It Hot (1959),01-Jan-1959,"Comedy, Crime","Some Like It Hot (1959) — Genres: Comedy, Crime"
+483,Casablanca (1942),01-Jan-1942,"Drama, Romance, War","Casablanca (1942) — Genres: Drama, Romance, War"
+484,"Maltese Falcon, The (1941)",01-Jan-1941,"Film-Noir, Mystery","Maltese Falcon, The (1941) — Genres: Film-Noir, Mystery"
+485,My Fair Lady (1964),01-Jan-1964,"Musical, Romance","My Fair Lady (1964) — Genres: Musical, Romance"
+486,Sabrina (1954),01-Jan-1954,"Comedy, Romance","Sabrina (1954) — Genres: Comedy, Romance"
+487,Roman Holiday (1953),01-Jan-1953,"Comedy, Romance","Roman Holiday (1953) — Genres: Comedy, Romance"
+488,Sunset Blvd. (1950),01-Jan-1950,Film-Noir,Sunset Blvd. (1950) — Genres: Film-Noir
+489,Notorious (1946),01-Jan-1946,"Film-Noir, Romance, Thriller","Notorious (1946) — Genres: Film-Noir, Romance, Thriller"
+490,To Catch a Thief (1955),01-Jan-1955,"Comedy, Romance, Thriller","To Catch a Thief (1955) — Genres: Comedy, Romance, Thriller"
+491,"Adventures of Robin Hood, The (1938)",01-Jan-1938,"Action, Adventure","Adventures of Robin Hood, The (1938) — Genres: Action, Adventure"
+492,East of Eden (1955),01-Jan-1955,Drama,East of Eden (1955) — Genres: Drama
+493,"Thin Man, The (1934)",01-Jan-1934,Mystery,"Thin Man, The (1934) — Genres: Mystery"
+494,His Girl Friday (1940),01-Jan-1940,Comedy,His Girl Friday (1940) — Genres: Comedy
+495,Around the World in 80 Days (1956),01-Jan-1956,"Adventure, Comedy","Around the World in 80 Days (1956) — Genres: Adventure, Comedy"
+496,It's a Wonderful Life (1946),01-Jan-1946,Drama,It's a Wonderful Life (1946) — Genres: Drama
+497,Bringing Up Baby (1938),01-Jan-1938,Comedy,Bringing Up Baby (1938) — Genres: Comedy
+498,"African Queen, The (1951)",01-Jan-1951,"Action, Adventure, Romance, War","African Queen, The (1951) — Genres: Action, Adventure, Romance, War"
+499,Cat on a Hot Tin Roof (1958),01-Jan-1958,Drama,Cat on a Hot Tin Roof (1958) — Genres: Drama
+500,Fly Away Home (1996),13-Sep-1996,"Adventure, Children","Fly Away Home (1996) — Genres: Adventure, Children"
+501,Dumbo (1941),01-Jan-1941,"Animation, Children, Musical","Dumbo (1941) — Genres: Animation, Children, Musical"
+502,Bananas (1971),01-Jan-1971,"Comedy, War","Bananas (1971) — Genres: Comedy, War"
+503,"Candidate, The (1972)",01-Jan-1972,Drama,"Candidate, The (1972) — Genres: Drama"
+504,Bonnie and Clyde (1967),01-Jan-1967,"Crime, Drama","Bonnie and Clyde (1967) — Genres: Crime, Drama"
+505,Dial M for Murder (1954),01-Jan-1954,"Mystery, Thriller","Dial M for Murder (1954) — Genres: Mystery, Thriller"
+506,Rebel Without a Cause (1955),01-Jan-1955,Drama,Rebel Without a Cause (1955) — Genres: Drama
+507,"Streetcar Named Desire, A (1951)",01-Jan-1951,Drama,"Streetcar Named Desire, A (1951) — Genres: Drama"
+508,"People vs. Larry Flynt, The (1996)",27-Dec-1996,Drama,"People vs. Larry Flynt, The (1996) — Genres: Drama"
+509,My Left Foot (1989),01-Jan-1989,Drama,My Left Foot (1989) — Genres: Drama
+510,"Magnificent Seven, The (1954)",01-Jan-1954,"Action, Drama, Western","Magnificent Seven, The (1954) — Genres: Action, Drama, Western"
+511,Lawrence of Arabia (1962),01-Jan-1962,"Adventure, War","Lawrence of Arabia (1962) — Genres: Adventure, War"
+512,Wings of Desire (1987),01-Jan-1987,"Comedy, Drama, Romance","Wings of Desire (1987) — Genres: Comedy, Drama, Romance"
+513,"Third Man, The (1949)",01-Jan-1949,"Mystery, Thriller","Third Man, The (1949) — Genres: Mystery, Thriller"
+514,Annie Hall (1977),01-Jan-1977,"Comedy, Romance","Annie Hall (1977) — Genres: Comedy, Romance"
+515,"Boot, Das (1981)",04-Apr-1997,"Action, Drama, War","Boot, Das (1981) — Genres: Action, Drama, War"
+516,Local Hero (1983),01-Jan-1983,Comedy,Local Hero (1983) — Genres: Comedy
+517,Manhattan (1979),01-Jan-1979,"Comedy, Drama, Romance","Manhattan (1979) — Genres: Comedy, Drama, Romance"
+518,Miller's Crossing (1990),01-Jan-1990,Drama,Miller's Crossing (1990) — Genres: Drama
+519,"Treasure of the Sierra Madre, The (1948)",01-Jan-1948,Adventure,"Treasure of the Sierra Madre, The (1948) — Genres: Adventure"
+520,"Great Escape, The (1963)",01-Jan-1963,"Adventure, War","Great Escape, The (1963) — Genres: Adventure, War"
+521,"Deer Hunter, The (1978)",01-Jan-1978,"Drama, War","Deer Hunter, The (1978) — Genres: Drama, War"
+522,Down by Law (1986),01-Jan-1986,"Comedy, Drama","Down by Law (1986) — Genres: Comedy, Drama"
+523,Cool Hand Luke (1967),01-Jan-1967,"Comedy, Drama","Cool Hand Luke (1967) — Genres: Comedy, Drama"
+524,"Great Dictator, The (1940)",01-Jan-1940,Comedy,"Great Dictator, The (1940) — Genres: Comedy"
+525,"Big Sleep, The (1946)",01-Jan-1946,"Film-Noir, Mystery","Big Sleep, The (1946) — Genres: Film-Noir, Mystery"
+526,Ben-Hur (1959),01-Jan-1959,"Action, Adventure, Drama","Ben-Hur (1959) — Genres: Action, Adventure, Drama"
+527,Gandhi (1982),01-Jan-1982,Drama,Gandhi (1982) — Genres: Drama
+528,"Killing Fields, The (1984)",01-Jan-1984,"Drama, War","Killing Fields, The (1984) — Genres: Drama, War"
+529,My Life as a Dog (Mitt liv som hund) (1985),01-Jan-1985,Drama,My Life as a Dog (Mitt liv som hund) (1985) — Genres: Drama
+530,"Man Who Would Be King, The (1975)",01-Jan-1975,Adventure,"Man Who Would Be King, The (1975) — Genres: Adventure"
+531,Shine (1996),22-Nov-1996,"Drama, Romance","Shine (1996) — Genres: Drama, Romance"
+532,Kama Sutra: A Tale of Love (1996),07-Mar-1997,Romance,Kama Sutra: A Tale of Love (1996) — Genres: Romance
+533,"Daytrippers, The (1996)",21-Mar-1997,Mystery,"Daytrippers, The (1996) — Genres: Mystery"
+534,Traveller (1997),18-Apr-1997,Drama,Traveller (1997) — Genres: Drama
+535,Addicted to Love (1997),23-May-1997,"Comedy, Romance","Addicted to Love (1997) — Genres: Comedy, Romance"
+536,Ponette (1996),23-May-1997,Drama,Ponette (1996) — Genres: Drama
+537,My Own Private Idaho (1991),01-Jan-1991,Drama,My Own Private Idaho (1991) — Genres: Drama
+538,Anastasia (1997),01-Jan-1997,"Animation, Children, Musical","Anastasia (1997) — Genres: Animation, Children, Musical"
+539,Mouse Hunt (1997),01-Jan-1997,"Children, Comedy","Mouse Hunt (1997) — Genres: Children, Comedy"
+540,Money Train (1995),01-Jan-1995,Action,Money Train (1995) — Genres: Action
+541,Mortal Kombat (1995),01-Jan-1995,"Action, Adventure","Mortal Kombat (1995) — Genres: Action, Adventure"
+542,Pocahontas (1995),01-Jan-1995,"Animation, Children, Musical, Romance","Pocahontas (1995) — Genres: Animation, Children, Musical, Romance"
+543,"Misérables, Les (1995)",01-Jan-1995,"Drama, Musical","Misérables, Les (1995) — Genres: Drama, Musical"
+544,Things to Do in Denver when You're Dead (1995),02-Feb-1996,"Crime, Drama, Romance","Things to Do in Denver when You're Dead (1995) — Genres: Crime, Drama, Romance"
+545,Vampire in Brooklyn (1995),01-Jan-1995,"Comedy, Romance","Vampire in Brooklyn (1995) — Genres: Comedy, Romance"
+546,Broken Arrow (1996),09-Feb-1996,"Action, Thriller","Broken Arrow (1996) — Genres: Action, Thriller"
+547,"Young Poisoner's Handbook, The (1995)",23-Feb-1996,Crime,"Young Poisoner's Handbook, The (1995) — Genres: Crime"
+548,"NeverEnding Story III, The (1994)",02-Feb-1996,"Children, Fantasy","NeverEnding Story III, The (1994) — Genres: Children, Fantasy"
+549,Rob Roy (1995),01-Jan-1995,"Drama, Romance, War","Rob Roy (1995) — Genres: Drama, Romance, War"
+550,Die Hard: With a Vengeance (1995),01-Jan-1995,"Action, Thriller","Die Hard: With a Vengeance (1995) — Genres: Action, Thriller"
+551,Lord of Illusions (1995),01-Jan-1995,Horror,Lord of Illusions (1995) — Genres: Horror
+552,Species (1995),01-Jan-1995,Sci-Fi,Species (1995) — Genres: Sci-Fi
+553,"Walk in the Clouds, A (1995)",01-Jan-1995,"Drama, Romance","Walk in the Clouds, A (1995) — Genres: Drama, Romance"
+554,Waterworld (1995),01-Jan-1995,"Action, Adventure","Waterworld (1995) — Genres: Action, Adventure"
+555,White Man's Burden (1995),01-Jan-1995,Drama,White Man's Burden (1995) — Genres: Drama
+556,Wild Bill (1995),01-Jan-1995,Western,Wild Bill (1995) — Genres: Western
+557,Farinelli: il castrato (1994),01-Jan-1994,"Drama, Musical","Farinelli: il castrato (1994) — Genres: Drama, Musical"
+558,Heavenly Creatures (1994),01-Jan-1994,"Drama, Fantasy, Thriller","Heavenly Creatures (1994) — Genres: Drama, Fantasy, Thriller"
+559,Interview with the Vampire (1994),01-Jan-1994,"Drama, Horror","Interview with the Vampire (1994) — Genres: Drama, Horror"
+560,"Kid in King Arthur's Court, A (1995)",01-Jan-1995,"Adventure, Children, Comedy, Fantasy, Romance, Sci-Fi","Kid in King Arthur's Court, A (1995) — Genres: Adventure, Children, Comedy, Fantasy, Romance, Sci-Fi"
+561,Mary Shelley's Frankenstein (1994),01-Jan-1994,"Drama, Horror","Mary Shelley's Frankenstein (1994) — Genres: Drama, Horror"
+562,"Quick and the Dead, The (1995)",01-Jan-1995,"Action, Adventure, Western","Quick and the Dead, The (1995) — Genres: Action, Adventure, Western"
+563,Stephen King's The Langoliers (1995),01-Jan-1995,Horror,Stephen King's The Langoliers (1995) — Genres: Horror
+564,Tales from the Hood (1995),01-Jan-1995,"Comedy, Horror","Tales from the Hood (1995) — Genres: Comedy, Horror"
+565,Village of the Damned (1995),01-Jan-1995,"Horror, Thriller","Village of the Damned (1995) — Genres: Horror, Thriller"
+566,Clear and Present Danger (1994),01-Jan-1994,"Action, Adventure, Thriller","Clear and Present Danger (1994) — Genres: Action, Adventure, Thriller"
+567,Wes Craven's New Nightmare (1994),01-Jan-1994,Horror,Wes Craven's New Nightmare (1994) — Genres: Horror
+568,Speed (1994),01-Jan-1994,"Action, Romance, Thriller","Speed (1994) — Genres: Action, Romance, Thriller"
+569,Wolf (1994),01-Jan-1994,"Drama, Horror","Wolf (1994) — Genres: Drama, Horror"
+570,Wyatt Earp (1994),01-Jan-1994,Western,Wyatt Earp (1994) — Genres: Western
+571,Another Stakeout (1993),01-Jan-1993,"Comedy, Thriller","Another Stakeout (1993) — Genres: Comedy, Thriller"
+572,Blown Away (1994),01-Jan-1994,"Action, Thriller","Blown Away (1994) — Genres: Action, Thriller"
+573,Body Snatchers (1993),01-Jan-1993,"Horror, Sci-Fi, Thriller","Body Snatchers (1993) — Genres: Horror, Sci-Fi, Thriller"
+574,Boxing Helena (1993),01-Jan-1993,"Mystery, Romance, Thriller","Boxing Helena (1993) — Genres: Mystery, Romance, Thriller"
+575,City Slickers II: The Legend of Curly's Gold (1994),01-Jan-1994,"Comedy, Western","City Slickers II: The Legend of Curly's Gold (1994) — Genres: Comedy, Western"
+576,Cliffhanger (1993),01-Jan-1993,"Action, Adventure, Crime","Cliffhanger (1993) — Genres: Action, Adventure, Crime"
+577,Coneheads (1993),01-Jan-1993,"Comedy, Sci-Fi","Coneheads (1993) — Genres: Comedy, Sci-Fi"
+578,Demolition Man (1993),01-Jan-1993,"Action, Sci-Fi","Demolition Man (1993) — Genres: Action, Sci-Fi"
+579,Fatal Instinct (1993),01-Jan-1993,Comedy,Fatal Instinct (1993) — Genres: Comedy
+580,"Englishman Who Went Up a Hill, But Came Down a Mountain, The (1995)",01-Jan-1995,"Comedy, Romance","Englishman Who Went Up a Hill, But Came Down a Mountain, The (1995) — Genres: Comedy, Romance"
+581,Kalifornia (1993),01-Jan-1993,"Drama, Thriller","Kalifornia (1993) — Genres: Drama, Thriller"
+582,"Piano, The (1993)",01-Jan-1993,"Drama, Romance","Piano, The (1993) — Genres: Drama, Romance"
+583,Romeo Is Bleeding (1993),01-Jan-1993,"Crime, Thriller","Romeo Is Bleeding (1993) — Genres: Crime, Thriller"
+584,"Secret Garden, The (1993)",01-Jan-1993,"Children, Drama","Secret Garden, The (1993) — Genres: Children, Drama"
+585,Son in Law (1993),01-Jan-1993,Comedy,Son in Law (1993) — Genres: Comedy
+586,Terminal Velocity (1994),01-Jan-1994,Action,Terminal Velocity (1994) — Genres: Action
+587,"Hour of the Pig, The (1993)",01-Jan-1993,"Drama, Mystery","Hour of the Pig, The (1993) — Genres: Drama, Mystery"
+588,Beauty and the Beast (1991),01-Jan-1991,"Animation, Children, Musical","Beauty and the Beast (1991) — Genres: Animation, Children, Musical"
+589,"Wild Bunch, The (1969)",01-Jan-1969,Western,"Wild Bunch, The (1969) — Genres: Western"
+590,Hellraiser: Bloodline (1996),08-Mar-1996,"Action, Horror, Sci-Fi","Hellraiser: Bloodline (1996) — Genres: Action, Horror, Sci-Fi"
+591,Primal Fear (1996),30-Mar-1996,"Drama, Thriller","Primal Fear (1996) — Genres: Drama, Thriller"
+592,True Crime (1995),01-Jan-1995,"Mystery, Thriller","True Crime (1995) — Genres: Mystery, Thriller"
+593,Stalingrad (1993),01-Jan-1993,War,Stalingrad (1993) — Genres: War
+594,Heavy (1995),05-Jun-1996,"Drama, Romance","Heavy (1995) — Genres: Drama, Romance"
+595,"Fan, The (1996)",16-Aug-1996,Thriller,"Fan, The (1996) — Genres: Thriller"
+596,"Hunchback of Notre Dame, The (1996)",21-Jun-1996,"Animation, Children, Musical","Hunchback of Notre Dame, The (1996) — Genres: Animation, Children, Musical"
+597,Eraser (1996),21-Jun-1996,"Action, Thriller","Eraser (1996) — Genres: Action, Thriller"
+598,"Big Squeeze, The (1996)",06-Sep-1996,"Comedy, Drama","Big Squeeze, The (1996) — Genres: Comedy, Drama"
+599,Police Story 4: Project S (Chao ji ji hua) (1993),16-Aug-1996,Action,Police Story 4: Project S (Chao ji ji hua) (1993) — Genres: Action
+600,Daniel Defoe's Robinson Crusoe (1996),01-Jan-1996,Children,Daniel Defoe's Robinson Crusoe (1996) — Genres: Children
+601,For Whom the Bell Tolls (1943),01-Jan-1943,"Adventure, War","For Whom the Bell Tolls (1943) — Genres: Adventure, War"
+602,"American in Paris, An (1951)",01-Jan-1951,"Musical, Romance","American in Paris, An (1951) — Genres: Musical, Romance"
+603,Rear Window (1954),01-Jan-1954,"Mystery, Thriller","Rear Window (1954) — Genres: Mystery, Thriller"
+604,It Happened One Night (1934),01-Jan-1934,Comedy,It Happened One Night (1934) — Genres: Comedy
+605,Meet Me in St. Louis (1944),01-Jan-1944,Musical,Meet Me in St. Louis (1944) — Genres: Musical
+606,All About Eve (1950),01-Jan-1950,Drama,All About Eve (1950) — Genres: Drama
+607,Rebecca (1940),01-Jan-1940,"Romance, Thriller","Rebecca (1940) — Genres: Romance, Thriller"
+608,Spellbound (1945),01-Jan-1945,"Mystery, Romance, Thriller","Spellbound (1945) — Genres: Mystery, Romance, Thriller"
+609,Father of the Bride (1950),01-Jan-1950,Comedy,Father of the Bride (1950) — Genres: Comedy
+610,Gigi (1958),01-Jan-1958,Musical,Gigi (1958) — Genres: Musical
+611,Laura (1944),01-Jan-1944,"Crime, Film-Noir, Mystery","Laura (1944) — Genres: Crime, Film-Noir, Mystery"
+612,Lost Horizon (1937),01-Jan-1937,Drama,Lost Horizon (1937) — Genres: Drama
+613,My Man Godfrey (1936),01-Jan-1936,Comedy,My Man Godfrey (1936) — Genres: Comedy
+614,Giant (1956),01-Jan-1956,Drama,Giant (1956) — Genres: Drama
+615,"39 Steps, The (1935)",01-Jan-1935,Thriller,"39 Steps, The (1935) — Genres: Thriller"
+616,Night of the Living Dead (1968),01-Jan-1968,"Horror, Sci-Fi","Night of the Living Dead (1968) — Genres: Horror, Sci-Fi"
+617,"Blue Angel, The (Blaue Engel, Der) (1930)",01-Jan-1930,Drama,"Blue Angel, The (Blaue Engel, Der) (1930) — Genres: Drama"
+618,Picnic (1955),01-Jan-1955,Drama,Picnic (1955) — Genres: Drama
+619,Extreme Measures (1996),27-Sep-1996,"Drama, Thriller","Extreme Measures (1996) — Genres: Drama, Thriller"
+620,"Chamber, The (1996)",11-Oct-1996,Drama,"Chamber, The (1996) — Genres: Drama"
+621,"Davy Crockett, King of the Wild Frontier (1955)",01-Jan-1955,Western,"Davy Crockett, King of the Wild Frontier (1955) — Genres: Western"
+622,Swiss Family Robinson (1960),01-Jan-1960,"Adventure, Children","Swiss Family Robinson (1960) — Genres: Adventure, Children"
+623,Angels in the Outfield (1994),01-Jan-1994,"Children, Comedy","Angels in the Outfield (1994) — Genres: Children, Comedy"
+624,"Three Caballeros, The (1945)",01-Jan-1945,"Animation, Children, Musical","Three Caballeros, The (1945) — Genres: Animation, Children, Musical"
+625,"Sword in the Stone, The (1963)",01-Jan-1963,"Animation, Children","Sword in the Stone, The (1963) — Genres: Animation, Children"
+626,So Dear to My Heart (1949),01-Jan-1949,"Children, Drama","So Dear to My Heart (1949) — Genres: Children, Drama"
+627,Robin Hood: Prince of Thieves (1991),01-Jan-1991,Drama,Robin Hood: Prince of Thieves (1991) — Genres: Drama
+628,Sleepers (1996),18-Oct-1996,"Crime, Drama","Sleepers (1996) — Genres: Crime, Drama"
+629,Victor/Victoria (1982),01-Jan-1982,"Comedy, Musical","Victor/Victoria (1982) — Genres: Comedy, Musical"
+630,"Great Race, The (1965)",01-Jan-1965,"Comedy, Musical","Great Race, The (1965) — Genres: Comedy, Musical"
+631,"Crying Game, The (1992)",01-Jan-1992,"Action, Drama, Romance, War","Crying Game, The (1992) — Genres: Action, Drama, Romance, War"
+632,Sophie's Choice (1982),01-Jan-1982,Drama,Sophie's Choice (1982) — Genres: Drama
+633,"Christmas Carol, A (1938)",01-Jan-1938,Drama,"Christmas Carol, A (1938) — Genres: Drama"
+634,Microcosmos: Le peuple de l'herbe (1996),11-Oct-1996,Documentary,Microcosmos: Le peuple de l'herbe (1996) — Genres: Documentary
+635,"Fog, The (1980)",01-Jan-1980,Horror,"Fog, The (1980) — Genres: Horror"
+636,Escape from New York (1981),01-Jan-1981,"Action, Adventure, Sci-Fi, Thriller","Escape from New York (1981) — Genres: Action, Adventure, Sci-Fi, Thriller"
+637,"Howling, The (1981)",01-Jan-1981,"Comedy, Horror","Howling, The (1981) — Genres: Comedy, Horror"
+638,"Return of Martin Guerre, The (Retour de Martin Guerre, Le) (1982)",01-Jan-1982,Drama,"Return of Martin Guerre, The (Retour de Martin Guerre, Le) (1982) — Genres: Drama"
+639,"Tin Drum, The (Blechtrommel, Die) (1979)",01-Jan-1979,Drama,"Tin Drum, The (Blechtrommel, Die) (1979) — Genres: Drama"
+640,"Cook the Thief His Wife & Her Lover, The (1989)",01-Jan-1989,Drama,"Cook the Thief His Wife & Her Lover, The (1989) — Genres: Drama"
+641,Paths of Glory (1957),01-Jan-1957,"Drama, War","Paths of Glory (1957) — Genres: Drama, War"
+642,"Grifters, The (1990)",01-Jan-1990,"Crime, Drama, Film-Noir","Grifters, The (1990) — Genres: Crime, Drama, Film-Noir"
+643,The Innocent (1994),01-Jan-1994,"Drama, Romance","The Innocent (1994) — Genres: Drama, Romance"
+644,"Thin Blue Line, The (1988)",01-Jan-1988,Documentary,"Thin Blue Line, The (1988) — Genres: Documentary"
+645,Paris Is Burning (1990),01-Jan-1990,Documentary,Paris Is Burning (1990) — Genres: Documentary
+646,Once Upon a Time in the West (1969),01-Jan-1969,Western,Once Upon a Time in the West (1969) — Genres: Western
+647,Ran (1985),01-Jan-1985,"Drama, War","Ran (1985) — Genres: Drama, War"
+648,"Quiet Man, The (1952)",01-Jan-1952,"Comedy, Romance","Quiet Man, The (1952) — Genres: Comedy, Romance"
+649,Once Upon a Time in America (1984),01-Jan-1984,"Crime, Drama, Thriller","Once Upon a Time in America (1984) — Genres: Crime, Drama, Thriller"
+650,"Seventh Seal, The (Sjunde inseglet, Det) (1957)",01-Jan-1957,Drama,"Seventh Seal, The (Sjunde inseglet, Det) (1957) — Genres: Drama"
+651,Glory (1989),01-Jan-1989,"Action, Drama, War","Glory (1989) — Genres: Action, Drama, War"
+652,Rosencrantz and Guildenstern Are Dead (1990),01-Jan-1990,"Comedy, Drama","Rosencrantz and Guildenstern Are Dead (1990) — Genres: Comedy, Drama"
+653,Touch of Evil (1958),01-Jan-1958,"Crime, Film-Noir, Thriller","Touch of Evil (1958) — Genres: Crime, Film-Noir, Thriller"
+654,Chinatown (1974),01-Jan-1974,"Film-Noir, Mystery, Thriller","Chinatown (1974) — Genres: Film-Noir, Mystery, Thriller"
+655,Stand by Me (1986),01-Jan-1986,"Adventure, Comedy, Drama","Stand by Me (1986) — Genres: Adventure, Comedy, Drama"
+656,M (1931),01-Jan-1931,"Crime, Film-Noir, Thriller","M (1931) — Genres: Crime, Film-Noir, Thriller"
+657,"Manchurian Candidate, The (1962)",01-Jan-1962,"Film-Noir, Thriller","Manchurian Candidate, The (1962) — Genres: Film-Noir, Thriller"
+658,Pump Up the Volume (1990),01-Jan-1990,Drama,Pump Up the Volume (1990) — Genres: Drama
+659,Arsenic and Old Lace (1944),01-Jan-1944,"Comedy, Mystery, Thriller","Arsenic and Old Lace (1944) — Genres: Comedy, Mystery, Thriller"
+660,Fried Green Tomatoes (1991),01-Jan-1991,Drama,Fried Green Tomatoes (1991) — Genres: Drama
+661,High Noon (1952),01-Jan-1952,Western,High Noon (1952) — Genres: Western
+662,Somewhere in Time (1980),01-Jan-1980,"Drama, Romance","Somewhere in Time (1980) — Genres: Drama, Romance"
+663,Being There (1979),01-Jan-1979,Comedy,Being There (1979) — Genres: Comedy
+664,"Paris, Texas (1984)",01-Jan-1984,Drama,"Paris, Texas (1984) — Genres: Drama"
+665,Alien 3 (1992),01-Jan-1992,"Action, Horror, Sci-Fi, Thriller","Alien 3 (1992) — Genres: Action, Horror, Sci-Fi, Thriller"
+666,Blood For Dracula (Andy Warhol's Dracula) (1974),01-Jan-1974,Horror,Blood For Dracula (Andy Warhol's Dracula) (1974) — Genres: Horror
+667,Audrey Rose (1977),01-Jan-1977,Horror,Audrey Rose (1977) — Genres: Horror
+668,Blood Beach (1981),01-Jan-1981,"Action, Horror","Blood Beach (1981) — Genres: Action, Horror"
+669,Body Parts (1991),01-Jan-1991,Horror,Body Parts (1991) — Genres: Horror
+670,Body Snatchers (1993),01-Jan-1993,"Horror, Sci-Fi, Thriller","Body Snatchers (1993) — Genres: Horror, Sci-Fi, Thriller"
+671,Bride of Frankenstein (1935),01-Jan-1935,Horror,Bride of Frankenstein (1935) — Genres: Horror
+672,Candyman (1992),01-Jan-1992,Horror,Candyman (1992) — Genres: Horror
+673,Cape Fear (1962),01-Jan-1962,"Film-Noir, Thriller","Cape Fear (1962) — Genres: Film-Noir, Thriller"
+674,Cat People (1982),01-Jan-1982,Horror,Cat People (1982) — Genres: Horror
+675,"Nosferatu (Nosferatu, eine Symphonie des Grauens) (1922)",01-Jan-1922,Horror,"Nosferatu (Nosferatu, eine Symphonie des Grauens) (1922) — Genres: Horror"
+676,"Crucible, The (1996)",27-Nov-1996,Drama,"Crucible, The (1996) — Genres: Drama"
+677,Fire on the Mountain (1996),24-Jan-1997,Documentary,Fire on the Mountain (1996) — Genres: Documentary
+678,Volcano (1997),25-Apr-1997,"Drama, Thriller","Volcano (1997) — Genres: Drama, Thriller"
+679,Conan the Barbarian (1981),01-Jan-1981,"Action, Adventure","Conan the Barbarian (1981) — Genres: Action, Adventure"
+680,Kull the Conqueror (1997),29-Aug-1997,"Action, Adventure","Kull the Conqueror (1997) — Genres: Action, Adventure"
+681,Wishmaster (1997),01-Jan-1997,Horror,Wishmaster (1997) — Genres: Horror
+682,I Know What You Did Last Summer (1997),17-Oct-1997,"Horror, Mystery, Thriller","I Know What You Did Last Summer (1997) — Genres: Horror, Mystery, Thriller"
+683,Rocket Man (1997),01-Jan-1997,Comedy,Rocket Man (1997) — Genres: Comedy
+684,In the Line of Fire (1993),01-Jan-1993,"Action, Thriller","In the Line of Fire (1993) — Genres: Action, Thriller"
+685,Executive Decision (1996),09-Mar-1996,"Action, Thriller","Executive Decision (1996) — Genres: Action, Thriller"
+686,"Perfect World, A (1993)",01-Jan-1993,"Action, Drama","Perfect World, A (1993) — Genres: Action, Drama"
+687,McHale's Navy (1997),18-Apr-1997,"Comedy, War","McHale's Navy (1997) — Genres: Comedy, War"
+688,Leave It to Beaver (1997),22-Aug-1997,Comedy,Leave It to Beaver (1997) — Genres: Comedy
+689,"Jackal, The (1997)",01-Jan-1997,"Action, Thriller","Jackal, The (1997) — Genres: Action, Thriller"
+690,Seven Years in Tibet (1997),01-Jan-1997,"Drama, War","Seven Years in Tibet (1997) — Genres: Drama, War"
+691,Dark City (1998),09-Jan-1998,"Film-Noir, Sci-Fi, Thriller","Dark City (1998) — Genres: Film-Noir, Sci-Fi, Thriller"
+692,"American President, The (1995)",01-Jan-1995,"Comedy, Drama, Romance","American President, The (1995) — Genres: Comedy, Drama, Romance"
+693,Casino (1995),01-Jan-1995,Drama,Casino (1995) — Genres: Drama
+694,Persuasion (1995),25-Sep-1995,Romance,Persuasion (1995) — Genres: Romance
+695,Kicking and Screaming (1995),01-Jan-1995,"Comedy, Drama","Kicking and Screaming (1995) — Genres: Comedy, Drama"
+696,City Hall (1996),16-Feb-1996,"Drama, Thriller","City Hall (1996) — Genres: Drama, Thriller"
+697,"Basketball Diaries, The (1995)",01-Jan-1995,Drama,"Basketball Diaries, The (1995) — Genres: Drama"
+698,"Browning Version, The (1994)",01-Jan-1994,Drama,"Browning Version, The (1994) — Genres: Drama"
+699,Little Women (1994),01-Jan-1994,Drama,Little Women (1994) — Genres: Drama
+700,Miami Rhapsody (1995),01-Jan-1995,Comedy,Miami Rhapsody (1995) — Genres: Comedy
+701,"Wonderful, Horrible Life of Leni Riefenstahl, The (1993)",01-Jan-1993,Documentary,"Wonderful, Horrible Life of Leni Riefenstahl, The (1993) — Genres: Documentary"
+702,Barcelona (1994),01-Jan-1994,"Comedy, Romance","Barcelona (1994) — Genres: Comedy, Romance"
+703,Widows' Peak (1994),01-Jan-1994,Drama,Widows' Peak (1994) — Genres: Drama
+704,"House of the Spirits, The (1993)",01-Jan-1993,"Drama, Romance","House of the Spirits, The (1993) — Genres: Drama, Romance"
+705,Singin' in the Rain (1952),01-Jan-1952,"Musical, Romance","Singin' in the Rain (1952) — Genres: Musical, Romance"
+706,Bad Moon (1996),01-Nov-1996,Horror,Bad Moon (1996) — Genres: Horror
+707,Enchanted April (1991),01-Jan-1991,Drama,Enchanted April (1991) — Genres: Drama
+708,"Sex, Lies, and Videotape (1989)",01-Jan-1989,Drama,"Sex, Lies, and Videotape (1989) — Genres: Drama"
+709,Strictly Ballroom (1992),01-Jan-1992,"Comedy, Romance","Strictly Ballroom (1992) — Genres: Comedy, Romance"
+710,Better Off Dead... (1985),01-Jan-1985,Comedy,Better Off Dead... (1985) — Genres: Comedy
+711,"Substance of Fire, The (1996)",06-Dec-1996,Drama,"Substance of Fire, The (1996) — Genres: Drama"
+712,Tin Men (1987),01-Jan-1987,"Comedy, Drama","Tin Men (1987) — Genres: Comedy, Drama"
+713,Othello (1995),18-Dec-1995,Drama,Othello (1995) — Genres: Drama
+714,Carrington (1995),01-Jan-1995,"Drama, Romance","Carrington (1995) — Genres: Drama, Romance"
+715,To Die For (1995),01-Jan-1995,"Comedy, Drama","To Die For (1995) — Genres: Comedy, Drama"
+716,Home for the Holidays (1995),01-Jan-1995,"Drama, Romance","Home for the Holidays (1995) — Genres: Drama, Romance"
+717,"Juror, The (1996)",01-Jan-1996,"Drama, Thriller","Juror, The (1996) — Genres: Drama, Thriller"
+718,In the Bleak Midwinter (1995),23-Feb-1996,Comedy,In the Bleak Midwinter (1995) — Genres: Comedy
+719,Canadian Bacon (1994),01-Jan-1994,"Comedy, War","Canadian Bacon (1994) — Genres: Comedy, War"
+720,First Knight (1995),01-Jan-1995,"Action, Adventure, Drama, Romance","First Knight (1995) — Genres: Action, Adventure, Drama, Romance"
+721,Mallrats (1995),01-Jan-1995,Comedy,Mallrats (1995) — Genres: Comedy
+722,Nine Months (1995),01-Jan-1995,Comedy,Nine Months (1995) — Genres: Comedy
+723,Boys on the Side (1995),01-Jan-1995,"Comedy, Drama","Boys on the Side (1995) — Genres: Comedy, Drama"
+724,Circle of Friends (1995),01-Jan-1995,"Drama, Romance","Circle of Friends (1995) — Genres: Drama, Romance"
+725,Exit to Eden (1994),01-Jan-1994,Comedy,Exit to Eden (1994) — Genres: Comedy
+726,Fluke (1995),01-Jan-1995,"Children, Drama","Fluke (1995) — Genres: Children, Drama"
+727,Immortal Beloved (1994),01-Jan-1994,"Drama, Romance","Immortal Beloved (1994) — Genres: Drama, Romance"
+728,Junior (1994),01-Jan-1994,"Comedy, Sci-Fi","Junior (1994) — Genres: Comedy, Sci-Fi"
+729,Nell (1994),01-Jan-1994,Drama,Nell (1994) — Genres: Drama
+730,"Queen Margot (Reine Margot, La) (1994)",01-Jan-1996,"Drama, Romance","Queen Margot (Reine Margot, La) (1994) — Genres: Drama, Romance"
+731,"Corrina, Corrina (1994)",01-Jan-1994,"Comedy, Drama, Romance","Corrina, Corrina (1994) — Genres: Comedy, Drama, Romance"
+732,Dave (1993),01-Jan-1993,"Comedy, Romance","Dave (1993) — Genres: Comedy, Romance"
+733,Go Fish (1994),01-Jan-1994,"Drama, Romance","Go Fish (1994) — Genres: Drama, Romance"
+734,Made in America (1993),01-Jan-1993,Comedy,Made in America (1993) — Genres: Comedy
+735,Philadelphia (1993),01-Jan-1993,Drama,Philadelphia (1993) — Genres: Drama
+736,Shadowlands (1993),01-Jan-1993,"Drama, Romance","Shadowlands (1993) — Genres: Drama, Romance"
+737,Sirens (1994),01-Jan-1994,"Comedy, Drama","Sirens (1994) — Genres: Comedy, Drama"
+738,Threesome (1994),01-Jan-1994,"Comedy, Romance","Threesome (1994) — Genres: Comedy, Romance"
+739,Pretty Woman (1990),01-Jan-1990,"Comedy, Romance","Pretty Woman (1990) — Genres: Comedy, Romance"
+740,Jane Eyre (1996),05-Apr-1996,"Drama, Romance","Jane Eyre (1996) — Genres: Drama, Romance"
+741,"Last Supper, The (1995)",05-Apr-1996,"Drama, Thriller","Last Supper, The (1995) — Genres: Drama, Thriller"
+742,Ransom (1996),08-Nov-1996,"Drama, Thriller","Ransom (1996) — Genres: Drama, Thriller"
+743,"Crow: City of Angels, The (1996)",30-Aug-1996,"Action, Thriller","Crow: City of Angels, The (1996) — Genres: Action, Thriller"
+744,Michael Collins (1996),11-Oct-1996,"Drama, War","Michael Collins (1996) — Genres: Drama, War"
+745,"Ruling Class, The (1972)",01-Jan-1972,Comedy,"Ruling Class, The (1972) — Genres: Comedy"
+746,Real Genius (1985),01-Jan-1985,Comedy,Real Genius (1985) — Genres: Comedy
+747,Benny & Joon (1993),01-Jan-1993,"Comedy, Romance","Benny & Joon (1993) — Genres: Comedy, Romance"
+748,"Saint, The (1997)",14-Mar-1997,"Action, Romance, Thriller","Saint, The (1997) — Genres: Action, Romance, Thriller"
+749,"MatchMaker, The (1997)",01-Jan-1997,"Comedy, Romance","MatchMaker, The (1997) — Genres: Comedy, Romance"
+750,Amistad (1997),18-Dec-1997,Drama,Amistad (1997) — Genres: Drama
+751,Tomorrow Never Dies (1997),01-Jan-1997,"Action, Romance, Thriller","Tomorrow Never Dies (1997) — Genres: Action, Romance, Thriller"
+752,"Replacement Killers, The (1998)",06-Feb-1998,"Action, Thriller","Replacement Killers, The (1998) — Genres: Action, Thriller"
+753,Burnt By the Sun (1994),01-Jan-1994,Drama,Burnt By the Sun (1994) — Genres: Drama
+754,Red Corner (1997),01-Jan-1997,"Crime, Thriller","Red Corner (1997) — Genres: Crime, Thriller"
+755,Jumanji (1995),01-Jan-1995,"Action, Adventure, Children, Fantasy, Sci-Fi","Jumanji (1995) — Genres: Action, Adventure, Children, Fantasy, Sci-Fi"
+756,Father of the Bride Part II (1995),01-Jan-1995,Comedy,Father of the Bride Part II (1995) — Genres: Comedy
+757,Across the Sea of Time (1995),01-Jan-1995,Documentary,Across the Sea of Time (1995) — Genres: Documentary
+758,Lawnmower Man 2: Beyond Cyberspace (1996),01-Jan-1996,"Sci-Fi, Thriller","Lawnmower Man 2: Beyond Cyberspace (1996) — Genres: Sci-Fi, Thriller"
+759,Fair Game (1995),01-Jan-1995,Action,Fair Game (1995) — Genres: Action
+760,Screamers (1995),01-Jan-1995,Sci-Fi,Screamers (1995) — Genres: Sci-Fi
+761,Nick of Time (1995),01-Jan-1995,"Action, Thriller","Nick of Time (1995) — Genres: Action, Thriller"
+762,Beautiful Girls (1996),09-Feb-1996,Drama,Beautiful Girls (1996) — Genres: Drama
+763,Happy Gilmore (1996),16-Feb-1996,Comedy,Happy Gilmore (1996) — Genres: Comedy
+764,If Lucy Fell (1996),08-Mar-1996,"Comedy, Romance","If Lucy Fell (1996) — Genres: Comedy, Romance"
+765,Boomerang (1992),01-Jan-1992,"Comedy, Romance","Boomerang (1992) — Genres: Comedy, Romance"
+766,Man of the Year (1995),01-Mar-1996,Documentary,Man of the Year (1995) — Genres: Documentary
+767,"Addiction, The (1995)",01-Jan-1995,Horror,"Addiction, The (1995) — Genres: Horror"
+768,Casper (1995),01-Jan-1995,"Adventure, Children","Casper (1995) — Genres: Adventure, Children"
+769,Congo (1995),01-Jan-1995,"Action, Adventure, Mystery, Sci-Fi","Congo (1995) — Genres: Action, Adventure, Mystery, Sci-Fi"
+770,Devil in a Blue Dress (1995),01-Jan-1995,"Crime, Film-Noir, Mystery, Thriller","Devil in a Blue Dress (1995) — Genres: Crime, Film-Noir, Mystery, Thriller"
+771,Johnny Mnemonic (1995),01-Jan-1995,"Action, Sci-Fi, Thriller","Johnny Mnemonic (1995) — Genres: Action, Sci-Fi, Thriller"
+772,Kids (1995),01-Jan-1995,Drama,Kids (1995) — Genres: Drama
+773,Mute Witness (1994),01-Jan-1994,Thriller,Mute Witness (1994) — Genres: Thriller
+774,"Prophecy, The (1995)",01-Jan-1995,Horror,"Prophecy, The (1995) — Genres: Horror"
+775,Something to Talk About (1995),01-Jan-1995,"Comedy, Drama, Romance","Something to Talk About (1995) — Genres: Comedy, Drama, Romance"
+776,Three Wishes (1995),01-Jan-1995,Drama,Three Wishes (1995) — Genres: Drama
+777,Castle Freak (1995),01-Jan-1995,Horror,Castle Freak (1995) — Genres: Horror
+778,Don Juan DeMarco (1995),01-Jan-1995,"Comedy, Drama, Romance","Don Juan DeMarco (1995) — Genres: Comedy, Drama, Romance"
+779,Drop Zone (1994),01-Jan-1994,Action,Drop Zone (1994) — Genres: Action
+780,Dumb & Dumber (1994),01-Jan-1994,Comedy,Dumb & Dumber (1994) — Genres: Comedy
+781,French Kiss (1995),01-Jan-1995,"Comedy, Romance","French Kiss (1995) — Genres: Comedy, Romance"
+782,Little Odessa (1994),01-Jan-1994,Drama,Little Odessa (1994) — Genres: Drama
+783,Milk Money (1994),01-Jan-1994,"Comedy, Romance","Milk Money (1994) — Genres: Comedy, Romance"
+784,Beyond Bedlam (1993),01-Jan-1993,"Drama, Horror","Beyond Bedlam (1993) — Genres: Drama, Horror"
+785,Only You (1994),01-Jan-1994,"Comedy, Romance","Only You (1994) — Genres: Comedy, Romance"
+786,"Perez Family, The (1995)",01-Jan-1995,"Comedy, Romance","Perez Family, The (1995) — Genres: Comedy, Romance"
+787,Roommates (1995),01-Jan-1995,"Comedy, Drama","Roommates (1995) — Genres: Comedy, Drama"
+788,Relative Fear (1994),01-Jan-1994,"Horror, Thriller","Relative Fear (1994) — Genres: Horror, Thriller"
+789,Swimming with Sharks (1995),01-Jan-1995,"Comedy, Drama","Swimming with Sharks (1995) — Genres: Comedy, Drama"
+790,Tommy Boy (1995),01-Jan-1995,Comedy,Tommy Boy (1995) — Genres: Comedy
+791,"Baby-Sitters Club, The (1995)",01-Jan-1995,Children,"Baby-Sitters Club, The (1995) — Genres: Children"
+792,Bullets Over Broadway (1994),01-Jan-1994,Comedy,Bullets Over Broadway (1994) — Genres: Comedy
+793,Crooklyn (1994),01-Jan-1994,Comedy,Crooklyn (1994) — Genres: Comedy
+794,It Could Happen to You (1994),01-Jan-1994,"Drama, Romance","It Could Happen to You (1994) — Genres: Drama, Romance"
+795,Richie Rich (1994),01-Jan-1994,"Children, Comedy","Richie Rich (1994) — Genres: Children, Comedy"
+796,Speechless (1994),01-Jan-1994,"Comedy, Romance","Speechless (1994) — Genres: Comedy, Romance"
+797,Timecop (1994),01-Jan-1994,"Action, Sci-Fi","Timecop (1994) — Genres: Action, Sci-Fi"
+798,Bad Company (1995),01-Jan-1995,Action,Bad Company (1995) — Genres: Action
+799,Boys Life (1995),01-Jan-1995,Drama,Boys Life (1995) — Genres: Drama
+800,In the Mouth of Madness (1995),01-Jan-1995,"Horror, Thriller","In the Mouth of Madness (1995) — Genres: Horror, Thriller"
+801,"Air Up There, The (1994)",01-Jan-1994,Comedy,"Air Up There, The (1994) — Genres: Comedy"
+802,Hard Target (1993),01-Jan-1993,"Action, Adventure, Crime, Thriller","Hard Target (1993) — Genres: Action, Adventure, Crime, Thriller"
+803,Heaven & Earth (1993),01-Jan-1993,"Action, Drama, War","Heaven & Earth (1993) — Genres: Action, Drama, War"
+804,Jimmy Hollywood (1994),01-Jan-1994,Comedy,Jimmy Hollywood (1994) — Genres: Comedy
+805,Manhattan Murder Mystery (1993),01-Jan-1993,"Comedy, Mystery","Manhattan Murder Mystery (1993) — Genres: Comedy, Mystery"
+806,Menace II Society (1993),01-Jan-1993,"Action, Crime, Drama","Menace II Society (1993) — Genres: Action, Crime, Drama"
+807,Poetic Justice (1993),01-Jan-1993,Drama,Poetic Justice (1993) — Genres: Drama
+808,"Program, The (1993)",01-Jan-1993,"Action, Drama","Program, The (1993) — Genres: Action, Drama"
+809,Rising Sun (1993),01-Jan-1993,"Action, Drama, Mystery","Rising Sun (1993) — Genres: Action, Drama, Mystery"
+810,"Shadow, The (1994)",01-Jan-1994,Action,"Shadow, The (1994) — Genres: Action"
+811,Thirty-Two Short Films About Glenn Gould (1993),01-Jan-1993,Documentary,Thirty-Two Short Films About Glenn Gould (1993) — Genres: Documentary
+812,Andre (1994),01-Jan-1994,"Adventure, Children","Andre (1994) — Genres: Adventure, Children"
+813,"Celluloid Closet, The (1995)",15-Mar-1996,Documentary,"Celluloid Closet, The (1995) — Genres: Documentary"
+814,"Great Day in Harlem, A (1994)",01-Jan-1994,Documentary,"Great Day in Harlem, A (1994) — Genres: Documentary"
+815,One Fine Day (1996),30-Nov-1996,"Drama, Romance","One Fine Day (1996) — Genres: Drama, Romance"
+816,Candyman: Farewell to the Flesh (1995),01-Jan-1995,Horror,Candyman: Farewell to the Flesh (1995) — Genres: Horror
+817,Frisk (1995),29-Mar-1996,Drama,Frisk (1995) — Genres: Drama
+818,Girl 6 (1996),22-Mar-1996,Comedy,Girl 6 (1996) — Genres: Comedy
+819,Eddie (1996),31-May-1996,Comedy,Eddie (1996) — Genres: Comedy
+820,Space Jam (1996),15-Nov-1996,"Adventure, Animation, Children, Comedy, Fantasy","Space Jam (1996) — Genres: Adventure, Animation, Children, Comedy, Fantasy"
+821,Mrs. Winterbourne (1996),19-Apr-1996,"Comedy, Romance","Mrs. Winterbourne (1996) — Genres: Comedy, Romance"
+822,Faces (1968),01-Jan-1968,Drama,Faces (1968) — Genres: Drama
+823,Mulholland Falls (1996),26-Apr-1996,"Crime, Film-Noir, Thriller","Mulholland Falls (1996) — Genres: Crime, Film-Noir, Thriller"
+824,"Great White Hype, The (1996)",03-May-1996,Comedy,"Great White Hype, The (1996) — Genres: Comedy"
+825,"Arrival, The (1996)",31-May-1996,"Action, Sci-Fi, Thriller","Arrival, The (1996) — Genres: Action, Sci-Fi, Thriller"
+826,"Phantom, The (1996)",07-Jun-1996,Adventure,"Phantom, The (1996) — Genres: Adventure"
+827,Daylight (1996),06-Dec-1996,"Action, Adventure, Thriller","Daylight (1996) — Genres: Action, Adventure, Thriller"
+828,Alaska (1996),21-Aug-1996,"Adventure, Children","Alaska (1996) — Genres: Adventure, Children"
+829,Fled (1996),19-Jul-1996,"Action, Adventure","Fled (1996) — Genres: Action, Adventure"
+830,Power 98 (1995),17-May-1996,"Action, Mystery, Thriller","Power 98 (1995) — Genres: Action, Mystery, Thriller"
+831,Escape from L.A. (1996),09-Aug-1996,"Action, Adventure, Sci-Fi, Thriller","Escape from L.A. (1996) — Genres: Action, Adventure, Sci-Fi, Thriller"
+832,Bogus (1996),06-Sep-1996,"Children, Drama, Fantasy","Bogus (1996) — Genres: Children, Drama, Fantasy"
+833,Bulletproof (1996),06-Sep-1996,Action,Bulletproof (1996) — Genres: Action
+834,Halloween: The Curse of Michael Myers (1995),01-Jan-1995,"Horror, Thriller","Halloween: The Curse of Michael Myers (1995) — Genres: Horror, Thriller"
+835,"Gay Divorcee, The (1934)",01-Jan-1934,"Comedy, Musical, Romance","Gay Divorcee, The (1934) — Genres: Comedy, Musical, Romance"
+836,Ninotchka (1939),01-Jan-1939,"Comedy, Romance","Ninotchka (1939) — Genres: Comedy, Romance"
+837,Meet John Doe (1941),01-Jan-1941,Drama,Meet John Doe (1941) — Genres: Drama
+838,In the Line of Duty 2 (1987),30-Aug-1996,Action,In the Line of Duty 2 (1987) — Genres: Action
+839,Loch Ness (1995),01-Jan-1995,"Horror, Thriller","Loch Ness (1995) — Genres: Horror, Thriller"
+840,Last Man Standing (1996),20-Sep-1996,"Action, Drama, Western","Last Man Standing (1996) — Genres: Action, Drama, Western"
+841,"Glimmer Man, The (1996)",04-Oct-1996,"Action, Thriller","Glimmer Man, The (1996) — Genres: Action, Thriller"
+842,Pollyanna (1960),01-Jan-1960,"Children, Comedy, Drama","Pollyanna (1960) — Genres: Children, Comedy, Drama"
+843,"Shaggy Dog, The (1959)",01-Jan-1959,"Children, Comedy","Shaggy Dog, The (1959) — Genres: Children, Comedy"
+844,Freeway (1996),23-Aug-1996,Crime,Freeway (1996) — Genres: Crime
+845,That Thing You Do! (1996),28-Sep-1996,Comedy,That Thing You Do! (1996) — Genres: Comedy
+846,To Gillian on Her 37th Birthday (1996),18-Oct-1996,"Drama, Romance","To Gillian on Her 37th Birthday (1996) — Genres: Drama, Romance"
+847,Looking for Richard (1996),11-Oct-1996,"Documentary, Drama","Looking for Richard (1996) — Genres: Documentary, Drama"
+848,"Murder, My Sweet (1944)",01-Jan-1944,"Film-Noir, Thriller","Murder, My Sweet (1944) — Genres: Film-Noir, Thriller"
+849,Days of Thunder (1990),01-Jan-1990,"Action, Romance","Days of Thunder (1990) — Genres: Action, Romance"
+850,"Perfect Candidate, A (1996)",27-Sep-1996,Documentary,"Perfect Candidate, A (1996) — Genres: Documentary"
+851,Two or Three Things I Know About Her (1966),01-Jan-1966,Drama,Two or Three Things I Know About Her (1966) — Genres: Drama
+852,"Bloody Child, The (1996)",26-Oct-1996,"Drama, Thriller","Bloody Child, The (1996) — Genres: Drama, Thriller"
+853,Braindead (1992),01-Jan-1992,"Comedy, Horror","Braindead (1992) — Genres: Comedy, Horror"
+854,Bad Taste (1987),01-Jan-1987,"Comedy, Horror","Bad Taste (1987) — Genres: Comedy, Horror"
+855,Diva (1981),01-Jan-1981,"Action, Drama, Mystery, Romance, Thriller","Diva (1981) — Genres: Action, Drama, Mystery, Romance, Thriller"
+856,Night on Earth (1991),01-Jan-1991,"Comedy, Drama","Night on Earth (1991) — Genres: Comedy, Drama"
+857,Paris Was a Woman (1995),08-Nov-1996,Documentary,Paris Was a Woman (1995) — Genres: Documentary
+858,Amityville: Dollhouse (1996),01-Jan-1996,Horror,Amityville: Dollhouse (1996) — Genres: Horror
+859,April Fool's Day (1986),01-Jan-1986,"Comedy, Horror","April Fool's Day (1986) — Genres: Comedy, Horror"
+860,"Believers, The (1987)",01-Jan-1987,"Horror, Thriller","Believers, The (1987) — Genres: Horror, Thriller"
+861,Nosferatu a Venezia (1986),01-Jan-1986,Horror,Nosferatu a Venezia (1986) — Genres: Horror
+862,Jingle All the Way (1996),22-Nov-1996,"Adventure, Children, Comedy","Jingle All the Way (1996) — Genres: Adventure, Children, Comedy"
+863,"Garden of Finzi-Contini, The (Giardino dei Finzi-Contini, Il) (1970)",08-Nov-1996,Drama,"Garden of Finzi-Contini, The (Giardino dei Finzi-Contini, Il) (1970) — Genres: Drama"
+864,My Fellow Americans (1996),20-Dec-1996,Comedy,My Fellow Americans (1996) — Genres: Comedy
+865,"Ice Storm, The (1997)",01-Jan-1997,Drama,"Ice Storm, The (1997) — Genres: Drama"
+866,Michael (1996),25-Dec-1996,"Comedy, Romance","Michael (1996) — Genres: Comedy, Romance"
+867,"Whole Wide World, The (1996)",25-Dec-1996,Drama,"Whole Wide World, The (1996) — Genres: Drama"
+868,Hearts and Minds (1996),10-Jan-1997,Drama,Hearts and Minds (1996) — Genres: Drama
+869,Fools Rush In (1997),14-Feb-1997,"Comedy, Romance","Fools Rush In (1997) — Genres: Comedy, Romance"
+870,Touch (1997),14-Feb-1997,Romance,Touch (1997) — Genres: Romance
+871,Vegas Vacation (1997),14-Feb-1997,Comedy,Vegas Vacation (1997) — Genres: Comedy
+872,Love Jones (1997),14-Mar-1997,Romance,Love Jones (1997) — Genres: Romance
+873,Picture Perfect (1997),01-Aug-1997,"Comedy, Romance","Picture Perfect (1997) — Genres: Comedy, Romance"
+874,Career Girls (1997),08-Aug-1997,Drama,Career Girls (1997) — Genres: Drama
+875,She's So Lovely (1997),22-Aug-1997,"Drama, Romance","She's So Lovely (1997) — Genres: Drama, Romance"
+876,Money Talks (1997),22-Aug-1997,"Action, Comedy","Money Talks (1997) — Genres: Action, Comedy"
+877,Excess Baggage (1997),01-Jan-1997,"Adventure, Romance","Excess Baggage (1997) — Genres: Adventure, Romance"
+878,That Darn Cat! (1997),14-Feb-1997,"Children, Comedy, Mystery","That Darn Cat! (1997) — Genres: Children, Comedy, Mystery"
+879,"Peacemaker, The (1997)",01-Jan-1997,"Action, Thriller, War","Peacemaker, The (1997) — Genres: Action, Thriller, War"
+880,Soul Food (1997),01-Jan-1997,Drama,Soul Food (1997) — Genres: Drama
+881,Money Talks (1997),22-Aug-1997,"Action, Comedy","Money Talks (1997) — Genres: Action, Comedy"
+882,Washington Square (1997),01-Jan-1997,Drama,Washington Square (1997) — Genres: Drama
+883,Telling Lies in America (1997),01-Jan-1997,Drama,Telling Lies in America (1997) — Genres: Drama
+884,Year of the Horse (1997),01-Jan-1997,Documentary,Year of the Horse (1997) — Genres: Documentary
+885,Phantoms (1998),01-Jan-1998,Horror,Phantoms (1998) — Genres: Horror
+886,"Life Less Ordinary, A (1997)",01-Jan-1997,"Romance, Thriller","Life Less Ordinary, A (1997) — Genres: Romance, Thriller"
+887,Eve's Bayou (1997),01-Jan-1997,Drama,Eve's Bayou (1997) — Genres: Drama
+888,One Night Stand (1997),01-Jan-1997,Drama,One Night Stand (1997) — Genres: Drama
+889,"Tango Lesson, The (1997)",01-Jan-1997,Romance,"Tango Lesson, The (1997) — Genres: Romance"
+890,Mortal Kombat: Annihilation (1997),01-Jan-1997,"Action, Adventure","Mortal Kombat: Annihilation (1997) — Genres: Action, Adventure"
+891,Bent (1997),18-Dec-1997,"Drama, War","Bent (1997) — Genres: Drama, War"
+892,Flubber (1997),01-Jan-1997,"Children, Comedy, Fantasy","Flubber (1997) — Genres: Children, Comedy, Fantasy"
+893,For Richer or Poorer (1997),01-Jan-1997,Comedy,For Richer or Poorer (1997) — Genres: Comedy
+894,Home Alone 3 (1997),01-Jan-1997,"Children, Comedy","Home Alone 3 (1997) — Genres: Children, Comedy"
+895,Scream 2 (1997),01-Jan-1997,"Horror, Thriller","Scream 2 (1997) — Genres: Horror, Thriller"
+896,"Sweet Hereafter, The (1997)",01-Jan-1997,Drama,"Sweet Hereafter, The (1997) — Genres: Drama"
+897,Time Tracers (1995),01-Jan-1995,"Action, Adventure, Sci-Fi","Time Tracers (1995) — Genres: Action, Adventure, Sci-Fi"
+898,"Postman, The (1997)",01-Jan-1997,Drama,"Postman, The (1997) — Genres: Drama"
+899,"Winter Guest, The (1997)",01-Jan-1997,Drama,"Winter Guest, The (1997) — Genres: Drama"
+900,Kundun (1997),25-Dec-1997,Drama,Kundun (1997) — Genres: Drama
+901,Mr. Magoo (1997),25-Dec-1997,Comedy,Mr. Magoo (1997) — Genres: Comedy
+902,"Big Lebowski, The (1998)",26-Dec-1997,"Comedy, Crime, Mystery, Thriller","Big Lebowski, The (1998) — Genres: Comedy, Crime, Mystery, Thriller"
+903,Afterglow (1997),26-Dec-1997,"Drama, Romance","Afterglow (1997) — Genres: Drama, Romance"
+904,Ma vie en rose (My Life in Pink) (1997),26-Dec-1997,"Comedy, Drama","Ma vie en rose (My Life in Pink) (1997) — Genres: Comedy, Drama"
+905,Great Expectations (1998),01-Jan-1998,"Drama, Romance","Great Expectations (1998) — Genres: Drama, Romance"
+906,Oscar & Lucinda (1997),31-Dec-1997,"Drama, Romance","Oscar & Lucinda (1997) — Genres: Drama, Romance"
+907,Vermin (1998),01-Jan-1997,Comedy,Vermin (1998) — Genres: Comedy
+908,Half Baked (1998),16-Jan-1998,Comedy,Half Baked (1998) — Genres: Comedy
+909,Dangerous Beauty (1998),23-Jan-1998,Drama,Dangerous Beauty (1998) — Genres: Drama
+910,Nil By Mouth (1997),06-Feb-1998,Drama,Nil By Mouth (1997) — Genres: Drama
+911,Twilight (1998),30-Jan-1998,"Crime, Drama","Twilight (1998) — Genres: Crime, Drama"
+912,U.S. Marshalls (1998),10-Mar-1998,"Action, Thriller","U.S. Marshalls (1998) — Genres: Action, Thriller"
+913,Love and Death on Long Island (1997),10-Mar-1998,Comedy,Love and Death on Long Island (1997) — Genres: Comedy
+914,Wild Things (1998),14-Mar-1998,"Crime, Drama, Mystery, Thriller","Wild Things (1998) — Genres: Crime, Drama, Mystery, Thriller"
+915,Primary Colors (1998),20-Mar-1998,Drama,Primary Colors (1998) — Genres: Drama
+916,Lost in Space (1998),27-Mar-1998,"Action, Sci-Fi, Thriller","Lost in Space (1998) — Genres: Action, Sci-Fi, Thriller"
+917,Mercury Rising (1998),27-Mar-1998,"Action, Drama, Thriller","Mercury Rising (1998) — Genres: Action, Drama, Thriller"
+918,City of Angels (1998),03-Apr-1998,Romance,City of Angels (1998) — Genres: Romance
+919,"City of Lost Children, The (1995)",01-Jan-1995,"Adventure, Sci-Fi","City of Lost Children, The (1995) — Genres: Adventure, Sci-Fi"
+920,Two Bits (1995),01-Jan-1995,Drama,Two Bits (1995) — Genres: Drama
+921,Farewell My Concubine (1993),01-Jan-1993,"Drama, Romance","Farewell My Concubine (1993) — Genres: Drama, Romance"
+922,Dead Man (1995),10-May-1996,Western,Dead Man (1995) — Genres: Western
+923,Raise the Red Lantern (1991),01-Jan-1991,Drama,Raise the Red Lantern (1991) — Genres: Drama
+924,White Squall (1996),01-Jan-1996,"Adventure, Drama","White Squall (1996) — Genres: Adventure, Drama"
+925,Unforgettable (1996),23-Feb-1996,"Sci-Fi, Thriller","Unforgettable (1996) — Genres: Sci-Fi, Thriller"
+926,Down Periscope (1996),01-Mar-1996,Comedy,Down Periscope (1996) — Genres: Comedy
+927,"Flower of My Secret, The (Flor de mi secreto, La) (1995)",08-Mar-1996,Drama,"Flower of My Secret, The (Flor de mi secreto, La) (1995) — Genres: Drama"
+928,"Craft, The (1996)",26-Apr-1996,"Drama, Horror","Craft, The (1996) — Genres: Drama, Horror"
+929,Harriet the Spy (1996),03-Jul-1996,"Children, Comedy","Harriet the Spy (1996) — Genres: Children, Comedy"
+930,Chain Reaction (1996),31-Jul-1996,"Action, Adventure, Thriller","Chain Reaction (1996) — Genres: Action, Adventure, Thriller"
+931,"Island of Dr. Moreau, The (1996)",23-Aug-1996,"Sci-Fi, Thriller","Island of Dr. Moreau, The (1996) — Genres: Sci-Fi, Thriller"
+932,First Kid (1996),30-Aug-1996,"Children, Comedy","First Kid (1996) — Genres: Children, Comedy"
+933,"Funeral, The (1996)",25-Oct-1996,Drama,"Funeral, The (1996) — Genres: Drama"
+934,"Preacher's Wife, The (1996)",13-Dec-1996,Drama,"Preacher's Wife, The (1996) — Genres: Drama"
+935,Paradise Road (1997),18-Apr-1997,"Drama, War","Paradise Road (1997) — Genres: Drama, War"
+936,Brassed Off (1996),13-Jun-1997,"Comedy, Drama, Romance","Brassed Off (1996) — Genres: Comedy, Drama, Romance"
+937,"Thousand Acres, A (1997)",01-Jan-1997,Drama,"Thousand Acres, A (1997) — Genres: Drama"
+938,"Smile Like Yours, A (1997)",01-Jan-1997,"Comedy, Romance","Smile Like Yours, A (1997) — Genres: Comedy, Romance"
+939,Murder in the First (1995),01-Jan-1995,"Drama, Thriller","Murder in the First (1995) — Genres: Drama, Thriller"
+940,Airheads (1994),01-Jan-1994,Comedy,Airheads (1994) — Genres: Comedy
+941,With Honors (1994),01-Jan-1994,"Comedy, Drama","With Honors (1994) — Genres: Comedy, Drama"
+942,What's Love Got to Do with It (1993),01-Jan-1993,Drama,What's Love Got to Do with It (1993) — Genres: Drama
+943,Killing Zoe (1994),01-Jan-1994,Thriller,Killing Zoe (1994) — Genres: Thriller
+944,Renaissance Man (1994),01-Jan-1994,"Comedy, Drama, War","Renaissance Man (1994) — Genres: Comedy, Drama, War"
+945,Charade (1963),01-Jan-1963,"Comedy, Mystery, Romance, Thriller","Charade (1963) — Genres: Comedy, Mystery, Romance, Thriller"
+946,"Fox and the Hound, The (1981)",01-Jan-1981,"Animation, Children","Fox and the Hound, The (1981) — Genres: Animation, Children"
+947,"Big Blue, The (Grand bleu, Le) (1988)",01-Jan-1988,"Adventure, Romance","Big Blue, The (Grand bleu, Le) (1988) — Genres: Adventure, Romance"
+948,Booty Call (1997),28-Feb-1997,"Comedy, Romance","Booty Call (1997) — Genres: Comedy, Romance"
+949,How to Make an American Quilt (1995),01-Jan-1995,"Drama, Romance","How to Make an American Quilt (1995) — Genres: Drama, Romance"
+950,Georgia (1995),01-Jan-1995,Drama,Georgia (1995) — Genres: Drama
+951,"Indian in the Cupboard, The (1995)",01-Jan-1995,"Adventure, Children, Fantasy","Indian in the Cupboard, The (1995) — Genres: Adventure, Children, Fantasy"
+952,Blue in the Face (1995),01-Jan-1995,Comedy,Blue in the Face (1995) — Genres: Comedy
+953,Unstrung Heroes (1995),01-Jan-1995,"Comedy, Drama","Unstrung Heroes (1995) — Genres: Comedy, Drama"
+954,Unzipped (1995),01-Jan-1995,Documentary,Unzipped (1995) — Genres: Documentary
+955,Before Sunrise (1995),01-Jan-1995,"Drama, Romance","Before Sunrise (1995) — Genres: Drama, Romance"
+956,Nobody's Fool (1994),01-Jan-1994,Drama,Nobody's Fool (1994) — Genres: Drama
+957,Pushing Hands (1992),01-Jan-1992,Comedy,Pushing Hands (1992) — Genres: Comedy
+958,To Live (Huozhe) (1994),01-Jan-1994,Drama,To Live (Huozhe) (1994) — Genres: Drama
+959,Dazed and Confused (1993),01-Jan-1993,Comedy,Dazed and Confused (1993) — Genres: Comedy
+960,Naked (1993),01-Jan-1993,Drama,Naked (1993) — Genres: Drama
+961,Orlando (1993),01-Jan-1993,Drama,Orlando (1993) — Genres: Drama
+962,Ruby in Paradise (1993),01-Jan-1993,Drama,Ruby in Paradise (1993) — Genres: Drama
+963,Some Folks Call It a Sling Blade (1993),01-Jan-1993,"Drama, Thriller","Some Folks Call It a Sling Blade (1993) — Genres: Drama, Thriller"
+964,"Month by the Lake, A (1995)",01-Jan-1995,"Comedy, Drama","Month by the Lake, A (1995) — Genres: Comedy, Drama"
+965,Funny Face (1957),01-Jan-1957,"Comedy, Musical","Funny Face (1957) — Genres: Comedy, Musical"
+966,"Affair to Remember, An (1957)",01-Jan-1957,Romance,"Affair to Remember, An (1957) — Genres: Romance"
+967,Little Lord Fauntleroy (1936),01-Jan-1936,Drama,Little Lord Fauntleroy (1936) — Genres: Drama
+968,"Inspector General, The (1949)",01-Jan-1949,Musical,"Inspector General, The (1949) — Genres: Musical"
+969,Winnie the Pooh and the Blustery Day (1968),01-Jan-1968,"Animation, Children","Winnie the Pooh and the Blustery Day (1968) — Genres: Animation, Children"
+970,Hear My Song (1991),01-Jan-1991,Comedy,Hear My Song (1991) — Genres: Comedy
+971,Mediterraneo (1991),01-Jan-1991,"Comedy, War","Mediterraneo (1991) — Genres: Comedy, War"
+972,Passion Fish (1992),01-Jan-1992,Drama,Passion Fish (1992) — Genres: Drama
+973,Grateful Dead (1995),18-Oct-1996,Documentary,Grateful Dead (1995) — Genres: Documentary
+974,Eye for an Eye (1996),01-Jan-1996,"Drama, Thriller","Eye for an Eye (1996) — Genres: Drama, Thriller"
+975,Fear (1996),12-Apr-1996,Thriller,Fear (1996) — Genres: Thriller
+976,Solo (1996),23-Aug-1996,"Action, Sci-Fi, Thriller","Solo (1996) — Genres: Action, Sci-Fi, Thriller"
+977,"Substitute, The (1996)",19-Apr-1996,Action,"Substitute, The (1996) — Genres: Action"
+978,Heaven's Prisoners (1996),10-May-1996,"Mystery, Thriller","Heaven's Prisoners (1996) — Genres: Mystery, Thriller"
+979,"Trigger Effect, The (1996)",30-Aug-1996,"Drama, Thriller","Trigger Effect, The (1996) — Genres: Drama, Thriller"
+980,Mother Night (1996),01-Nov-1996,Drama,Mother Night (1996) — Genres: Drama
+981,Dangerous Ground (1997),04-Sep-1996,Drama,Dangerous Ground (1997) — Genres: Drama
+982,Maximum Risk (1996),13-Sep-1996,"Action, Adventure, Thriller","Maximum Risk (1996) — Genres: Action, Adventure, Thriller"
+983,"Rich Man's Wife, The (1996)",13-Sep-1996,Thriller,"Rich Man's Wife, The (1996) — Genres: Thriller"
+984,Shadow Conspiracy (1997),31-Jan-1997,Thriller,Shadow Conspiracy (1997) — Genres: Thriller
+985,Blood & Wine (1997),15-Nov-1996,Drama,Blood & Wine (1997) — Genres: Drama
+986,Turbulence (1997),10-Jan-1997,Thriller,Turbulence (1997) — Genres: Thriller
+987,Underworld (1997),09-May-1997,Thriller,Underworld (1997) — Genres: Thriller
+988,"Beautician and the Beast, The (1997)",07-Feb-1997,"Comedy, Romance","Beautician and the Beast, The (1997) — Genres: Comedy, Romance"
+989,Cats Don't Dance (1997),26-Mar-1997,"Animation, Children, Musical","Cats Don't Dance (1997) — Genres: Animation, Children, Musical"
+990,Anna Karenina (1997),04-Apr-1997,"Drama, Romance","Anna Karenina (1997) — Genres: Drama, Romance"
+991,Keys to Tulsa (1997),11-Apr-1997,Crime,Keys to Tulsa (1997) — Genres: Crime
+992,Head Above Water (1996),20-Jun-1997,"Comedy, Thriller","Head Above Water (1996) — Genres: Comedy, Thriller"
+993,Hercules (1997),27-Jun-1997,"Adventure, Animation, Children, Comedy, Musical","Hercules (1997) — Genres: Adventure, Animation, Children, Comedy, Musical"
+994,"Last Time I Committed Suicide, The (1997)",20-Jun-1997,Drama,"Last Time I Committed Suicide, The (1997) — Genres: Drama"
+995,"Kiss Me, Guido (1997)",01-Jan-1997,Comedy,"Kiss Me, Guido (1997) — Genres: Comedy"
+996,"Big Green, The (1995)",01-Jan-1995,"Children, Comedy","Big Green, The (1995) — Genres: Children, Comedy"
+997,Stuart Saves His Family (1995),01-Jan-1995,Comedy,Stuart Saves His Family (1995) — Genres: Comedy
+998,Cabin Boy (1994),01-Jan-1994,Comedy,Cabin Boy (1994) — Genres: Comedy
+999,Clean Slate (1994),01-Jan-1994,Comedy,Clean Slate (1994) — Genres: Comedy
+1000,Lightning Jack (1994),01-Jan-1994,"Comedy, Western","Lightning Jack (1994) — Genres: Comedy, Western"
+1001,"Stupids, The (1996)",30-Aug-1996,Comedy,"Stupids, The (1996) — Genres: Comedy"
+1002,"Pest, The (1997)",07-Feb-1997,Comedy,"Pest, The (1997) — Genres: Comedy"
+1003,That Darn Cat! (1997),14-Feb-1997,"Children, Comedy, Mystery","That Darn Cat! (1997) — Genres: Children, Comedy, Mystery"
+1004,Geronimo: An American Legend (1993),01-Jan-1993,"Drama, Western","Geronimo: An American Legend (1993) — Genres: Drama, Western"
+1005,"Double vie de Véronique, La (Double Life of Veronique, The) (1991)",01-Jan-1991,Drama,"Double vie de Véronique, La (Double Life of Veronique, The) (1991) — Genres: Drama"
+1006,Until the End of the World (Bis ans Ende der Welt) (1991),01-Jan-1991,"Drama, Sci-Fi","Until the End of the World (Bis ans Ende der Welt) (1991) — Genres: Drama, Sci-Fi"
+1007,Waiting for Guffman (1996),31-Jan-1997,Comedy,Waiting for Guffman (1996) — Genres: Comedy
+1008,I Shot Andy Warhol (1996),01-May-1996,Drama,I Shot Andy Warhol (1996) — Genres: Drama
+1009,Stealing Beauty (1996),14-Jun-1996,Drama,Stealing Beauty (1996) — Genres: Drama
+1010,Basquiat (1996),16-Aug-1996,Drama,Basquiat (1996) — Genres: Drama
+1011,2 Days in the Valley (1996),27-Sep-1996,Crime,2 Days in the Valley (1996) — Genres: Crime
+1012,Private Parts (1997),07-Mar-1997,"Comedy, Drama","Private Parts (1997) — Genres: Comedy, Drama"
+1013,Anaconda (1997),11-Apr-1997,"Action, Adventure, Thriller","Anaconda (1997) — Genres: Action, Adventure, Thriller"
+1014,Romy and Michele's High School Reunion (1997),25-Apr-1997,Comedy,Romy and Michele's High School Reunion (1997) — Genres: Comedy
+1015,Shiloh (1997),23-May-1997,"Children, Drama","Shiloh (1997) — Genres: Children, Drama"
+1016,Con Air (1997),06-Jun-1997,"Action, Adventure, Thriller","Con Air (1997) — Genres: Action, Adventure, Thriller"
+1017,Trees Lounge (1996),11-Oct-1996,Drama,Trees Lounge (1996) — Genres: Drama
+1018,Tie Me Up! Tie Me Down! (1990),01-Jan-1990,Drama,Tie Me Up! Tie Me Down! (1990) — Genres: Drama
+1019,"Die xue shuang xiong (Killer, The) (1989)",01-Jan-1989,"Action, Thriller","Die xue shuang xiong (Killer, The) (1989) — Genres: Action, Thriller"
+1020,Gaslight (1944),01-Jan-1944,"Mystery, Thriller","Gaslight (1944) — Genres: Mystery, Thriller"
+1021,8 1/2 (1963),01-Jan-1963,Drama,8 1/2 (1963) — Genres: Drama
+1022,"Fast, Cheap & Out of Control (1997)",01-Jan-1997,Documentary,"Fast, Cheap & Out of Control (1997) — Genres: Documentary"
+1023,Fathers' Day (1997),09-May-1997,Comedy,Fathers' Day (1997) — Genres: Comedy
+1024,Mrs. Dalloway (1997),01-Jan-1997,Romance,Mrs. Dalloway (1997) — Genres: Romance
+1025,Fire Down Below (1997),01-Jan-1997,"Action, Drama, Thriller","Fire Down Below (1997) — Genres: Action, Drama, Thriller"
+1026,"Lay of the Land, The (1997)",01-Jan-1997,"Comedy, Drama","Lay of the Land, The (1997) — Genres: Comedy, Drama"
+1027,"Shooter, The (1995)",01-Jan-1995,Action,"Shooter, The (1995) — Genres: Action"
+1028,Grumpier Old Men (1995),01-Jan-1995,"Comedy, Romance","Grumpier Old Men (1995) — Genres: Comedy, Romance"
+1029,Jury Duty (1995),01-Jan-1995,Comedy,Jury Duty (1995) — Genres: Comedy
+1030,"Beverly Hillbillies, The (1993)",01-Jan-1993,Comedy,"Beverly Hillbillies, The (1993) — Genres: Comedy"
+1031,Lassie (1994),01-Jan-1994,"Adventure, Children","Lassie (1994) — Genres: Adventure, Children"
+1032,Little Big League (1994),01-Jan-1994,"Children, Comedy","Little Big League (1994) — Genres: Children, Comedy"
+1033,Homeward Bound II: Lost in San Francisco (1996),08-Mar-1996,"Adventure, Children","Homeward Bound II: Lost in San Francisco (1996) — Genres: Adventure, Children"
+1034,"Quest, The (1996)",26-Apr-1996,"Action, Adventure","Quest, The (1996) — Genres: Action, Adventure"
+1035,Cool Runnings (1993),01-Jan-1993,Comedy,Cool Runnings (1993) — Genres: Comedy
+1036,Drop Dead Fred (1991),01-Jan-1991,"Comedy, Fantasy","Drop Dead Fred (1991) — Genres: Comedy, Fantasy"
+1037,Grease 2 (1982),01-Jan-1982,"Comedy, Musical, Romance","Grease 2 (1982) — Genres: Comedy, Musical, Romance"
+1038,Switchback (1997),01-Jan-1997,Thriller,Switchback (1997) — Genres: Thriller
+1039,Hamlet (1996),24-Jan-1997,Drama,Hamlet (1996) — Genres: Drama
+1040,Two if by Sea (1996),01-Jan-1996,"Comedy, Romance","Two if by Sea (1996) — Genres: Comedy, Romance"
+1041,Forget Paris (1995),01-Jan-1995,"Comedy, Romance","Forget Paris (1995) — Genres: Comedy, Romance"
+1042,Just Cause (1995),01-Jan-1995,"Mystery, Thriller","Just Cause (1995) — Genres: Mystery, Thriller"
+1043,Rent-a-Kid (1995),01-Jan-1995,Comedy,Rent-a-Kid (1995) — Genres: Comedy
+1044,"Paper, The (1994)",01-Jan-1994,"Comedy, Drama","Paper, The (1994) — Genres: Comedy, Drama"
+1045,Fearless (1993),01-Jan-1993,Drama,Fearless (1993) — Genres: Drama
+1046,Malice (1993),01-Jan-1993,Thriller,Malice (1993) — Genres: Thriller
+1047,Multiplicity (1996),12-Jul-1996,Comedy,Multiplicity (1996) — Genres: Comedy
+1048,She's the One (1996),23-Aug-1996,"Comedy, Romance","She's the One (1996) — Genres: Comedy, Romance"
+1049,House Arrest (1996),02-Aug-1996,Comedy,House Arrest (1996) — Genres: Comedy
+1050,"Ghost and Mrs. Muir, The (1947)",01-Jan-1947,"Drama, Romance","Ghost and Mrs. Muir, The (1947) — Genres: Drama, Romance"
+1051,"Associate, The (1996)",19-Oct-1996,Comedy,"Associate, The (1996) — Genres: Comedy"
+1052,Dracula: Dead and Loving It (1995),01-Jan-1995,"Comedy, Horror","Dracula: Dead and Loving It (1995) — Genres: Comedy, Horror"
+1053,Now and Then (1995),01-Jan-1995,Drama,Now and Then (1995) — Genres: Drama
+1054,Mr. Wrong (1996),16-Feb-1996,Comedy,Mr. Wrong (1996) — Genres: Comedy
+1055,"Simple Twist of Fate, A (1994)",01-Jan-1994,Drama,"Simple Twist of Fate, A (1994) — Genres: Drama"
+1056,Cronos (1992),01-Jan-1992,Horror,Cronos (1992) — Genres: Horror
+1057,"Pallbearer, The (1996)",19-Apr-1996,Comedy,"Pallbearer, The (1996) — Genres: Comedy"
+1058,"War, The (1994)",01-Jan-1994,"Adventure, Drama","War, The (1994) — Genres: Adventure, Drama"
+1059,Don't Be a Menace to South Central While Drinking Your Juice in the Hood (1996),01-Jan-1996,Comedy,Don't Be a Menace to South Central While Drinking Your Juice in the Hood (1996) — Genres: Comedy
+1060,"Adventures of Pinocchio, The (1996)",26-Jul-1996,"Adventure, Children","Adventures of Pinocchio, The (1996) — Genres: Adventure, Children"
+1061,"Evening Star, The (1996)",25-Dec-1996,"Comedy, Drama","Evening Star, The (1996) — Genres: Comedy, Drama"
+1062,Four Days in September (1997),23-Jan-1998,Drama,Four Days in September (1997) — Genres: Drama
+1063,"Little Princess, A (1995)",01-Jan-1995,"Children, Drama","Little Princess, A (1995) — Genres: Children, Drama"
+1064,Crossfire (1947),01-Jan-1947,"Crime, Film-Noir","Crossfire (1947) — Genres: Crime, Film-Noir"
+1065,Koyaanisqatsi (1983),01-Jan-1983,"Documentary, War","Koyaanisqatsi (1983) — Genres: Documentary, War"
+1066,Balto (1995),01-Jan-1995,"Animation, Children","Balto (1995) — Genres: Animation, Children"
+1067,Bottle Rocket (1996),21-Feb-1996,Comedy,Bottle Rocket (1996) — Genres: Comedy
+1068,"Star Maker, The (Uomo delle stelle, L') (1995)",01-Mar-1996,Drama,"Star Maker, The (Uomo delle stelle, L') (1995) — Genres: Drama"
+1069,Amateur (1994),01-Jan-1994,"Crime, Drama, Thriller","Amateur (1994) — Genres: Crime, Drama, Thriller"
+1070,Living in Oblivion (1995),01-Jan-1995,Comedy,Living in Oblivion (1995) — Genres: Comedy
+1071,Party Girl (1995),01-Jan-1995,Comedy,Party Girl (1995) — Genres: Comedy
+1072,"Pyromaniac's Love Story, A (1995)",01-Jan-1995,"Comedy, Romance","Pyromaniac's Love Story, A (1995) — Genres: Comedy, Romance"
+1073,Shallow Grave (1994),01-Jan-1994,Thriller,Shallow Grave (1994) — Genres: Thriller
+1074,Reality Bites (1994),01-Jan-1994,"Comedy, Drama","Reality Bites (1994) — Genres: Comedy, Drama"
+1075,"Man of No Importance, A (1994)",01-Jan-1994,Drama,"Man of No Importance, A (1994) — Genres: Drama"
+1076,"Pagemaster, The (1994)",01-Jan-1994,"Action, Adventure, Animation, Children, Fantasy","Pagemaster, The (1994) — Genres: Action, Adventure, Animation, Children, Fantasy"
+1077,Love and a .45 (1994),01-Jan-1994,Thriller,Love and a .45 (1994) — Genres: Thriller
+1078,Oliver & Company (1988),29-Mar-1988,"Animation, Children","Oliver & Company (1988) — Genres: Animation, Children"
+1079,Joe's Apartment (1996),26-Jul-1996,"Comedy, Musical","Joe's Apartment (1996) — Genres: Comedy, Musical"
+1080,Celestial Clockwork (1994),12-Jul-1996,Comedy,Celestial Clockwork (1994) — Genres: Comedy
+1081,Curdled (1996),27-Sep-1996,Crime,Curdled (1996) — Genres: Crime
+1082,Female Perversions (1996),25-Apr-1997,Drama,Female Perversions (1996) — Genres: Drama
+1083,Albino Alligator (1996),17-Jan-1997,"Crime, Thriller","Albino Alligator (1996) — Genres: Crime, Thriller"
+1084,Anne Frank Remembered (1995),23-Feb-1996,Documentary,Anne Frank Remembered (1995) — Genres: Documentary
+1085,Carried Away (1996),29-Mar-1996,"Drama, Romance","Carried Away (1996) — Genres: Drama, Romance"
+1086,It's My Party (1995),22-Mar-1996,Drama,It's My Party (1995) — Genres: Drama
+1087,Bloodsport 2 (1995),01-Mar-1996,Action,Bloodsport 2 (1995) — Genres: Action
+1088,Double Team (1997),04-Apr-1997,Action,Double Team (1997) — Genres: Action
+1089,Speed 2: Cruise Control (1997),13-Jun-1997,"Action, Romance, Thriller","Speed 2: Cruise Control (1997) — Genres: Action, Romance, Thriller"
+1090,Sliver (1993),01-Jan-1993,Thriller,Sliver (1993) — Genres: Thriller
+1091,Pete's Dragon (1977),01-Jan-1977,"Adventure, Animation, Children, Musical","Pete's Dragon (1977) — Genres: Adventure, Animation, Children, Musical"
+1092,Dear God (1996),01-Nov-1996,Comedy,Dear God (1996) — Genres: Comedy
+1093,Live Nude Girls (1995),01-Mar-1996,Comedy,Live Nude Girls (1995) — Genres: Comedy
+1094,"Thin Line Between Love and Hate, A (1996)",03-Apr-1996,Comedy,"Thin Line Between Love and Hate, A (1996) — Genres: Comedy"
+1095,High School High (1996),25-Oct-1996,Comedy,High School High (1996) — Genres: Comedy
+1096,Commandments (1997),02-May-1997,Romance,Commandments (1997) — Genres: Romance
+1097,"Hate (Haine, La) (1995)",09-Feb-1996,Drama,"Hate (Haine, La) (1995) — Genres: Drama"
+1098,Flirting With Disaster (1996),22-Mar-1996,Comedy,Flirting With Disaster (1996) — Genres: Comedy
+1099,"Red Firecracker, Green Firecracker (1994)",01-Jan-1994,Drama,"Red Firecracker, Green Firecracker (1994) — Genres: Drama"
+1100,What Happened Was... (1994),01-Jan-1994,"Comedy, Drama, Romance","What Happened Was... (1994) — Genres: Comedy, Drama, Romance"
+1101,Six Degrees of Separation (1993),01-Jan-1993,"Drama, Mystery","Six Degrees of Separation (1993) — Genres: Drama, Mystery"
+1102,Two Much (1996),01-Jan-1996,"Comedy, Romance","Two Much (1996) — Genres: Comedy, Romance"
+1103,Trust (1990),01-Jan-1990,"Comedy, Drama","Trust (1990) — Genres: Comedy, Drama"
+1104,C'est arrivé près de chez vous (1992),01-Jan-1992,"Comedy, Crime, Drama","C'est arrivé près de chez vous (1992) — Genres: Comedy, Crime, Drama"
+1105,Firestorm (1998),09-Jan-1998,"Action, Adventure, Thriller","Firestorm (1998) — Genres: Action, Adventure, Thriller"
+1106,"Newton Boys, The (1998)",14-Mar-1998,"Crime, Drama","Newton Boys, The (1998) — Genres: Crime, Drama"
+1107,Beyond Rangoon (1995),01-Jan-1995,Drama,Beyond Rangoon (1995) — Genres: Drama
+1108,Feast of July (1995),01-Jan-1995,Drama,Feast of July (1995) — Genres: Drama
+1109,Death and the Maiden (1994),01-Jan-1994,"Drama, Thriller","Death and the Maiden (1994) — Genres: Drama, Thriller"
+1110,Tank Girl (1995),01-Jan-1995,"Action, Comedy, Musical, Sci-Fi","Tank Girl (1995) — Genres: Action, Comedy, Musical, Sci-Fi"
+1111,Double Happiness (1994),01-Mar-1996,Drama,Double Happiness (1994) — Genres: Drama
+1112,Cobb (1994),01-Jan-1994,Drama,Cobb (1994) — Genres: Drama
+1113,Mrs. Parker and the Vicious Circle (1994),01-Jan-1994,Drama,Mrs. Parker and the Vicious Circle (1994) — Genres: Drama
+1114,Faithful (1996),03-Apr-1996,Comedy,Faithful (1996) — Genres: Comedy
+1115,Twelfth Night (1996),25-Oct-1996,"Comedy, Drama, Romance","Twelfth Night (1996) — Genres: Comedy, Drama, Romance"
+1116,"Mark of Zorro, The (1940)",01-Jan-1940,Adventure,"Mark of Zorro, The (1940) — Genres: Adventure"
+1117,Surviving Picasso (1996),20-Sep-1996,Drama,Surviving Picasso (1996) — Genres: Drama
+1118,Up in Smoke (1978),01-Jan-1978,Comedy,Up in Smoke (1978) — Genres: Comedy
+1119,Some Kind of Wonderful (1987),01-Jan-1987,"Drama, Romance","Some Kind of Wonderful (1987) — Genres: Drama, Romance"
+1120,I'm Not Rappaport (1996),13-Nov-1996,Comedy,I'm Not Rappaport (1996) — Genres: Comedy
+1121,"Umbrellas of Cherbourg, The (Parapluies de Cherbourg, Les) (1964)",05-Apr-1996,"Drama, Musical","Umbrellas of Cherbourg, The (Parapluies de Cherbourg, Les) (1964) — Genres: Drama, Musical"
+1122,They Made Me a Criminal (1939),01-Jan-1939,"Crime, Drama","They Made Me a Criminal (1939) — Genres: Crime, Drama"
+1123,"Last Time I Saw Paris, The (1954)",01-Jan-1954,Drama,"Last Time I Saw Paris, The (1954) — Genres: Drama"
+1124,"Farewell to Arms, A (1932)",01-Jan-1932,"Romance, War","Farewell to Arms, A (1932) — Genres: Romance, War"
+1125,"Innocents, The (1961)",01-Jan-1961,Thriller,"Innocents, The (1961) — Genres: Thriller"
+1126,"Old Man and the Sea, The (1958)",01-Jan-1958,"Adventure, Drama","Old Man and the Sea, The (1958) — Genres: Adventure, Drama"
+1127,"Truman Show, The (1998)",01-Jan-1998,Drama,"Truman Show, The (1998) — Genres: Drama"
+1128,Heidi Fleiss: Hollywood Madam (1995) ,09-Feb-1996,Documentary,Heidi Fleiss: Hollywood Madam (1995)  — Genres: Documentary
+1129,Chungking Express (1994),16-Feb-1996,"Drama, Mystery, Romance","Chungking Express (1994) — Genres: Drama, Mystery, Romance"
+1130,Jupiter's Wife (1994),09-Feb-1996,Documentary,Jupiter's Wife (1994) — Genres: Documentary
+1131,Safe (1995),01-Jan-1995,Thriller,Safe (1995) — Genres: Thriller
+1132,Feeling Minnesota (1996),13-Sep-1996,"Drama, Romance","Feeling Minnesota (1996) — Genres: Drama, Romance"
+1133,Escape to Witch Mountain (1975),01-Jan-1975,"Adventure, Children, Fantasy","Escape to Witch Mountain (1975) — Genres: Adventure, Children, Fantasy"
+1134,Get on the Bus (1996),16-Oct-1996,Drama,Get on the Bus (1996) — Genres: Drama
+1135,"Doors, The (1991)",01-Jan-1991,"Drama, Musical","Doors, The (1991) — Genres: Drama, Musical"
+1136,Ghosts of Mississippi (1996),20-Dec-1996,Drama,Ghosts of Mississippi (1996) — Genres: Drama
+1137,Beautiful Thing (1996),09-Oct-1996,"Drama, Romance","Beautiful Thing (1996) — Genres: Drama, Romance"
+1138,Best Men (1997),01-Sep-1997,"Action, Comedy, Crime, Drama","Best Men (1997) — Genres: Action, Comedy, Crime, Drama"
+1139,Hackers (1995),01-Jan-1995,"Action, Crime, Thriller","Hackers (1995) — Genres: Action, Crime, Thriller"
+1140,"Road to Wellville, The (1994)",01-Jan-1994,Comedy,"Road to Wellville, The (1994) — Genres: Comedy"
+1141,"War Room, The (1993)",01-Jan-1993,Documentary,"War Room, The (1993) — Genres: Documentary"
+1142,When We Were Kings (1996),14-Feb-1997,Documentary,When We Were Kings (1996) — Genres: Documentary
+1143,Hard Eight (1996),28-Feb-1997,"Crime, Thriller","Hard Eight (1996) — Genres: Crime, Thriller"
+1144,"Quiet Room, The (1996)",02-May-1997,Drama,"Quiet Room, The (1996) — Genres: Drama"
+1145,Blue Chips (1994),01-Jan-1994,Drama,Blue Chips (1994) — Genres: Drama
+1146,Calendar Girl (1993),01-Jan-1993,Drama,Calendar Girl (1993) — Genres: Drama
+1147,My Family (1995),01-Jan-1995,Drama,My Family (1995) — Genres: Drama
+1148,Tom & Viv (1994),01-Jan-1994,Drama,Tom & Viv (1994) — Genres: Drama
+1149,Walkabout (1971),20-Dec-1971,Drama,Walkabout (1971) — Genres: Drama
+1150,Last Dance (1996),03-May-1996,Drama,Last Dance (1996) — Genres: Drama
+1151,Original Gangstas (1996),10-May-1996,Crime,Original Gangstas (1996) — Genres: Crime
+1152,In Love and War (1996),24-Jan-1997,"Romance, War","In Love and War (1996) — Genres: Romance, War"
+1153,Backbeat (1993),01-Jan-1993,"Drama, Musical","Backbeat (1993) — Genres: Drama, Musical"
+1154,Alphaville (1965),01-Jan-1965,Sci-Fi,Alphaville (1965) — Genres: Sci-Fi
+1155,"Rendezvous in Paris (Rendez-vous de Paris, Les) (1995)",28-Jun-1996,"Comedy, Romance","Rendezvous in Paris (Rendez-vous de Paris, Les) (1995) — Genres: Comedy, Romance"
+1156,Cyclo (1995),02-Aug-1996,"Crime, Drama","Cyclo (1995) — Genres: Crime, Drama"
+1157,"Relic, The (1997)",17-Jan-1997,Horror,"Relic, The (1997) — Genres: Horror"
+1158,"Fille seule, La (A Single Girl) (1995)",30-Oct-1996,Drama,"Fille seule, La (A Single Girl) (1995) — Genres: Drama"
+1159,Stalker (1979),01-Jan-1979,"Mystery, Sci-Fi","Stalker (1979) — Genres: Mystery, Sci-Fi"
+1160,Love! Valour! Compassion! (1997),16-May-1997,"Drama, Romance","Love! Valour! Compassion! (1997) — Genres: Drama, Romance"
+1161,Palookaville (1996),25-Oct-1996,"Action, Drama","Palookaville (1996) — Genres: Action, Drama"
+1162,Phat Beach (1996),02-Aug-1996,Comedy,Phat Beach (1996) — Genres: Comedy
+1163,"Portrait of a Lady, The (1996)",27-Dec-1996,Drama,"Portrait of a Lady, The (1996) — Genres: Drama"
+1164,Zeus and Roxanne (1997),10-Jan-1997,Children,Zeus and Roxanne (1997) — Genres: Children
+1165,Big Bully (1996),01-Jan-1996,"Comedy, Drama","Big Bully (1996) — Genres: Comedy, Drama"
+1166,Love & Human Remains (1993),01-Jan-1993,Comedy,Love & Human Remains (1993) — Genres: Comedy
+1167,"Sum of Us, The (1994)",01-Jan-1994,Comedy,"Sum of Us, The (1994) — Genres: Comedy"
+1168,Little Buddha (1993),01-Jan-1993,Drama,Little Buddha (1993) — Genres: Drama
+1169,Fresh (1994),01-Jan-1994,Drama,Fresh (1994) — Genres: Drama
+1170,Spanking the Monkey (1994),01-Jan-1994,"Comedy, Drama","Spanking the Monkey (1994) — Genres: Comedy, Drama"
+1171,Wild Reeds (1994),01-Jan-1994,Drama,Wild Reeds (1994) — Genres: Drama
+1172,"Women, The (1939)",01-Jan-1939,Comedy,"Women, The (1939) — Genres: Comedy"
+1173,Bliss (1997),06-Jun-1997,"Drama, Romance","Bliss (1997) — Genres: Drama, Romance"
+1174,Caught (1996),27-Sep-1996,"Drama, Thriller","Caught (1996) — Genres: Drama, Thriller"
+1175,Hugo Pool (1997),01-Jan-1997,Romance,Hugo Pool (1997) — Genres: Romance
+1176,Welcome To Sarajevo (1997),01-Jan-1997,"Drama, War","Welcome To Sarajevo (1997) — Genres: Drama, War"
+1177,Dunston Checks In (1996),01-Jan-1996,Comedy,Dunston Checks In (1996) — Genres: Comedy
+1178,Major Payne (1994),01-Jan-1994,Comedy,Major Payne (1994) — Genres: Comedy
+1179,Man of the House (1995),01-Jan-1995,Comedy,Man of the House (1995) — Genres: Comedy
+1180,I Love Trouble (1994),01-Jan-1994,"Action, Comedy","I Love Trouble (1994) — Genres: Action, Comedy"
+1181,"Low Down Dirty Shame, A (1994)",01-Jan-1994,"Action, Comedy","Low Down Dirty Shame, A (1994) — Genres: Action, Comedy"
+1182,Cops and Robbersons (1994),01-Jan-1994,Comedy,Cops and Robbersons (1994) — Genres: Comedy
+1183,"Cowboy Way, The (1994)",01-Jan-1994,"Action, Comedy","Cowboy Way, The (1994) — Genres: Action, Comedy"
+1184,"Endless Summer 2, The (1994)",01-Jan-1994,Documentary,"Endless Summer 2, The (1994) — Genres: Documentary"
+1185,In the Army Now (1994),01-Jan-1994,"Comedy, War","In the Army Now (1994) — Genres: Comedy, War"
+1186,"Inkwell, The (1994)",01-Jan-1994,"Comedy, Drama","Inkwell, The (1994) — Genres: Comedy, Drama"
+1187,Switchblade Sisters (1975),17-May-1975,Crime,Switchblade Sisters (1975) — Genres: Crime
+1188,Young Guns II (1990),01-Jan-1990,"Action, Comedy, Western","Young Guns II (1990) — Genres: Action, Comedy, Western"
+1189,Prefontaine (1997),24-Jan-1997,Drama,Prefontaine (1997) — Genres: Drama
+1190,That Old Feeling (1997),04-Apr-1997,"Comedy, Romance","That Old Feeling (1997) — Genres: Comedy, Romance"
+1191,"Letter From Death Row, A (1998)",01-Feb-1998,"Crime, Drama","Letter From Death Row, A (1998) — Genres: Crime, Drama"
+1192,"Boys of St. Vincent, The (1993)",01-Jan-1993,Drama,"Boys of St. Vincent, The (1993) — Genres: Drama"
+1193,Before the Rain (Pred dozhdot) (1994),01-Jan-1994,Drama,Before the Rain (Pred dozhdot) (1994) — Genres: Drama
+1194,Once Were Warriors (1994),01-Jan-1994,"Crime, Drama","Once Were Warriors (1994) — Genres: Crime, Drama"
+1195,Strawberry and Chocolate (Fresa y chocolate) (1993),01-Jan-1993,Drama,Strawberry and Chocolate (Fresa y chocolate) (1993) — Genres: Drama
+1196,"Savage Nights (Nuits fauves, Les) (1992)",01-Jan-1992,Drama,"Savage Nights (Nuits fauves, Les) (1992) — Genres: Drama"
+1197,"Family Thing, A (1996)",23-Mar-1996,"Comedy, Drama","Family Thing, A (1996) — Genres: Comedy, Drama"
+1198,Purple Noon (1960),28-Jun-1960,"Crime, Thriller","Purple Noon (1960) — Genres: Crime, Thriller"
+1199,Cemetery Man (Dellamorte Dellamore) (1994),12-Apr-1996,"Comedy, Horror","Cemetery Man (Dellamorte Dellamore) (1994) — Genres: Comedy, Horror"
+1200,Kim (1950),01-Jan-1950,"Children, Drama","Kim (1950) — Genres: Children, Drama"
+1201,Marlene Dietrich: Shadow and Light (1996) ,02-Apr-1996,Documentary,Marlene Dietrich: Shadow and Light (1996)  — Genres: Documentary
+1202,"Maybe, Maybe Not (Bewegte Mann, Der) (1994)",19-Jul-1996,Comedy,"Maybe, Maybe Not (Bewegte Mann, Der) (1994) — Genres: Comedy"
+1203,Top Hat (1935),01-Jan-1935,"Comedy, Musical, Romance","Top Hat (1935) — Genres: Comedy, Musical, Romance"
+1204,To Be or Not to Be (1942),01-Jan-1942,"Comedy, Drama, War","To Be or Not to Be (1942) — Genres: Comedy, Drama, War"
+1205,"Secret Agent, The (1996)",08-Nov-1996,Drama,"Secret Agent, The (1996) — Genres: Drama"
+1206,Amos & Andrew (1993),01-Jan-1993,Comedy,Amos & Andrew (1993) — Genres: Comedy
+1207,Jade (1995),01-Jan-1995,Thriller,Jade (1995) — Genres: Thriller
+1208,Kiss of Death (1995),01-Jan-1995,"Crime, Drama, Thriller","Kiss of Death (1995) — Genres: Crime, Drama, Thriller"
+1209,Mixed Nuts (1994),01-Jan-1994,Comedy,Mixed Nuts (1994) — Genres: Comedy
+1210,Virtuosity (1995),01-Jan-1995,"Sci-Fi, Thriller","Virtuosity (1995) — Genres: Sci-Fi, Thriller"
+1211,Blue Sky (1994),01-Jan-1994,"Drama, Romance","Blue Sky (1994) — Genres: Drama, Romance"
+1212,Flesh and Bone (1993),01-Jan-1993,"Drama, Mystery, Romance","Flesh and Bone (1993) — Genres: Drama, Mystery, Romance"
+1213,Guilty as Sin (1993),01-Jan-1993,"Crime, Drama, Thriller","Guilty as Sin (1993) — Genres: Crime, Drama, Thriller"
+1214,In the Realm of the Senses (Ai no corrida) (1976),08-Mar-1976,Drama,In the Realm of the Senses (Ai no corrida) (1976) — Genres: Drama
+1215,Barb Wire (1996),03-May-1996,"Action, Sci-Fi","Barb Wire (1996) — Genres: Action, Sci-Fi"
+1216,Kissed (1996),18-Apr-1997,Romance,Kissed (1996) — Genres: Romance
+1217,Assassins (1995),01-Jan-1995,Thriller,Assassins (1995) — Genres: Thriller
+1218,Friday (1995),01-Jan-1995,Comedy,Friday (1995) — Genres: Comedy
+1219,"Goofy Movie, A (1995)",01-Jan-1995,"Animation, Children, Comedy, Romance","Goofy Movie, A (1995) — Genres: Animation, Children, Comedy, Romance"
+1220,Higher Learning (1995),01-Jan-1995,Drama,Higher Learning (1995) — Genres: Drama
+1221,When a Man Loves a Woman (1994),01-Jan-1994,Drama,When a Man Loves a Woman (1994) — Genres: Drama
+1222,Judgment Night (1993),01-Jan-1993,Action,Judgment Night (1993) — Genres: Action
+1223,King of the Hill (1993),01-Jan-1993,Drama,King of the Hill (1993) — Genres: Drama
+1224,"Scout, The (1994)",01-Jan-1994,Drama,"Scout, The (1994) — Genres: Drama"
+1225,Angus (1995),01-Jan-1995,Comedy,Angus (1995) — Genres: Comedy
+1226,Night Falls on Manhattan (1997),16-May-1997,"Crime, Drama","Night Falls on Manhattan (1997) — Genres: Crime, Drama"
+1227,"Awfully Big Adventure, An (1995)",01-Jan-1995,Drama,"Awfully Big Adventure, An (1995) — Genres: Drama"
+1228,Under Siege 2: Dark Territory (1995),01-Jan-1995,Action,Under Siege 2: Dark Territory (1995) — Genres: Action
+1229,Poison Ivy II (1995),01-Jan-1995,"Drama, Thriller","Poison Ivy II (1995) — Genres: Drama, Thriller"
+1230,Ready to Wear (Pret-A-Porter) (1994),01-Jan-1994,Comedy,Ready to Wear (Pret-A-Porter) (1994) — Genres: Comedy
+1231,Marked for Death (1990),01-Jan-1990,"Action, Drama","Marked for Death (1990) — Genres: Action, Drama"
+1232,Madonna: Truth or Dare (1991),01-Jan-1991,Documentary,Madonna: Truth or Dare (1991) — Genres: Documentary
+1233,Nénette et Boni (1996),01-Jan-1996,Drama,Nénette et Boni (1996) — Genres: Drama
+1234,Chairman of the Board (1998),01-Jan-1998,Comedy,Chairman of the Board (1998) — Genres: Comedy
+1235,"Big Bang Theory, The (1994)",01-Jan-1994,Crime,"Big Bang Theory, The (1994) — Genres: Crime"
+1236,"Other Voices, Other Rooms (1997)",01-Jan-1997,Drama,"Other Voices, Other Rooms (1997) — Genres: Drama"
+1237,Twisted (1996),01-Jan-1996,"Comedy, Drama","Twisted (1996) — Genres: Comedy, Drama"
+1238,Full Speed (1996),01-Jan-1996,Drama,Full Speed (1996) — Genres: Drama
+1239,Cutthroat Island (1995),01-Jan-1995,"Action, Adventure, Romance","Cutthroat Island (1995) — Genres: Action, Adventure, Romance"
+1240,Ghost in the Shell (Kokaku kidotai) (1995),12-Apr-1996,"Animation, Sci-Fi","Ghost in the Shell (Kokaku kidotai) (1995) — Genres: Animation, Sci-Fi"
+1241,"Van, The (1996)",27-Jun-1997,"Comedy, Drama","Van, The (1996) — Genres: Comedy, Drama"
+1242,"Old Lady Who Walked in the Sea, The (Vieille qui marchait dans la mer, La) (1991)",01-Jan-1991,Comedy,"Old Lady Who Walked in the Sea, The (Vieille qui marchait dans la mer, La) (1991) — Genres: Comedy"
+1243,Night Flier (1997),06-Feb-1998,Horror,Night Flier (1997) — Genres: Horror
+1244,Metro (1997),17-Jan-1997,Action,Metro (1997) — Genres: Action
+1245,Gridlock'd (1997),29-Jan-1997,Crime,Gridlock'd (1997) — Genres: Crime
+1246,Bushwhacked (1995),01-Jan-1995,Comedy,Bushwhacked (1995) — Genres: Comedy
+1247,Bad Girls (1994),01-Jan-1994,Western,Bad Girls (1994) — Genres: Western
+1248,Blink (1994),01-Jan-1994,Thriller,Blink (1994) — Genres: Thriller
+1249,For Love or Money (1993),01-Jan-1993,Comedy,For Love or Money (1993) — Genres: Comedy
+1250,Best of the Best 3: No Turning Back (1995),01-Jan-1995,Action,Best of the Best 3: No Turning Back (1995) — Genres: Action
+1251,A Chef in Love (1996),25-Apr-1997,Comedy,A Chef in Love (1996) — Genres: Comedy
+1252,"Contempt (Mépris, Le) (1963)",27-Jun-1997,Drama,"Contempt (Mépris, Le) (1963) — Genres: Drama"
+1253,"Tie That Binds, The (1995)",01-Jan-1995,Thriller,"Tie That Binds, The (1995) — Genres: Thriller"
+1254,Gone Fishin' (1997),30-May-1997,Comedy,Gone Fishin' (1997) — Genres: Comedy
+1255,Broken English (1996),02-May-1997,Drama,Broken English (1996) — Genres: Drama
+1256,"Designated Mourner, The (1997)",23-May-1997,Drama,"Designated Mourner, The (1997) — Genres: Drama"
+1257,"Designated Mourner, The (1997)",23-May-1997,Drama,"Designated Mourner, The (1997) — Genres: Drama"
+1258,Trial and Error (1997),30-May-1997,"Comedy, Romance","Trial and Error (1997) — Genres: Comedy, Romance"
+1259,Pie in the Sky (1995),09-Feb-1996,"Comedy, Romance","Pie in the Sky (1995) — Genres: Comedy, Romance"
+1260,Total Eclipse (1995),01-Jan-1995,Drama,Total Eclipse (1995) — Genres: Drama
+1261,"Run of the Country, The (1995)",01-Jan-1995,Drama,"Run of the Country, The (1995) — Genres: Drama"
+1262,Walking and Talking (1996),12-Jul-1996,Romance,Walking and Talking (1996) — Genres: Romance
+1263,Foxfire (1996),23-Aug-1996,Drama,Foxfire (1996) — Genres: Drama
+1264,Nothing to Lose (1994),16-Aug-1996,Drama,Nothing to Lose (1994) — Genres: Drama
+1265,Star Maps (1997),01-Jan-1997,Drama,Star Maps (1997) — Genres: Drama
+1266,Bread and Chocolate (Pane e cioccolata) (1973),01-Jan-1973,Drama,Bread and Chocolate (Pane e cioccolata) (1973) — Genres: Drama
+1267,Clockers (1995),01-Jan-1995,Drama,Clockers (1995) — Genres: Drama
+1268,Bitter Moon (1992),01-Jan-1992,Drama,Bitter Moon (1992) — Genres: Drama
+1269,Love in the Afternoon (1957),01-Jan-1957,"Comedy, Romance","Love in the Afternoon (1957) — Genres: Comedy, Romance"
+1270,Life with Mikey (1993),01-Jan-1993,Comedy,Life with Mikey (1993) — Genres: Comedy
+1271,North (1994),01-Jan-1994,Comedy,North (1994) — Genres: Comedy
+1272,Talking About Sex (1994),01-Jan-1994,"Comedy, Drama","Talking About Sex (1994) — Genres: Comedy, Drama"
+1273,Color of Night (1994),01-Jan-1994,"Drama, Thriller","Color of Night (1994) — Genres: Drama, Thriller"
+1274,Robocop 3 (1993),01-Jan-1993,"Sci-Fi, Thriller","Robocop 3 (1993) — Genres: Sci-Fi, Thriller"
+1275,Killer (Bulletproof Heart) (1994),01-Jan-1994,Thriller,Killer (Bulletproof Heart) (1994) — Genres: Thriller
+1276,Sunset Park (1996),26-Apr-1996,Drama,Sunset Park (1996) — Genres: Drama
+1277,Set It Off (1996),25-Sep-1996,"Action, Crime","Set It Off (1996) — Genres: Action, Crime"
+1278,Selena (1997),21-Mar-1997,"Drama, Musical","Selena (1997) — Genres: Drama, Musical"
+1279,Wild America (1997),04-Jul-1997,"Adventure, Children","Wild America (1997) — Genres: Adventure, Children"
+1280,Gang Related (1997),01-Jan-1997,Crime,Gang Related (1997) — Genres: Crime
+1281,Manny & Lo (1996),26-Jul-1996,Drama,Manny & Lo (1996) — Genres: Drama
+1282,"Grass Harp, The (1995)",11-Oct-1996,Drama,"Grass Harp, The (1995) — Genres: Drama"
+1283,Out to Sea (1997),04-Jul-1997,Comedy,Out to Sea (1997) — Genres: Comedy
+1284,Before and After (1996),23-Feb-1996,"Drama, Mystery","Before and After (1996) — Genres: Drama, Mystery"
+1285,Princess Caraboo (1994),01-Jan-1994,Drama,Princess Caraboo (1994) — Genres: Drama
+1286,Shall We Dance? (1937),01-Jan-1937,"Comedy, Musical, Romance","Shall We Dance? (1937) — Genres: Comedy, Musical, Romance"
+1287,Ed (1996),08-Mar-1996,Comedy,Ed (1996) — Genres: Comedy
+1288,Denise Calls Up (1995),29-Mar-1996,Comedy,Denise Calls Up (1995) — Genres: Comedy
+1289,Jack and Sarah (1995),22-Mar-1996,Romance,Jack and Sarah (1995) — Genres: Romance
+1290,Country Life (1994),01-Jan-1994,"Drama, Romance","Country Life (1994) — Genres: Drama, Romance"
+1291,Celtic Pride (1996),19-Apr-1996,Comedy,Celtic Pride (1996) — Genres: Comedy
+1292,"Simple Wish, A (1997)",11-Jul-1997,"Children, Fantasy","Simple Wish, A (1997) — Genres: Children, Fantasy"
+1293,Star Kid (1997),16-Jan-1998,"Adventure, Children, Fantasy, Sci-Fi","Star Kid (1997) — Genres: Adventure, Children, Fantasy, Sci-Fi"
+1294,Ayn Rand: A Sense of Life (1997),13-Feb-1998,Documentary,Ayn Rand: A Sense of Life (1997) — Genres: Documentary
+1295,Kicked in the Head (1997),01-Jan-1997,"Comedy, Drama","Kicked in the Head (1997) — Genres: Comedy, Drama"
+1296,Indian Summer (1996),01-Jan-1996,"Comedy, Drama","Indian Summer (1996) — Genres: Comedy, Drama"
+1297,Love Affair (1994),01-Jan-1994,"Drama, Romance","Love Affair (1994) — Genres: Drama, Romance"
+1298,"Band Wagon, The (1953)",01-Jan-1953,"Comedy, Musical","Band Wagon, The (1953) — Genres: Comedy, Musical"
+1299,Penny Serenade (1941),01-Jan-1941,"Drama, Romance","Penny Serenade (1941) — Genres: Drama, Romance"
+1300,'Til There Was You (1997),30-May-1997,"Drama, Romance","'Til There Was You (1997) — Genres: Drama, Romance"
+1301,Stripes (1981),01-Jan-1981,Comedy,Stripes (1981) — Genres: Comedy
+1302,Late Bloomers (1996),06-Jun-1997,Comedy,Late Bloomers (1996) — Genres: Comedy
+1303,"Getaway, The (1994)",01-Jan-1994,Action,"Getaway, The (1994) — Genres: Action"
+1304,New York Cop (1996),01-Jan-1996,"Action, Crime","New York Cop (1996) — Genres: Action, Crime"
+1305,National Lampoon's Senior Trip (1995),01-Jan-1995,Comedy,National Lampoon's Senior Trip (1995) — Genres: Comedy
+1306,Delta of Venus (1994),01-Jan-1994,Drama,Delta of Venus (1994) — Genres: Drama
+1307,Carmen Miranda: Bananas Is My Business (1994),01-Jan-1994,Documentary,Carmen Miranda: Bananas Is My Business (1994) — Genres: Documentary
+1308,Babyfever (1994),01-Jan-1994,"Comedy, Drama","Babyfever (1994) — Genres: Comedy, Drama"
+1309,"Very Natural Thing, A (1974)",01-Jan-1974,Drama,"Very Natural Thing, A (1974) — Genres: Drama"
+1310,"Walk in the Sun, A (1945)",01-Jan-1945,Drama,"Walk in the Sun, A (1945) — Genres: Drama"
+1311,Waiting to Exhale (1995),15-Jan-1996,"Comedy, Drama","Waiting to Exhale (1995) — Genres: Comedy, Drama"
+1312,"Pompatus of Love, The (1996)",26-Jul-1996,"Comedy, Drama","Pompatus of Love, The (1996) — Genres: Comedy, Drama"
+1313,Palmetto (1998),20-Feb-1998,"Film-Noir, Mystery, Thriller","Palmetto (1998) — Genres: Film-Noir, Mystery, Thriller"
+1314,Surviving the Game (1994),01-Jan-1994,"Action, Adventure, Thriller","Surviving the Game (1994) — Genres: Action, Adventure, Thriller"
+1315,Inventing the Abbotts (1997),04-Apr-1997,"Drama, Romance","Inventing the Abbotts (1997) — Genres: Drama, Romance"
+1316,"Horse Whisperer, The (1998)",25-Dec-1997,Drama,"Horse Whisperer, The (1998) — Genres: Drama"
+1317,"Journey of August King, The (1995)",22-Mar-1996,Drama,"Journey of August King, The (1995) — Genres: Drama"
+1318,Catwalk (1995),07-Jun-1996,Documentary,Catwalk (1995) — Genres: Documentary
+1319,"Neon Bible, The (1995)",01-Mar-1996,Drama,"Neon Bible, The (1995) — Genres: Drama"
+1320,Homage (1995),03-May-1996,Drama,Homage (1995) — Genres: Drama
+1321,Open Season (1996),10-May-1996,Comedy,Open Season (1996) — Genres: Comedy
+1322,Metisse (Café au Lait) (1993),01-Jan-1993,Comedy,Metisse (Café au Lait) (1993) — Genres: Comedy
+1323,"Wooden Man's Bride, The (Wu Kui) (1994)",01-Jan-1994,Drama,"Wooden Man's Bride, The (Wu Kui) (1994) — Genres: Drama"
+1324,Loaded (1994),12-Apr-1996,"Drama, Thriller","Loaded (1994) — Genres: Drama, Thriller"
+1325,August (1996),12-Apr-1996,Drama,August (1996) — Genres: Drama
+1326,Boys (1996),10-May-1996,Drama,Boys (1996) — Genres: Drama
+1327,Captives (1994),16-Sep-1994,Drama,Captives (1994) — Genres: Drama
+1328,Of Love and Shadows (1994),10-May-1996,Drama,Of Love and Shadows (1994) — Genres: Drama
+1329,"Low Life, The (1994)",10-May-1996,Drama,"Low Life, The (1994) — Genres: Drama"
+1330,An Unforgettable Summer (1994),01-Jan-1994,Drama,An Unforgettable Summer (1994) — Genres: Drama
+1331,"Last Klezmer: Leopold Kozlowski, His Life and Music, The (1995)",01-Jan-1995,Documentary,"Last Klezmer: Leopold Kozlowski, His Life and Music, The (1995) — Genres: Documentary"
+1332,My Life and Times With Antonin Artaud (En compagnie d'Antonin Artaud) (1993),01-Jan-1993,Drama,My Life and Times With Antonin Artaud (En compagnie d'Antonin Artaud) (1993) — Genres: Drama
+1333,Midnight Dancers (Sibak) (1994),01-Jan-1994,"Comedy, Drama","Midnight Dancers (Sibak) (1994) — Genres: Comedy, Drama"
+1334,Somebody to Love (1994),14-Jun-1996,Drama,Somebody to Love (1994) — Genres: Drama
+1335,American Buffalo (1996),13-Sep-1996,Drama,American Buffalo (1996) — Genres: Drama
+1336,Kazaam (1996),17-Jul-1996,"Children, Comedy, Fantasy","Kazaam (1996) — Genres: Children, Comedy, Fantasy"
+1337,Larger Than Life (1996),01-Nov-1996,Comedy,Larger Than Life (1996) — Genres: Comedy
+1338,Two Deaths (1995),09-Aug-1996,Drama,Two Deaths (1995) — Genres: Drama
+1339,Stefano Quantestorie (1993),01-Jan-1993,"Comedy, Drama","Stefano Quantestorie (1993) — Genres: Comedy, Drama"
+1340,"Crude Oasis, The (1995)",01-Jan-1995,Romance,"Crude Oasis, The (1995) — Genres: Romance"
+1341,Hedd Wyn (1992),01-Jan-1992,Drama,Hedd Wyn (1992) — Genres: Drama
+1342,"Convent, The (Convento, O) (1995)",14-Jun-1996,Drama,"Convent, The (Convento, O) (1995) — Genres: Drama"
+1343,Lotto Land (1995),01-Jan-1995,Drama,Lotto Land (1995) — Genres: Drama
+1344,"Story of Xinghua, The (1993)",01-Jan-1993,Drama,"Story of Xinghua, The (1993) — Genres: Drama"
+1345,"Day the Sun Turned Cold, The (Tianguo niezi) (1994)",01-Jan-1994,Drama,"Day the Sun Turned Cold, The (Tianguo niezi) (1994) — Genres: Drama"
+1346,Dingo (1992),01-Jan-1992,Drama,Dingo (1992) — Genres: Drama
+1347,"Ballad of Narayama, The (Narayama Bushiko) (1958)",01-Jan-1958,Drama,"Ballad of Narayama, The (Narayama Bushiko) (1958) — Genres: Drama"
+1348,Every Other Weekend (1990),01-Jan-1990,Drama,Every Other Weekend (1990) — Genres: Drama
+1349,Mille bolle blu (1993),01-Jan-1993,Comedy,Mille bolle blu (1993) — Genres: Comedy
+1350,Crows and Sparrows (1949),01-Jan-1949,Drama,Crows and Sparrows (1949) — Genres: Drama
+1351,Lover's Knot (1996),12-Jul-1996,Comedy,Lover's Knot (1996) — Genres: Comedy
+1352,Shadow of Angels (Schatten der Engel) (1976),01-Jan-1976,Drama,Shadow of Angels (Schatten der Engel) (1976) — Genres: Drama
+1353,1-900 (1994),01-Jan-1994,Romance,1-900 (1994) — Genres: Romance
+1354,Venice/Venice (1992),01-Jan-1992,Drama,Venice/Venice (1992) — Genres: Drama
+1355,Infinity (1996),04-Oct-1996,Drama,Infinity (1996) — Genres: Drama
+1356,Ed's Next Move (1996),04-Oct-1996,Comedy,Ed's Next Move (1996) — Genres: Comedy
+1357,For the Moment (1994),01-Jan-1994,"Romance, War","For the Moment (1994) — Genres: Romance, War"
+1358,The Deadly Cure (1996),16-Sep-1996,Action,The Deadly Cure (1996) — Genres: Action
+1359,Boys in Venice (1996),24-Sep-1996,Drama,Boys in Venice (1996) — Genres: Drama
+1360,"Sexual Life of the Belgians, The (1994)",01-Jan-1994,Comedy,"Sexual Life of the Belgians, The (1994) — Genres: Comedy"
+1361,"Search for One-eye Jimmy, The (1996)",01-Jan-1996,Comedy,"Search for One-eye Jimmy, The (1996) — Genres: Comedy"
+1362,American Strays (1996),13-Sep-1996,Action,American Strays (1996) — Genres: Action
+1363,"Leopard Son, The (1996)",27-Sep-1996,Documentary,"Leopard Son, The (1996) — Genres: Documentary"
+1364,Bird of Prey (1996),04-Oct-1996,Action,Bird of Prey (1996) — Genres: Action
+1365,Johnny 100 Pesos (1993),01-Jan-1993,"Action, Drama","Johnny 100 Pesos (1993) — Genres: Action, Drama"
+1366,JLG/JLG - autoportrait de décembre (1994),01-Jan-1994,"Documentary, Drama","JLG/JLG - autoportrait de décembre (1994) — Genres: Documentary, Drama"
+1367,Faust (1994),01-Jan-1994,Animation,Faust (1994) — Genres: Animation
+1368,Mina Tannenbaum (1994),01-Jan-1994,Drama,Mina Tannenbaum (1994) — Genres: Drama
+1369,"Forbidden Christ, The (Cristo proibito, Il) (1950)",01-Jan-1950,Drama,"Forbidden Christ, The (Cristo proibito, Il) (1950) — Genres: Drama"
+1370,I Can't Sleep (J'ai pas sommeil) (1994),01-Jan-1994,"Drama, Thriller","I Can't Sleep (J'ai pas sommeil) (1994) — Genres: Drama, Thriller"
+1371,"Machine, The (1994)",01-Jan-1994,"Comedy, Horror","Machine, The (1994) — Genres: Comedy, Horror"
+1372,"Stranger, The (1994)",01-Jan-1994,Action,"Stranger, The (1994) — Genres: Action"
+1373,Good Morning (1971),4-Feb-1971,unknown,Good Morning (1971) — Genres: unknown
+1374,Falling in Love Again (1980),01-Jan-1980,Comedy,Falling in Love Again (1980) — Genres: Comedy
+1375,"Cement Garden, The (1993)",01-Jan-1993,Drama,"Cement Garden, The (1993) — Genres: Drama"
+1376,Meet Wally Sparks (1997),31-Jan-1997,Comedy,Meet Wally Sparks (1997) — Genres: Comedy
+1377,Hotel de Love (1996),07-Feb-1997,"Comedy, Romance","Hotel de Love (1996) — Genres: Comedy, Romance"
+1378,Rhyme & Reason (1997),05-Mar-1997,Documentary,Rhyme & Reason (1997) — Genres: Documentary
+1379,Love and Other Catastrophes (1996),28-Mar-1997,Romance,Love and Other Catastrophes (1996) — Genres: Romance
+1380,Hollow Reed (1996),02-May-1997,Drama,Hollow Reed (1996) — Genres: Drama
+1381,Losing Chase (1996),01-Jan-1996,Drama,Losing Chase (1996) — Genres: Drama
+1382,"Bonheur, Le (1965)",16-May-1997,Drama,"Bonheur, Le (1965) — Genres: Drama"
+1383,"Second Jungle Book: Mowgli & Baloo, The (1997)",16-May-1997,"Adventure, Children","Second Jungle Book: Mowgli & Baloo, The (1997) — Genres: Adventure, Children"
+1384,Squeeze (1996),13-Jun-1997,Drama,Squeeze (1996) — Genres: Drama
+1385,Roseanna's Grave (For Roseanna) (1997),20-Jun-1997,"Comedy, Romance","Roseanna's Grave (For Roseanna) (1997) — Genres: Comedy, Romance"
+1386,Tetsuo II: Body Hammer (1992),20-Jun-1997,Sci-Fi,Tetsuo II: Body Hammer (1992) — Genres: Sci-Fi
+1387,Fall (1997),27-Jun-1997,Romance,Fall (1997) — Genres: Romance
+1388,Gabbeh (1996),27-Jun-1997,Drama,Gabbeh (1996) — Genres: Drama
+1389,Mondo (1996),27-Jun-1997,Drama,Mondo (1996) — Genres: Drama
+1390,"Innocent Sleep, The (1995)",27-Jun-1997,Crime,"Innocent Sleep, The (1995) — Genres: Crime"
+1391,For Ever Mozart (1996),04-Jul-1997,Drama,For Ever Mozart (1996) — Genres: Drama
+1392,"Locusts, The (1997)",01-Jan-1997,Drama,"Locusts, The (1997) — Genres: Drama"
+1393,Stag (1997),01-Jan-1997,"Action, Thriller","Stag (1997) — Genres: Action, Thriller"
+1394,Swept from the Sea (1997),01-Jan-1997,Romance,Swept from the Sea (1997) — Genres: Romance
+1395,Hurricane Streets (1998),01-Jan-1998,Drama,Hurricane Streets (1998) — Genres: Drama
+1396,Stonewall (1995),26-Jul-1996,Drama,Stonewall (1995) — Genres: Drama
+1397,Of Human Bondage (1934),01-Jan-1934,Drama,Of Human Bondage (1934) — Genres: Drama
+1398,Anna (1996),13-Nov-1996,Drama,Anna (1996) — Genres: Drama
+1399,Stranger in the House (1997),01-Jan-1997,Thriller,Stranger in the House (1997) — Genres: Thriller
+1400,Picture Bride (1995),01-Jan-1995,"Drama, Romance","Picture Bride (1995) — Genres: Drama, Romance"
+1401,M. Butterfly (1993),01-Jan-1993,Drama,M. Butterfly (1993) — Genres: Drama
+1402,"Ciao, Professore! (1993)",01-Jan-1993,Drama,"Ciao, Professore! (1993) — Genres: Drama"
+1403,Caro Diario (Dear Diary) (1994),01-Jan-1994,"Comedy, Drama","Caro Diario (Dear Diary) (1994) — Genres: Comedy, Drama"
+1404,Withnail and I (1987),01-Jan-1987,Comedy,Withnail and I (1987) — Genres: Comedy
+1405,Boy's Life 2 (1997),07-Mar-1997,Drama,Boy's Life 2 (1997) — Genres: Drama
+1406,When Night Is Falling (1995),01-Jan-1995,"Drama, Romance","When Night Is Falling (1995) — Genres: Drama, Romance"
+1407,"Specialist, The (1994)",01-Jan-1994,Action,"Specialist, The (1994) — Genres: Action"
+1408,Gordy (1995),01-Jan-1995,Comedy,Gordy (1995) — Genres: Comedy
+1409,"Swan Princess, The (1994)",01-Jan-1994,"Animation, Children","Swan Princess, The (1994) — Genres: Animation, Children"
+1410,Harlem (1993),01-Jan-1993,Drama,Harlem (1993) — Genres: Drama
+1411,Barbarella (1968),01-Jan-1968,"Adventure, Sci-Fi","Barbarella (1968) — Genres: Adventure, Sci-Fi"
+1412,Land Before Time III: The Time of the Great Giving (1995) (V),01-Jan-1995,"Animation, Children","Land Before Time III: The Time of the Great Giving (1995) (V) — Genres: Animation, Children"
+1413,Street Fighter (1994),01-Jan-1994,Action,Street Fighter (1994) — Genres: Action
+1414,Coldblooded (1995),01-Jan-1995,Action,Coldblooded (1995) — Genres: Action
+1415,"Next Karate Kid, The (1994)",01-Jan-1994,"Action, Children","Next Karate Kid, The (1994) — Genres: Action, Children"
+1416,No Escape (1994),01-Jan-1994,"Action, Sci-Fi","No Escape (1994) — Genres: Action, Sci-Fi"
+1417,"Turning, The (1992)",02-May-1997,Drama,"Turning, The (1992) — Genres: Drama"
+1418,"Joy Luck Club, The (1993)",01-Jan-1993,Drama,"Joy Luck Club, The (1993) — Genres: Drama"
+1419,Highlander III: The Sorcerer (1994),01-Jan-1994,"Action, Sci-Fi","Highlander III: The Sorcerer (1994) — Genres: Action, Sci-Fi"
+1420,Gilligan's Island: The Movie (1998),01-Jan-1997,Comedy,Gilligan's Island: The Movie (1998) — Genres: Comedy
+1421,My Crazy Life (Mi vida loca) (1993),01-Jan-1993,Drama,My Crazy Life (Mi vida loca) (1993) — Genres: Drama
+1422,Suture (1993),01-Jan-1993,"Film-Noir, Thriller","Suture (1993) — Genres: Film-Noir, Thriller"
+1423,"Walking Dead, The (1995)",01-Jan-1995,"Drama, War","Walking Dead, The (1995) — Genres: Drama, War"
+1424,I Like It Like That (1994),01-Jan-1994,"Comedy, Drama, Romance","I Like It Like That (1994) — Genres: Comedy, Drama, Romance"
+1425,I'll Do Anything (1994),01-Jan-1994,"Comedy, Drama","I'll Do Anything (1994) — Genres: Comedy, Drama"
+1426,Grace of My Heart (1996),13-Sep-1996,"Comedy, Drama","Grace of My Heart (1996) — Genres: Comedy, Drama"
+1427,Drunks (1995),01-Nov-1996,Drama,Drunks (1995) — Genres: Drama
+1428,SubUrbia (1997),07-Feb-1997,Comedy,SubUrbia (1997) — Genres: Comedy
+1429,Sliding Doors (1998),01-Jan-1998,"Drama, Romance","Sliding Doors (1998) — Genres: Drama, Romance"
+1430,Ill Gotten Gains (1997),01-Jan-1997,Drama,Ill Gotten Gains (1997) — Genres: Drama
+1431,Legal Deceit (1997),01-Jan-1997,Thriller,Legal Deceit (1997) — Genres: Thriller
+1432,"Mighty, The (1998)",09-Oct-1998,Drama,"Mighty, The (1998) — Genres: Drama"
+1433,Men of Means (1998),01-Jan-1997,"Action, Drama","Men of Means (1998) — Genres: Action, Drama"
+1434,Shooting Fish (1997),16-Jan-1998,Romance,Shooting Fish (1997) — Genres: Romance
+1435,"Steal Big, Steal Little (1995)",01-Jan-1995,Comedy,"Steal Big, Steal Little (1995) — Genres: Comedy"
+1436,Mr. Jones (1993),01-Jan-1993,"Drama, Romance","Mr. Jones (1993) — Genres: Drama, Romance"
+1437,House Party 3 (1994),01-Jan-1994,Comedy,House Party 3 (1994) — Genres: Comedy
+1438,Panther (1995),01-Jan-1995,Drama,Panther (1995) — Genres: Drama
+1439,Jason's Lyric (1994),01-Jan-1994,"Crime, Drama","Jason's Lyric (1994) — Genres: Crime, Drama"
+1440,Above the Rim (1994),01-Jan-1994,Drama,Above the Rim (1994) — Genres: Drama
+1441,Moonlight and Valentino (1995),01-Jan-1995,"Drama, Romance","Moonlight and Valentino (1995) — Genres: Drama, Romance"
+1442,"Scarlet Letter, The (1995)",01-Jan-1995,Drama,"Scarlet Letter, The (1995) — Genres: Drama"
+1443,8 Seconds (1994),01-Jan-1994,Drama,8 Seconds (1994) — Genres: Drama
+1444,That Darn Cat! (1965),01-Jan-1965,"Children, Comedy, Mystery","That Darn Cat! (1965) — Genres: Children, Comedy, Mystery"
+1445,Ladybird Ladybird (1994),01-Jan-1994,Drama,Ladybird Ladybird (1994) — Genres: Drama
+1446,"Bye Bye, Love (1995)",01-Jan-1995,Comedy,"Bye Bye, Love (1995) — Genres: Comedy"
+1447,Century (1993),01-Jan-1993,Drama,Century (1993) — Genres: Drama
+1448,My Favorite Season (1993),19-Apr-1996,Drama,My Favorite Season (1993) — Genres: Drama
+1449,Pather Panchali (1955),22-Mar-1996,Drama,Pather Panchali (1955) — Genres: Drama
+1450,Golden Earrings (1947),01-Jan-1947,"Adventure, Romance","Golden Earrings (1947) — Genres: Adventure, Romance"
+1451,Foreign Correspondent (1940),01-Jan-1940,Thriller,Foreign Correspondent (1940) — Genres: Thriller
+1452,Lady of Burlesque (1943),01-Jan-1943,"Comedy, Mystery","Lady of Burlesque (1943) — Genres: Comedy, Mystery"
+1453,Angel on My Shoulder (1946),01-Jan-1946,"Crime, Drama","Angel on My Shoulder (1946) — Genres: Crime, Drama"
+1454,Angel and the Badman (1947),01-Jan-1947,Western,Angel and the Badman (1947) — Genres: Western
+1455,"Outlaw, The (1943)",01-Jan-1943,Western,"Outlaw, The (1943) — Genres: Western"
+1456,Beat the Devil (1954),01-Jan-1954,"Comedy, Drama","Beat the Devil (1954) — Genres: Comedy, Drama"
+1457,Love Is All There Is (1996),11-Oct-1996,"Comedy, Drama","Love Is All There Is (1996) — Genres: Comedy, Drama"
+1458,"Damsel in Distress, A (1937)",01-Jan-1937,"Comedy, Musical, Romance","Damsel in Distress, A (1937) — Genres: Comedy, Musical, Romance"
+1459,Madame Butterfly (1995),20-Sep-1996,Musical,Madame Butterfly (1995) — Genres: Musical
+1460,Sleepover (1995),25-Oct-1996,"Comedy, Drama","Sleepover (1995) — Genres: Comedy, Drama"
+1461,Here Comes Cookie (1935),01-Jan-1935,Comedy,Here Comes Cookie (1935) — Genres: Comedy
+1462,"Thieves (Voleurs, Les) (1996)",25-Dec-1996,"Crime, Drama, Romance","Thieves (Voleurs, Les) (1996) — Genres: Crime, Drama, Romance"
+1463,"Boys, Les (1997)",01-Jan-1997,Comedy,"Boys, Les (1997) — Genres: Comedy"
+1464,"Stars Fell on Henrietta, The (1995)",01-Jan-1995,Drama,"Stars Fell on Henrietta, The (1995) — Genres: Drama"
+1465,Last Summer in the Hamptons (1995),01-Jan-1995,"Comedy, Drama","Last Summer in the Hamptons (1995) — Genres: Comedy, Drama"
+1466,Margaret's Museum (1995),01-Jan-1995,Drama,Margaret's Museum (1995) — Genres: Drama
+1467,"Saint of Fort Washington, The (1993)",01-Jan-1993,Drama,"Saint of Fort Washington, The (1993) — Genres: Drama"
+1468,"Cure, The (1995)",01-Jan-1995,Drama,"Cure, The (1995) — Genres: Drama"
+1469,Tom and Huck (1995),01-Jan-1995,"Adventure, Children","Tom and Huck (1995) — Genres: Adventure, Children"
+1470,Gumby: The Movie (1995),01-Jan-1995,"Animation, Children","Gumby: The Movie (1995) — Genres: Animation, Children"
+1471,Hideaway (1995),01-Jan-1995,Thriller,Hideaway (1995) — Genres: Thriller
+1472,"Visitors, The (Visiteurs, Les) (1993)",19-Jul-1996,"Comedy, Sci-Fi","Visitors, The (Visiteurs, Les) (1993) — Genres: Comedy, Sci-Fi"
+1473,"Little Princess, The (1939)",01-Jan-1939,"Children, Drama","Little Princess, The (1939) — Genres: Children, Drama"
+1474,Nina Takes a Lover (1994),01-Jan-1994,"Comedy, Romance","Nina Takes a Lover (1994) — Genres: Comedy, Romance"
+1475,Bhaji on the Beach (1993),01-Jan-1993,"Comedy, Drama","Bhaji on the Beach (1993) — Genres: Comedy, Drama"
+1476,Raw Deal (1948),01-Jan-1948,Film-Noir,Raw Deal (1948) — Genres: Film-Noir
+1477,Nightwatch (1997),22-Apr-1997,"Horror, Thriller","Nightwatch (1997) — Genres: Horror, Thriller"
+1478,Dead Presidents (1995),01-Jan-1995,"Action, Crime, Drama","Dead Presidents (1995) — Genres: Action, Crime, Drama"
+1479,Reckless (1995),01-Jan-1995,Comedy,Reckless (1995) — Genres: Comedy
+1480,Herbie Rides Again (1974),01-Jan-1974,"Adventure, Children, Comedy","Herbie Rides Again (1974) — Genres: Adventure, Children, Comedy"
+1481,S.F.W. (1994),01-Jan-1994,Drama,S.F.W. (1994) — Genres: Drama
+1482,"Gate of Heavenly Peace, The (1995)",10-May-1996,Documentary,"Gate of Heavenly Peace, The (1995) — Genres: Documentary"
+1483,"Man in the Iron Mask, The (1998)",17-Mar-1998,"Action, Drama, Romance","Man in the Iron Mask, The (1998) — Genres: Action, Drama, Romance"
+1484,"Jerky Boys, The (1994)",01-Jan-1994,"Action, Comedy","Jerky Boys, The (1994) — Genres: Action, Comedy"
+1485,"Colonel Chabert, Le (1994)",01-Jan-1994,"Drama, Romance, War","Colonel Chabert, Le (1994) — Genres: Drama, Romance, War"
+1486,Girl in the Cadillac (1995),01-Jan-1995,Drama,Girl in the Cadillac (1995) — Genres: Drama
+1487,Even Cowgirls Get the Blues (1993),01-Jan-1993,"Comedy, Romance","Even Cowgirls Get the Blues (1993) — Genres: Comedy, Romance"
+1488,Germinal (1993),01-Jan-1993,Drama,Germinal (1993) — Genres: Drama
+1489,Chasers (1994),01-Jan-1994,Comedy,Chasers (1994) — Genres: Comedy
+1490,Fausto (1993),01-Jan-1993,Comedy,Fausto (1993) — Genres: Comedy
+1491,Tough and Deadly (1995),01-Jan-1995,"Action, Drama, Thriller","Tough and Deadly (1995) — Genres: Action, Drama, Thriller"
+1492,Window to Paris (1994),01-Jan-1994,Comedy,Window to Paris (1994) — Genres: Comedy
+1493,"Modern Affair, A (1995)",06-Sep-1996,Romance,"Modern Affair, A (1995) — Genres: Romance"
+1494,"Mostro, Il (1994)",19-Apr-1996,Comedy,"Mostro, Il (1994) — Genres: Comedy"
+1495,Flirt (1995),07-Aug-1996,Drama,Flirt (1995) — Genres: Drama
+1496,Carpool (1996),23-Aug-1996,"Comedy, Crime","Carpool (1996) — Genres: Comedy, Crime"
+1497,"Line King: Al Hirschfeld, The (1996)",11-Oct-1996,Documentary,"Line King: Al Hirschfeld, The (1996) — Genres: Documentary"
+1498,Farmer & Chase (1995),10-Jan-1997,Comedy,Farmer & Chase (1995) — Genres: Comedy
+1499,Grosse Fatigue (1994),01-Jan-1994,Comedy,Grosse Fatigue (1994) — Genres: Comedy
+1500,Santa with Muscles (1996),08-Nov-1996,Comedy,Santa with Muscles (1996) — Genres: Comedy
+1501,Prisoner of the Mountains (Kavkazsky Plennik) (1996),31-Jan-1997,War,Prisoner of the Mountains (Kavkazsky Plennik) (1996) — Genres: War
+1502,Naked in New York (1994),01-Jan-1994,"Comedy, Romance","Naked in New York (1994) — Genres: Comedy, Romance"
+1503,Gold Diggers: The Secret of Bear Mountain (1995),01-Jan-1995,"Adventure, Children","Gold Diggers: The Secret of Bear Mountain (1995) — Genres: Adventure, Children"
+1504,"Bewegte Mann, Der (1994)",12-Jul-1996,Comedy,"Bewegte Mann, Der (1994) — Genres: Comedy"
+1505,Killer: A Journal of Murder (1995),06-Sep-1996,"Crime, Drama","Killer: A Journal of Murder (1995) — Genres: Crime, Drama"
+1506,Nelly & Monsieur Arnaud (1995),12-Apr-1996,Drama,Nelly & Monsieur Arnaud (1995) — Genres: Drama
+1507,Three Lives and Only One Death (1996),11-Oct-1996,Comedy,Three Lives and Only One Death (1996) — Genres: Comedy
+1508,"Babysitter, The (1995)",01-Jan-1995,"Drama, Thriller","Babysitter, The (1995) — Genres: Drama, Thriller"
+1509,Getting Even with Dad (1994),01-Jan-1994,Comedy,Getting Even with Dad (1994) — Genres: Comedy
+1510,Mad Dog Time (1996),08-Nov-1996,Crime,Mad Dog Time (1996) — Genres: Crime
+1511,Children of the Revolution (1996),01-May-1997,Comedy,Children of the Revolution (1996) — Genres: Comedy
+1512,"World of Apu, The (Apur Sansar) (1959)",05-Apr-1996,Drama,"World of Apu, The (Apur Sansar) (1959) — Genres: Drama"
+1513,Sprung (1997),14-May-1997,Comedy,Sprung (1997) — Genres: Comedy
+1514,Dream With the Fishes (1997),20-Jun-1997,Drama,Dream With the Fishes (1997) — Genres: Drama
+1515,Wings of Courage (1995),01-Jan-1995,"Adventure, Romance","Wings of Courage (1995) — Genres: Adventure, Romance"
+1516,"Wedding Gift, The (1994)",01-Jan-1994,Drama,"Wedding Gift, The (1994) — Genres: Drama"
+1517,Race the Sun (1996),01-Jan-1996,Drama,Race the Sun (1996) — Genres: Drama
+1518,Losing Isaiah (1995),01-Jan-1995,Drama,Losing Isaiah (1995) — Genres: Drama
+1519,New Jersey Drive (1995),01-Jan-1995,"Crime, Drama","New Jersey Drive (1995) — Genres: Crime, Drama"
+1520,"Fear, The (1995)",01-Jan-1995,Horror,"Fear, The (1995) — Genres: Horror"
+1521,Mr. Wonderful (1993),01-Jan-1993,"Comedy, Romance","Mr. Wonderful (1993) — Genres: Comedy, Romance"
+1522,Trial by Jury (1994),01-Jan-1994,Thriller,Trial by Jury (1994) — Genres: Thriller
+1523,"Good Man in Africa, A (1994)",01-Jan-1994,"Action, Adventure","Good Man in Africa, A (1994) — Genres: Action, Adventure"
+1524,Kaspar Hauser (1993),07-Jun-1996,Drama,Kaspar Hauser (1993) — Genres: Drama
+1525,"Object of My Affection, The (1998)",20-Mar-1998,"Comedy, Romance","Object of My Affection, The (1998) — Genres: Comedy, Romance"
+1526,Witness (1985),01-Jan-1985,"Drama, Romance, Thriller","Witness (1985) — Genres: Drama, Romance, Thriller"
+1527,Senseless (1998),09-Jan-1998,Comedy,Senseless (1998) — Genres: Comedy
+1528,Nowhere (1997),09-May-1997,Drama,Nowhere (1997) — Genres: Drama
+1529,Underground (1995),29-Mar-1996,War,Underground (1995) — Genres: War
+1530,Jefferson in Paris (1995),01-Jan-1995,Drama,Jefferson in Paris (1995) — Genres: Drama
+1531,Far From Home: The Adventures of Yellow Dog (1995),01-Jan-1995,"Adventure, Children","Far From Home: The Adventures of Yellow Dog (1995) — Genres: Adventure, Children"
+1532,Foreign Student (1994),01-Jan-1994,Drama,Foreign Student (1994) — Genres: Drama
+1533,I Don't Want to Talk About It (De eso no se habla) (1993),01-Jan-1993,Drama,I Don't Want to Talk About It (De eso no se habla) (1993) — Genres: Drama
+1534,Twin Town (1997),30-May-1997,"Comedy, Crime","Twin Town (1997) — Genres: Comedy, Crime"
+1535,"Enfer, L' (1994)",01-Jan-1994,Drama,"Enfer, L' (1994) — Genres: Drama"
+1536,Aiqing wansui (1994),22-Jul-1996,Drama,Aiqing wansui (1994) — Genres: Drama
+1537,Cosi (1996),11-Apr-1997,Comedy,Cosi (1996) — Genres: Comedy
+1538,All Over Me (1997),25-Apr-1997,Drama,All Over Me (1997) — Genres: Drama
+1539,Being Human (1993),01-Jan-1993,Drama,Being Human (1993) — Genres: Drama
+1540,"Amazing Panda Adventure, The (1995)",01-Jan-1995,"Adventure, Children","Amazing Panda Adventure, The (1995) — Genres: Adventure, Children"
+1541,"Beans of Egypt, Maine, The (1994)",01-Jan-1994,Drama,"Beans of Egypt, Maine, The (1994) — Genres: Drama"
+1542,"Scarlet Letter, The (1926)",01-Jan-1926,Drama,"Scarlet Letter, The (1926) — Genres: Drama"
+1543,Johns (1996),18-Oct-1996,Drama,Johns (1996) — Genres: Drama
+1544,It Takes Two (1995),01-Jan-1995,Comedy,It Takes Two (1995) — Genres: Comedy
+1545,Frankie Starlight (1995),01-Jan-1995,"Drama, Romance","Frankie Starlight (1995) — Genres: Drama, Romance"
+1546,Shadows (Cienie) (1988),01-Jan-1988,Drama,Shadows (Cienie) (1988) — Genres: Drama
+1547,"Show, The (1995)",01-Jan-1995,Documentary,"Show, The (1995) — Genres: Documentary"
+1548,The Courtyard (1995),01-Jan-1995,"Action, Thriller","The Courtyard (1995) — Genres: Action, Thriller"
+1549,Dream Man (1995),01-Jan-1995,Thriller,Dream Man (1995) — Genres: Thriller
+1550,Destiny Turns on the Radio (1995),01-Jan-1995,Comedy,Destiny Turns on the Radio (1995) — Genres: Comedy
+1551,"Glass Shield, The (1994)",01-Jan-1994,Drama,"Glass Shield, The (1994) — Genres: Drama"
+1552,"Hunted, The (1995)",01-Jan-1995,Action,"Hunted, The (1995) — Genres: Action"
+1553,"Underneath, The (1995)",01-Jan-1995,"Mystery, Thriller","Underneath, The (1995) — Genres: Mystery, Thriller"
+1554,Safe Passage (1994),01-Jan-1994,Drama,Safe Passage (1994) — Genres: Drama
+1555,"Secret Adventures of Tom Thumb, The (1993)",01-Jan-1993,"Adventure, Children","Secret Adventures of Tom Thumb, The (1993) — Genres: Adventure, Children"
+1556,Condition Red (1995),01-Jan-1995,"Action, Drama, Thriller","Condition Red (1995) — Genres: Action, Drama, Thriller"
+1557,Yankee Zulu (1994),16-Feb-1996,"Comedy, Drama","Yankee Zulu (1994) — Genres: Comedy, Drama"
+1558,Aparajito (1956),29-Mar-1996,Drama,Aparajito (1956) — Genres: Drama
+1559,Hostile Intentions (1994),01-Jan-1994,"Action, Drama, Thriller","Hostile Intentions (1994) — Genres: Action, Drama, Thriller"
+1560,Clean Slate (Coup de Torchon) (1981),01-Jan-1981,Crime,Clean Slate (Coup de Torchon) (1981) — Genres: Crime
+1561,Tigrero: A Film That Was Never Made (1994),01-Jan-1994,"Documentary, Drama","Tigrero: A Film That Was Never Made (1994) — Genres: Documentary, Drama"
+1562,"Eye of Vichy, The (Oeil de Vichy, L') (1993)",01-Jan-1993,Documentary,"Eye of Vichy, The (Oeil de Vichy, L') (1993) — Genres: Documentary"
+1563,"Promise, The (Versprechen, Das) (1994)",01-Jan-1994,Romance,"Promise, The (Versprechen, Das) (1994) — Genres: Romance"
+1564,To Cross the Rubicon (1991),01-Jan-1991,Drama,To Cross the Rubicon (1991) — Genres: Drama
+1565,Daens (1992),01-Jan-1992,Drama,Daens (1992) — Genres: Drama
+1566,"Man from Down Under, The (1943)",01-Jan-1943,Drama,"Man from Down Under, The (1943) — Genres: Drama"
+1567,Careful (1992),01-Jan-1992,Comedy,Careful (1992) — Genres: Comedy
+1568,Vermont Is For Lovers (1992),01-Jan-1992,"Comedy, Romance","Vermont Is For Lovers (1992) — Genres: Comedy, Romance"
+1569,"Vie est belle, La (Life is Rosey) (1987)",01-Jan-1987,"Comedy, Drama","Vie est belle, La (Life is Rosey) (1987) — Genres: Comedy, Drama"
+1570,Quartier Mozart (1992),01-Jan-1992,Comedy,Quartier Mozart (1992) — Genres: Comedy
+1571,Touki Bouki (Journey of the Hyena) (1973),01-Jan-1973,Drama,Touki Bouki (Journey of the Hyena) (1973) — Genres: Drama
+1572,Wend Kuuni (God's Gift) (1982),01-Jan-1982,Drama,Wend Kuuni (God's Gift) (1982) — Genres: Drama
+1573,Spirits of the Dead (Tre passi nel delirio) (1968),01-Jan-1968,Horror,Spirits of the Dead (Tre passi nel delirio) (1968) — Genres: Horror
+1574,Pharaoh's Army (1995),01-Jan-1995,War,Pharaoh's Army (1995) — Genres: War
+1575,"I, Worst of All (Yo, la peor de todas) (1990)",01-Jan-1990,Drama,"I, Worst of All (Yo, la peor de todas) (1990) — Genres: Drama"
+1576,"Hungarian Fairy Tale, A (1987)",01-Jan-1987,Fantasy,"Hungarian Fairy Tale, A (1987) — Genres: Fantasy"
+1577,"Death in the Garden (Mort en ce jardin, La) (1956)",01-Jan-1956,Drama,"Death in the Garden (Mort en ce jardin, La) (1956) — Genres: Drama"
+1578,"Collectionneuse, La (1967)",01-Jan-1967,Drama,"Collectionneuse, La (1967) — Genres: Drama"
+1579,Baton Rouge (1988),01-Jan-1988,Thriller,Baton Rouge (1988) — Genres: Thriller
+1580,Liebelei (1933),01-Jan-1933,Romance,Liebelei (1933) — Genres: Romance
+1581,"Woman in Question, The (1950)",01-Jan-1950,Mystery,"Woman in Question, The (1950) — Genres: Mystery"
+1582,T-Men (1947),01-Jan-1947,Film-Noir,T-Men (1947) — Genres: Film-Noir
+1583,"Invitation, The (Zaproszenie) (1986)",01-Jan-1986,Drama,"Invitation, The (Zaproszenie) (1986) — Genres: Drama"
+1584,"Symphonie pastorale, La (1946)",01-Jan-1946,Drama,"Symphonie pastorale, La (1946) — Genres: Drama"
+1585,American Dream (1990),01-Jan-1990,Documentary,American Dream (1990) — Genres: Documentary
+1586,Lashou shentan (1992),01-Jan-1992,"Action, Crime, Drama","Lashou shentan (1992) — Genres: Action, Crime, Drama"
+1587,Terror in a Texas Town (1958),01-Jan-1958,Western,Terror in a Texas Town (1958) — Genres: Western
+1588,Salut cousin! (1996),21-Feb-1997,"Comedy, Drama","Salut cousin! (1996) — Genres: Comedy, Drama"
+1589,Schizopolis (1996),23-May-1997,Comedy,Schizopolis (1996) — Genres: Comedy
+1590,"To Have, or Not (1995)",06-Jun-1997,Drama,"To Have, or Not (1995) — Genres: Drama"
+1591,Duoluo tianshi (1995),21-Jan-1998,Drama,Duoluo tianshi (1995) — Genres: Drama
+1592,"Magic Hour, The (1998)",30-Jan-1998,Drama,"Magic Hour, The (1998) — Genres: Drama"
+1593,Death in Brunswick (1991),16-Aug-1996,Comedy,Death in Brunswick (1991) — Genres: Comedy
+1594,Everest (1998),10-Mar-1998,Documentary,Everest (1998) — Genres: Documentary
+1595,Shopping (1994),09-Feb-1996,"Action, Thriller","Shopping (1994) — Genres: Action, Thriller"
+1596,Nemesis 2: Nebula (1995),01-Jan-1995,"Action, Sci-Fi, Thriller","Nemesis 2: Nebula (1995) — Genres: Action, Sci-Fi, Thriller"
+1597,Romper Stomper (1992),01-Jan-1992,"Action, Drama","Romper Stomper (1992) — Genres: Action, Drama"
+1598,City of Industry (1997),14-Mar-1997,"Crime, Thriller","City of Industry (1997) — Genres: Crime, Thriller"
+1599,Someone Else's America (1995),10-May-1996,Drama,Someone Else's America (1995) — Genres: Drama
+1600,Guantanamera (1994),16-May-1997,Comedy,Guantanamera (1994) — Genres: Comedy
+1601,Office Killer (1997),01-Jan-1997,Thriller,Office Killer (1997) — Genres: Thriller
+1602,"Price Above Rubies, A (1998)",20-Mar-1998,Drama,"Price Above Rubies, A (1998) — Genres: Drama"
+1603,Angela (1995),16-Feb-1996,Drama,Angela (1995) — Genres: Drama
+1604,He Walked by Night (1948),01-Jan-1948,"Crime, Film-Noir, Thriller","He Walked by Night (1948) — Genres: Crime, Film-Noir, Thriller"
+1605,Love Serenade (1996),11-Jul-1997,Comedy,Love Serenade (1996) — Genres: Comedy
+1606,Deceiver (1997),01-Jan-1997,Crime,Deceiver (1997) — Genres: Crime
+1607,Hurricane Streets (1998),01-Jan-1998,Drama,Hurricane Streets (1998) — Genres: Drama
+1608,Buddy (1997),06-Jun-1997,"Adventure, Children, Drama","Buddy (1997) — Genres: Adventure, Children, Drama"
+1609,B*A*P*S (1997),28-Mar-1997,Comedy,B*A*P*S (1997) — Genres: Comedy
+1610,"Truth or Consequences, N.M. (1997)",02-May-1997,"Action, Crime, Romance","Truth or Consequences, N.M. (1997) — Genres: Action, Crime, Romance"
+1611,Intimate Relations (1996),09-May-1997,Comedy,Intimate Relations (1996) — Genres: Comedy
+1612,"Leading Man, The (1996)",16-Jan-1998,Romance,"Leading Man, The (1996) — Genres: Romance"
+1613,Tokyo Fist (1995),11-Feb-1998,"Action, Drama","Tokyo Fist (1995) — Genres: Action, Drama"
+1614,"Reluctant Debutante, The (1958)",01-Jan-1958,"Comedy, Drama","Reluctant Debutante, The (1958) — Genres: Comedy, Drama"
+1615,Warriors of Virtue (1997),02-May-1997,"Action, Adventure, Children, Fantasy","Warriors of Virtue (1997) — Genres: Action, Adventure, Children, Fantasy"
+1616,Desert Winds (1995),01-Jan-1995,Drama,Desert Winds (1995) — Genres: Drama
+1617,Hugo Pool (1997),01-Jan-1997,Romance,Hugo Pool (1997) — Genres: Romance
+1618,King of New York (1990),01-Jan-1990,"Action, Crime","King of New York (1990) — Genres: Action, Crime"
+1619,All Things Fair (1996),08-Mar-1996,Drama,All Things Fair (1996) — Genres: Drama
+1620,"Sixth Man, The (1997)",28-Mar-1997,Comedy,"Sixth Man, The (1997) — Genres: Comedy"
+1621,Butterfly Kiss (1995),26-Apr-1996,Thriller,Butterfly Kiss (1995) — Genres: Thriller
+1622,"Paris, France (1993)",01-Jan-1993,Comedy,"Paris, France (1993) — Genres: Comedy"
+1623,"Cérémonie, La (1995)",20-Dec-1996,Drama,"Cérémonie, La (1995) — Genres: Drama"
+1624,Hush (1998),10-Mar-1998,Thriller,Hush (1998) — Genres: Thriller
+1625,Nightwatch (1997),22-Apr-1997,"Horror, Thriller","Nightwatch (1997) — Genres: Horror, Thriller"
+1626,Nobody Loves Me (Keiner liebt mich) (1994),09-Feb-1996,"Comedy, Drama","Nobody Loves Me (Keiner liebt mich) (1994) — Genres: Comedy, Drama"
+1627,"Wife, The (1995)",26-Jul-1996,"Comedy, Drama","Wife, The (1995) — Genres: Comedy, Drama"
+1628,Lamerica (1994),01-Jan-1994,Drama,Lamerica (1994) — Genres: Drama
+1629,Nico Icon (1995),01-Jan-1995,Documentary,Nico Icon (1995) — Genres: Documentary
+1630,"Silence of the Palace, The (Saimt el Qusur) (1994)",02-Feb-1996,Drama,"Silence of the Palace, The (Saimt el Qusur) (1994) — Genres: Drama"
+1631,"Slingshot, The (1993)",01-Jan-1993,"Comedy, Drama","Slingshot, The (1993) — Genres: Comedy, Drama"
+1632,Land and Freedom (Tierra y libertad) (1995),29-Mar-1996,War,Land and Freedom (Tierra y libertad) (1995) — Genres: War
+1633,Á köldum klaka (Cold Fever) (1994),08-Mar-1996,"Comedy, Drama","Á köldum klaka (Cold Fever) (1994) — Genres: Comedy, Drama"
+1634,Etz Hadomim Tafus (Under the Domin Tree) (1994),19-Apr-1996,Drama,Etz Hadomim Tafus (Under the Domin Tree) (1994) — Genres: Drama
+1635,Two Friends (1986) ,26-Apr-1986,Drama,Two Friends (1986)  — Genres: Drama
+1636,Brothers in Trouble (1995),26-Apr-1996,Drama,Brothers in Trouble (1995) — Genres: Drama
+1637,Girls Town (1996),23-Aug-1996,Drama,Girls Town (1996) — Genres: Drama
+1638,Normal Life (1996),25-Oct-1996,"Crime, Drama","Normal Life (1996) — Genres: Crime, Drama"
+1639,Bitter Sugar (Azucar Amargo) (1996),22-Nov-1996,Drama,Bitter Sugar (Azucar Amargo) (1996) — Genres: Drama
+1640,"Eighth Day, The (1996)",01-Nov-1996,Drama,"Eighth Day, The (1996) — Genres: Drama"
+1641,Dadetown (1995),18-Sep-1996,Documentary,Dadetown (1995) — Genres: Documentary
+1642,Some Mother's Son (1996),27-Dec-1996,Drama,Some Mother's Son (1996) — Genres: Drama
+1643,Angel Baby (1995),10-Jan-1997,Drama,Angel Baby (1995) — Genres: Drama
+1644,Sudden Manhattan (1996),13-Jun-1997,Comedy,Sudden Manhattan (1996) — Genres: Comedy
+1645,"Butcher Boy, The (1998)",01-Jan-1998,Drama,"Butcher Boy, The (1998) — Genres: Drama"
+1646,Men With Guns (1997),06-Mar-1998,"Action, Drama","Men With Guns (1997) — Genres: Action, Drama"
+1647,Hana-bi (1997),20-Mar-1998,"Comedy, Crime, Drama","Hana-bi (1997) — Genres: Comedy, Crime, Drama"
+1648,"Niagara, Niagara (1997)",20-Mar-1998,Drama,"Niagara, Niagara (1997) — Genres: Drama"
+1649,"Big One, The (1997)",27-Mar-1998,"Comedy, Documentary","Big One, The (1997) — Genres: Comedy, Documentary"
+1650,"Butcher Boy, The (1998)",01-Jan-1998,Drama,"Butcher Boy, The (1998) — Genres: Drama"
+1651,"Spanish Prisoner, The (1997)",27-Mar-1998,"Drama, Thriller","Spanish Prisoner, The (1997) — Genres: Drama, Thriller"
+1652,Temptress Moon (Feng Yue) (1996),13-Jun-1997,Romance,Temptress Moon (Feng Yue) (1996) — Genres: Romance
+1653,Entertaining Angels: The Dorothy Day Story (1996),27-Sep-1996,Drama,Entertaining Angels: The Dorothy Day Story (1996) — Genres: Drama
+1654,Chairman of the Board (1998),01-Jan-1998,Comedy,Chairman of the Board (1998) — Genres: Comedy
+1655,"Favor, The (1994)",01-Jan-1994,"Comedy, Romance","Favor, The (1994) — Genres: Comedy, Romance"
+1656,Little City (1998),20-Feb-1998,"Comedy, Romance","Little City (1998) — Genres: Comedy, Romance"
+1657,Target (1995),28-Feb-1996,"Action, Drama","Target (1995) — Genres: Action, Drama"
+1658,"Substance of Fire, The (1996)",06-Dec-1996,Drama,"Substance of Fire, The (1996) — Genres: Drama"
+1659,Getting Away With Murder (1996),12-Apr-1996,Comedy,Getting Away With Murder (1996) — Genres: Comedy
+1660,Small Faces (1995),09-Aug-1996,Drama,Small Faces (1995) — Genres: Drama
+1661,"New Age, The (1994)",01-Jan-1994,Drama,"New Age, The (1994) — Genres: Drama"
+1662,Rough Magic (1995),30-May-1997,"Drama, Romance","Rough Magic (1995) — Genres: Drama, Romance"
+1663,Nothing Personal (1995),30-Apr-1997,"Drama, War","Nothing Personal (1995) — Genres: Drama, War"
+1664,8 Heads in a Duffel Bag (1997),18-Apr-1997,Comedy,8 Heads in a Duffel Bag (1997) — Genres: Comedy
+1665,"Brother's Kiss, A (1997)",25-Apr-1997,Drama,"Brother's Kiss, A (1997) — Genres: Drama"
+1666,Ripe (1996),02-May-1997,Drama,Ripe (1996) — Genres: Drama
+1667,"Next Step, The (1995)",13-Jun-1997,Drama,"Next Step, The (1995) — Genres: Drama"
+1668,Wedding Bell Blues (1996),13-Jun-1997,Comedy,Wedding Bell Blues (1996) — Genres: Comedy
+1669,MURDER and murder (1996),20-Jun-1997,"Crime, Drama, Mystery","MURDER and murder (1996) — Genres: Crime, Drama, Mystery"
+1670,Tainted (1998),01-Feb-1998,"Comedy, Thriller","Tainted (1998) — Genres: Comedy, Thriller"
+1671,"Further Gesture, A (1996)",20-Feb-1998,Drama,"Further Gesture, A (1996) — Genres: Drama"
+1672,Kika (1993),01-Jan-1993,Drama,Kika (1993) — Genres: Drama
+1673,Mirage (1995),01-Jan-1995,"Action, Thriller","Mirage (1995) — Genres: Action, Thriller"
+1674,Mamma Roma (1962),01-Jan-1962,Drama,Mamma Roma (1962) — Genres: Drama
+1675,"Sunchaser, The (1996)",25-Oct-1996,Drama,"Sunchaser, The (1996) — Genres: Drama"
+1676,"War at Home, The (1996)",01-Jan-1996,Drama,"War at Home, The (1996) — Genres: Drama"
+1677,Sweet Nothing (1995),20-Sep-1996,Drama,Sweet Nothing (1995) — Genres: Drama
+1678,Mat' i syn (1997),06-Feb-1998,Drama,Mat' i syn (1997) — Genres: Drama
+1679,B. Monkey (1998),06-Feb-1998,"Romance, Thriller","B. Monkey (1998) — Genres: Romance, Thriller"
+1680,Sliding Doors (1998),01-Jan-1998,"Drama, Romance","Sliding Doors (1998) — Genres: Drama, Romance"
+1681,You So Crazy (1994),01-Jan-1994,Comedy,You So Crazy (1994) — Genres: Comedy
+1682,Scream of Stone (Schrei aus Stein) (1991),08-Mar-1996,Drama,Scream of Stone (Schrei aus Stein) (1991) — Genres: Drama

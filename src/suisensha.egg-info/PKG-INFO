@@ -1,0 +1,128 @@
+Metadata-Version: 2.4
+Name: suisensha
+Version: 0.1.0
+Summary: Recommend + LLM + RAG Pipeline — Embedding, Transformer & Retrieval-Augmented recommendations
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: torch>=2.0.0
+Requires-Dist: transformers>=4.30.0
+Requires-Dist: sentence-transformers>=2.2.0
+Requires-Dist: faiss-cpu>=1.7.4
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: scikit-learn>=1.3.0
+Requires-Dist: matplotlib>=3.7.0
+Requires-Dist: tqdm>=4.65.0
+Requires-Dist: requests>=2.31.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0; extra == "dev"
+Requires-Dist: ruff>=0.4.0; extra == "dev"
+Requires-Dist: mypy>=1.8.0; extra == "dev"
+Dynamic: license-file
+
+# SuisenSha — Recommend + LLM + RAG Pipeline
+
+A production-style recommendation prototype combining **embedding similarity**, **transformer sequential recommendation (SASRec)**, and **RAG-augmented LLM generation** — all evaluated on the MovieLens-100K dataset.
+
+## Architecture
+
+```
+                     ┌───────────────────────┐
+                     │  Phase 1: Data & EDA  │
+                     │  MovieLens-100K       │
+                     └──────────┬────────────┘
+                                │
+            ┌───────────────────┼───────────────────┐
+            ▼                   ▼                   ▼
+   ┌────────────────┐  ┌────────────────┐  ┌────────────────┐
+   │ Phase 2:       │  │ Phase 3:       │  │ Phase 4:       │
+   │ Embedding      │  │ SASRec         │  │ RAG + LLM      │
+   │ + FAISS        │  │ Transformer    │  │ Generation     │
+   └───────┬────────┘  └───────┬────────┘  └───────┬────────┘
+           └───────────────────┼───────────────────┘
+                               ▼
+                    ┌──────────────────────┐
+                    │ Phase 5: Evaluation  │
+                    │ & Comparison         │
+                    └──────────────────────┘
+```
+
+## Project Structure
+
+```
+SuisenSha/
+├── src/
+│   └── pipeline/
+│       ├── __init__.py
+│       ├── __main__.py          # python -m pipeline
+│       ├── cli.py               # CLI entry point
+│       ├── config.py            # Frozen dataclass configs
+│       ├── data/
+│       │   └── loader.py        # Phase 1 — download, EDA, sequences
+│       ├── models/
+│       │   ├── embedding.py     # Phase 2 — Sentence-Transformer + FAISS
+│       │   ├── sequential.py    # Phase 3 — SASRec (PyTorch)
+│       │   └── rag.py           # Phase 4 — Retrieval + DistilGPT-2
+│       └── evaluation/
+│           └── metrics.py       # Phase 5 — HR, NDCG, comparison chart
+├── tests/
+│   ├── test_metrics.py
+│   └── test_data_loader.py
+├── data/                        # Downloaded dataset (gitignored)
+├── artifacts/                   # Model checkpoints, FAISS index
+├── outputs/                     # EDA plots, comparison chart
+├── pyproject.toml               # PEP 621 packaging + tool config
+├── Makefile                     # Dev shortcuts
+├── .gitignore
+└── README.md
+```
+
+## Quick Start
+
+```bash
+# 1. Install (editable, with dev tools)
+pip install -e ".[dev]"
+
+# 2. Run the full pipeline
+python -m pipeline.cli
+
+# 3. Run a specific phase
+python -m pipeline.cli --phase 1   # Data Loading & EDA
+python -m pipeline.cli --phase 2   # Embedding Recommender
+python -m pipeline.cli --phase 3   # SASRec Transformer
+python -m pipeline.cli --phase 4   # RAG + LLM
+python -m pipeline.cli --phase 5   # Evaluation & Comparison
+
+# 4. Run tests
+pytest
+```
+
+## Pipelines
+
+| Phase | Module | Description |
+|-------|--------|-------------|
+| 1 | `data.loader` | Downloads MovieLens-100K, runs EDA, builds user sequences |
+| 2 | `models.embedding` | Sentence-Transformer embeddings + FAISS similarity search |
+| 3 | `models.sequential` | SASRec — causal self-attention for next-item prediction |
+| 4 | `models.rag` | FAISS retrieval + DistilGPT-2 for explained recommendations |
+| 5 | `evaluation.metrics` | HitRate@k, NDCG@k — comparison across all pipelines |
+
+## Dev Tools
+
+| Command | Purpose |
+|---------|---------|
+| `make install` | Install production deps |
+| `make dev` | Install with dev deps (pytest, ruff, mypy) |
+| `make lint` | Run ruff linter |
+| `make test` | Run pytest suite |
+| `make type-check` | Run mypy |
+| `make clean` | Remove caches and data |
+
+## Outputs
+
+- `outputs/eda_distributions.png` — rating, user, and item distribution histograms
+- `outputs/comparison.png` — metric comparison bar chart across pipelines
+- `artifacts/` — FAISS index, item embeddings, SASRec checkpoint
