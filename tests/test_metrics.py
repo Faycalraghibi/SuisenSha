@@ -24,7 +24,7 @@ class TestNDCG:
         assert ndcg_at_k([42, 1, 2], target=42, k=3) == 1.0
 
     def test_second_position(self):
-        expected = 1.0 / 1.5849625007211563  # 1 / log2(3)
+        expected = 1.0 / 1.5849625007211563  # log2(3)
         assert abs(ndcg_at_k([1, 42, 2], target=42, k=3) - expected) < 1e-6
 
     def test_miss(self):
