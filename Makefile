@@ -28,6 +28,12 @@ run: ## Run the full pipeline (all phases)
 run-phase: ## Run a specific phase (usage: make run-phase PHASE=2)
 	python -m pipeline.cli --phase $(PHASE)
 
+run-api: ## Start the FastAPI backend server
+	python -m pipeline.cli --phase 6
+
+run-ui: ## Start the Streamlit frontend UI
+	python -m pipeline.cli --phase 7
+
 clean: ## Remove artefacts and caches
 	rm -rf __pycache__ .pytest_cache .mypy_cache .ruff_cache
 	find . -type d -name __pycache__ -exec rm -rf {} +

@@ -24,8 +24,8 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--phase",
         type=int,
         default=0,
-        choices=[0, 1, 2, 3, 4, 5],
-        help="Phase to run (1-5). 0 = run all phases sequentially.",
+        choices=[0, 1, 2, 3, 4, 5, 6, 7],
+        help="Phase to run (1-7). 0 = run all phases sequentially.",
     )
     return parser.parse_args(argv)
 
@@ -62,6 +62,20 @@ def main(argv: list[str] | None = None) -> None:
         print("\n▓▓▓  PHASE 5 — Evaluation & Comparison  ▓▓▓")
         from pipeline.evaluation.metrics import run_phase5
         run_phase5()
+
+    if args.phase == 6:
+        print("\n▓▓▓  PHASE 6 — Starting FastAPI Backend  ▓▓▓")
+        import uvicorn
+        uvicorn.run("pipeline.api.main:app", host="127.0.0.1", port=8000)
+
+    if args.phase == 7:
+        print("\n▓▓▓  PHASE 7 — Starting Streamlit UI  ▓▓▓")
+        import subprocess
+        from pathlib import Path
+        ui_path = Path(__file__).resolve().parent / "ui" / "app.py"
+        subprocess.run([sys.executable, "-m", "streamlit", "run", str(ui_path)])
+
+
 
     print("\n✅ Pipeline complete.")
 
