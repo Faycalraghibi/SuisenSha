@@ -8,7 +8,6 @@ from collections import defaultdict
 from pathlib import Path
 
 import matplotlib
-import numpy as np
 import pandas as pd
 import requests
 
@@ -19,9 +18,9 @@ import matplotlib.pyplot as plt
 from pipeline.config import (
     DATA_DIR,
     INTERACTIONS_CSV,
-    MOVIES_CSV,
     MOVIELENS_DIR,
     MOVIELENS_URL,
+    MOVIES_CSV,
     OUTPUTS_DIR,
     USER_SEQUENCES_PKL,
     ensure_dirs,
@@ -58,9 +57,25 @@ def load_ratings(data_dir: Path | None = None) -> pd.DataFrame:
 
 
 _GENRE_COLS = [
-    "unknown", "Action", "Adventure", "Animation", "Children", "Comedy",
-    "Crime", "Documentary", "Drama", "Fantasy", "Film-Noir", "Horror",
-    "Musical", "Mystery", "Romance", "Sci-Fi", "Thriller", "War", "Western",
+    "unknown",
+    "Action",
+    "Adventure",
+    "Animation",
+    "Children",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Fantasy",
+    "Film-Noir",
+    "Horror",
+    "Musical",
+    "Mystery",
+    "Romance",
+    "Sci-Fi",
+    "Thriller",
+    "War",
+    "Western",
 ]
 
 
@@ -74,7 +89,7 @@ def load_movies(data_dir: Path | None = None) -> pd.DataFrame:
         lambda row: ", ".join(g for g, v in zip(_GENRE_COLS, row) if v == 1),
         axis=1,
     )
-    # Description combines title + genres for embedding — gives the encoder richer signal than title alone
+    # Combine title + genres for embedding — richer signal than title alone
     df["description"] = df.apply(
         lambda r: f"{r['title']} — Genres: {r['genres']}" if r["genres"] else r["title"],
         axis=1,

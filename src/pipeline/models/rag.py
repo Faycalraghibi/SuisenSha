@@ -6,12 +6,12 @@ import pickle
 import faiss
 import numpy as np
 import pandas as pd
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline as hf_pipeline
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import pipeline as hf_pipeline
 
 from pipeline.config import (
     MOVIES_CSV,
     USER_SEQUENCES_PKL,
-    ensure_dirs,
     rag_cfg,
 )
 
@@ -51,12 +51,14 @@ def retrieve_candidates(
         if iid in history_set:
             continue
         info = movie_info.get(iid, {})
-        candidates.append({
-            "item_id": iid,
-            "title": info.get("title", f"Item {iid}"),
-            "genres": info.get("genres", ""),
-            "score": float(score),
-        })
+        candidates.append(
+            {
+                "item_id": iid,
+                "title": info.get("title", f"Item {iid}"),
+                "genres": info.get("genres", ""),
+                "score": float(score),
+            }
+        )
         if len(candidates) >= top_k:
             break
     return candidates
@@ -120,7 +122,7 @@ def generate_recommendations(
         pad_token_id=gen.tokenizer.eos_token_id,
     )
     # Strip the prompt prefix — only return the generated continuation
-    return output[0]["generated_text"][len(prompt):].strip()
+    return output[0]["generated_text"][len(prompt) :].strip()
 
 
 def run_phase4(
@@ -134,6 +136,7 @@ def run_phase4(
             sequences = pickle.load(f)
 
     from pipeline.models.embedding import load_artefacts
+
     index, item_ids, embeddings = load_artefacts()
 
     title_lookup = movies.set_index("item_id")["title"].to_dict()

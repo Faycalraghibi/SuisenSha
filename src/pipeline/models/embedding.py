@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import logging
 import pickle
-from pathlib import Path
 
 import faiss
 import numpy as np
@@ -35,9 +34,12 @@ def generate_item_embeddings(
     descriptions = movies["description"].tolist()
     # normalize_embeddings=True so inner-product == cosine similarity in FAISS
     embeddings = model.encode(
-        descriptions, show_progress_bar=True, batch_size=64, normalize_embeddings=True,
+        descriptions,
+        show_progress_bar=True,
+        batch_size=64,
+        normalize_embeddings=True,
     )
-    return movies["item_id"].values, np.asarray(embeddings, dtype="float32")
+    return movies["item_id"].values, np.asarray(embeddings, dtype="float32")  # type: ignore[return-value]
 
 
 def build_faiss_index(embeddings: np.ndarray) -> faiss.IndexFlatIP:
@@ -88,11 +90,9 @@ def recommend_for_user(
     # Over-fetch to compensate for filtering out already-seen items
     _, indices = index.search(user_vec.astype("float32"), top_k + len(hist_idx))
     history_set = set(user_history_ids)
-    return [
-        int(item_ids[i])
-        for i in indices[0]
-        if i >= 0 and int(item_ids[i]) not in history_set
-    ][:top_k]
+    return [int(item_ids[i]) for i in indices[0] if i >= 0 and int(item_ids[i]) not in history_set][
+        :top_k
+    ]
 
 
 def evaluate(
@@ -115,8 +115,13 @@ def evaluate(
         f"HitRate@{k}": float(np.mean(hits)) if hits else 0.0,
         f"NDCG@{k}": float(np.mean(ndcgs)) if ndcgs else 0.0,
     }
-    logger.info("Embedding Recommender — HR@%d: %.4f  NDCG@%d: %.4f",
-                k, result[f"HitRate@{k}"], k, result[f"NDCG@{k}"])
+    logger.info(
+        "Embedding Recommender — HR@%d: %.4f  NDCG@%d: %.4f",
+        k,
+        result[f"HitRate@{k}"],
+        k,
+        result[f"NDCG@{k}"],
+    )
     return result
 
 

@@ -1,7 +1,8 @@
 import os
-import streamlit as st
-import requests
+
 import pandas as pd
+import requests
+import streamlit as st
 
 # Basic config
 st.set_page_config(
@@ -12,12 +13,14 @@ st.set_page_config(
 
 API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
+
 def fetch_history(user_id: int):
     try:
         resp = requests.get(f"{API_URL}/users/{user_id}/history", timeout=5)
         return resp.json() if resp.status_code == 200 else None
     except requests.exceptions.ConnectionError:
         return None
+
 
 def fetch_embedding_recs(user_id: int):
     try:
@@ -26,12 +29,14 @@ def fetch_embedding_recs(user_id: int):
     except requests.exceptions.ConnectionError:
         return None
 
+
 def fetch_sasrec_recs(user_id: int):
     try:
         resp = requests.get(f"{API_URL}/recommend/sasrec/{user_id}", timeout=5)
         return resp.json() if resp.status_code == 200 else None
     except requests.exceptions.ConnectionError:
         return None
+
 
 def fetch_rag_explanation(user_id: int):
     try:
@@ -40,26 +45,30 @@ def fetch_rag_explanation(user_id: int):
     except requests.exceptions.ConnectionError:
         return None
 
+
 # --- UI Layout ---
 
 st.title("🎬 SuisenSha Recommendations")
-st.markdown("Compare **Embedding** vs **Transformer (SASRec)** models, and generate **AI Explanations (RAG)**.")
+st.markdown(
+    "Compare **Embedding** vs **Transformer (SASRec)** models, "
+    "and generate **AI Explanations (RAG)**."
+)
 
 # Sidebar
 st.sidebar.header("User Selection")
-# In a real app we'd fetch the list of users from the API, 
+# In a real app we'd fetch the list of users from the API,
 # for now we'll hardcode some sample user IDs from MovieLens 100K evaluation set.
 user_id = st.sidebar.number_input("User ID", min_value=1, max_value=943, value=1, step=1)
 
 if st.sidebar.button("Fetch Details"):
     st.session_state["user_id"] = user_id
-    st.session_state["rag_explanation"] = None # Clear previous RAG
+    st.session_state["rag_explanation"] = None  # Clear previous RAG
 
 current_user = st.session_state.get("user_id", None)
 
 if current_user:
     st.header(f"User {current_user} Profile")
-    
+
     # 1. History
     with st.expander("👁️ View Watch History", expanded=True):
         history_data = fetch_history(current_user)
@@ -71,10 +80,10 @@ if current_user:
 
     st.divider()
     st.header("Top 10 Recommendations")
-    
+
     # 2. Side-by-side models
     col1, col2 = st.columns(2)
-    
+
     with col1:
         st.subheader("FAISS Baseline (Item Embeddings)")
         emb_data = fetch_embedding_recs(current_user)
@@ -94,13 +103,18 @@ if current_user:
             st.error("Failed to fetch SASRec recommendations.")
 
     st.divider()
-    
+
     # 3. RAG Explanation
     st.header("🤖 AI Concierge (RAG)")
-    st.markdown("Use a generative language model to explain the recommendations based on the user's history.")
-    
+    st.markdown(
+        "Use a generative language model to explain "
+        "the recommendations based on the user's history."
+    )
+
     if st.button("Generate Explanation", type="primary"):
-        with st.spinner("Generating natural language explanation... (this may take a moment on CPU)"):
+        with st.spinner(
+            "Generating natural language explanation... (this may take a moment on CPU)"
+        ):
             rag_data = fetch_rag_explanation(current_user)
             if rag_data:
                 st.session_state["rag_explanation"] = rag_data["rationale"]

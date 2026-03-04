@@ -32,3 +32,5 @@ Thumbs.db
 
 docs/skills.md
 docs/todo.md
+*.egg-info/
+suisensha-venv/

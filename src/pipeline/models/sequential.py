@@ -94,15 +94,18 @@ class SASRec(nn.Module):
         self.output_proj = nn.Linear(hidden_dim, num_items + 1)
 
     def forward(self, seq: torch.Tensor) -> torch.Tensor:
-        B, L = seq.shape
+        _batch, seq_len = seq.shape
         device = seq.device
 
         item_e = self.item_emb(seq)
-        pos_e = self.pos_emb(torch.arange(L, device=device).unsqueeze(0))
+        pos_e = self.pos_emb(torch.arange(seq_len, device=device).unsqueeze(0))
         x = self.emb_dropout(item_e + pos_e)
 
         # Causal mask prevents attending to future items (autoregressive)
-        causal_mask = torch.triu(torch.ones(L, L, device=device, dtype=torch.bool), diagonal=1)
+        causal_mask = torch.triu(
+            torch.ones(seq_len, seq_len, device=device, dtype=torch.bool),
+            diagonal=1,
+        )
         padding_mask = seq == 0
 
         x = self.transformer(x, mask=causal_mask, src_key_padding_mask=padding_mask)
@@ -110,7 +113,7 @@ class SASRec(nn.Module):
 
         # Use the last non-padding position as the sequence representation
         lengths = (seq != 0).sum(dim=1).clamp(min=1) - 1
-        last_hidden = x[torch.arange(B, device=device), lengths]
+        last_hidden = x[torch.arange(_batch, device=device), lengths]
         return self.output_proj(last_hidden)
 
 
@@ -119,8 +122,12 @@ def train_sasrec(sequences: dict[int, list[int]]) -> SASRec:
     all_items = {item for seq in sequences.values() for item in seq}
     num_items = max(all_items)
 
-    logger.info("Training SASRec — %d items, %d users, %d epochs",
-                num_items, len(sequences), sasrec_cfg.epochs)
+    logger.info(
+        "Training SASRec — %d items, %d users, %d epochs",
+        num_items,
+        len(sequences),
+        sasrec_cfg.epochs,
+    )
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info("Device: %s", device)
@@ -203,8 +210,9 @@ def evaluate_sasrec(sequences: dict[int, list[int]], k: int = 10) -> dict[str, f
         f"HitRate@{k}": float(np.mean(hits)) if hits else 0.0,
         f"NDCG@{k}": float(np.mean(ndcgs)) if ndcgs else 0.0,
     }
-    logger.info("SASRec — HR@%d: %.4f  NDCG@%d: %.4f",
-                k, result[f"HitRate@{k}"], k, result[f"NDCG@{k}"])
+    logger.info(
+        "SASRec — HR@%d: %.4f  NDCG@%d: %.4f", k, result[f"HitRate@{k}"], k, result[f"NDCG@{k}"]
+    )
     return result
 
 

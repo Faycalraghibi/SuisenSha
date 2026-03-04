@@ -2,11 +2,9 @@ from __future__ import annotations
 
 import logging
 import math
-import os
 import pickle
 
 import matplotlib
-import numpy as np
 import pandas as pd
 
 matplotlib.use("Agg")
@@ -99,7 +97,7 @@ def compare_pipelines(results: dict[str, dict[str, float]]) -> None:
 
 
 def run_phase5() -> None:
-    movies = pd.read_csv(MOVIES_CSV)
+    _movies = pd.read_csv(MOVIES_CSV)  # noqa: F841
     with open(USER_SEQUENCES_PKL, "rb") as f:
         sequences = pickle.load(f)
 
@@ -107,6 +105,7 @@ def run_phase5() -> None:
 
     logger.info("Evaluating Embedding Recommender …")
     from pipeline.models.embedding import evaluate, load_artefacts
+
     index, item_ids, embeddings = load_artefacts()
     emb = {}
     for k in eval_cfg.k_values:
@@ -115,6 +114,7 @@ def run_phase5() -> None:
 
     logger.info("Evaluating SASRec Recommender …")
     from pipeline.models.sequential import evaluate_sasrec
+
     seq = {}
     for k in eval_cfg.k_values:
         seq.update(evaluate_sasrec(sequences, k=k))

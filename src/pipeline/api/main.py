@@ -7,7 +7,6 @@ from fastapi import Depends, FastAPI, HTTPException, Request
 
 from pipeline.api.dependencies import (
     get_faiss_artifacts,
-    get_llm_generator,
     get_movie_lookup,
     get_movies_df,
     get_sasrec_model,
@@ -44,8 +43,8 @@ async def lifespan(app: FastAPI):
     sasrec_model, _ = load_sasrec_model()
     app.state.sasrec_model = sasrec_model
 
-    # 3. LLM Generator
-    app.state.llm_generator = await _get_generator() if __import__("asyncio").iscoroutinefunction(_get_generator) else _get_generator()
+    # 3. LLM Generator — _get_generator is always sync
+    app.state.llm_generator = _get_generator()
 
     logger.info("Application startup complete.")
     yield
@@ -186,6 +185,7 @@ def recommend_rag(
 
     # Check the SQLite cache first for an instant response
     from pipeline.cache import RecommendationCache
+
     cache = RecommendationCache()
     cached = cache.get(user_id)
     if cached is not None:
