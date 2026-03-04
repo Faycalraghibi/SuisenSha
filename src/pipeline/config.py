@@ -24,6 +24,7 @@ EMBEDDINGS_NPY: Path = ARTIFACTS_DIR / "item_embeddings.npy"
 ITEM_IDS_NPY: Path = ARTIFACTS_DIR / "item_ids.npy"
 
 SEQ_MODEL_PATH: Path = ARTIFACTS_DIR / "sasrec_model.pt"
+RAG_CACHE_DB: Path = ARTIFACTS_DIR / "rag_cache.db"
 
 SEED: int = 42
 

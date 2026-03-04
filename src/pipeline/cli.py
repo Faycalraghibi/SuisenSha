@@ -24,8 +24,14 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--phase",
         type=int,
         default=0,
-        choices=[0, 1, 2, 3, 4, 5, 6, 7],
-        help="Phase to run (1-7). 0 = run all phases sequentially.",
+        choices=[0, 1, 2, 3, 4, 5, 6, 7, 8],
+        help="Phase to run (1-8). 0 = run all phases sequentially.",
+    )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="(Phase 8 only) Max number of users to batch-generate RAG for.",
     )
     return parser.parse_args(argv)
 
@@ -74,6 +80,11 @@ def main(argv: list[str] | None = None) -> None:
         from pathlib import Path
         ui_path = Path(__file__).resolve().parent / "ui" / "app.py"
         subprocess.run([sys.executable, "-m", "streamlit", "run", str(ui_path)])
+
+    if args.phase == 8:
+        print("\n▓▓▓  PHASE 8 — Batch RAG Pre-computation  ▓▓▓")
+        from pipeline.batch import run_batch
+        run_batch(limit=args.limit)
 
 
 

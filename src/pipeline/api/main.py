@@ -184,12 +184,18 @@ def recommend_rag(
     if user_id not in sequences:
         raise HTTPException(status_code=404, detail="User not found.")
 
+    # Check the SQLite cache first for an instant response
+    from pipeline.cache import RecommendationCache
+    cache = RecommendationCache()
+    cached = cache.get(user_id)
+    if cached is not None:
+        cache.close()
+        return RAGResponse(user_id=user_id, rationale=cached)
+
     from pipeline.models.rag import generate_recommendations
 
     index, item_ids, embeddings = get_faiss_artifacts(request)
-    
-    # generate_recommendations already calls _get_generator(), which is cached globally.
-    # App state preload just ensures the cache is warm.
+
     response_text = generate_recommendations(
         user_history_ids=sequences[user_id],
         item_ids=item_ids,
@@ -197,5 +203,9 @@ def recommend_rag(
         index=index,
         movies_df=movies_df,
     )
+
+    # Store for future instant retrieval
+    cache.put(user_id, response_text)
+    cache.close()
 
     return RAGResponse(user_id=user_id, rationale=response_text)

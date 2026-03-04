@@ -1,40 +1,46 @@
-.PHONY: install dev lint type-check test run run-phase clean help
+.PHONY: install dev lint type-check test run run-phase clean help pre-commit batch-rag
 
-help: ## Show this help
+help: 
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
-install: ## Install production dependencies
+install: 
 	pip install -e .
 
-dev: ## Install with dev dependencies
+dev: 
 	pip install -e ".[dev]"
 
-lint: ## Run ruff linter
+lint: 
 	ruff check src/ tests/
 
-format: ## Auto-format with ruff
+format: 
 	ruff format src/ tests/
 
-type-check: ## Run mypy
+type-check: 
 	mypy src/
 
-test: ## Run test suite
+test: 
 	pytest
 
-run: ## Run the full pipeline (all phases)
+run: 
 	python -m pipeline.cli
 
-run-phase: ## Run a specific phase (usage: make run-phase PHASE=2)
+run-phase: 
 	python -m pipeline.cli --phase $(PHASE)
 
-run-api: ## Start the FastAPI backend server
+run-api: 
 	python -m pipeline.cli --phase 6
 
-run-ui: ## Start the Streamlit frontend UI
+run-ui: 
 	python -m pipeline.cli --phase 7
 
-clean: ## Remove artefacts and caches
+pre-commit: 
+	pre-commit install
+
+batch-rag: 
+	python -m pipeline.cli --phase 8
+
+clean: 
 	rm -rf __pycache__ .pytest_cache .mypy_cache .ruff_cache
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	rm -rf data/ artifacts/ outputs/*.png
