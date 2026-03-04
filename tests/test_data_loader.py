@@ -8,12 +8,14 @@ from pipeline.data.loader import build_user_sequences
 class TestBuildUserSequences:
     def _make_ratings(self) -> pd.DataFrame:
         """Synthetic ratings for 2 users."""
-        return pd.DataFrame({
-            "user_id":   [1, 1, 1, 1, 1, 1, 2, 2],
-            "item_id":   [10, 20, 30, 40, 50, 60, 10, 20],
-            "rating":    [4.0, 5.0, 3.0, 4.5, 2.0, 4.0, 5.0, 4.0],
-            "timestamp": [1, 2, 3, 4, 5, 6, 1, 2],
-        })
+        return pd.DataFrame(
+            {
+                "user_id": [1, 1, 1, 1, 1, 1, 2, 2],
+                "item_id": [10, 20, 30, 40, 50, 60, 10, 20],
+                "rating": [4.0, 5.0, 3.0, 4.5, 2.0, 4.0, 5.0, 4.0],
+                "timestamp": [1, 2, 3, 4, 5, 6, 1, 2],
+            }
+        )
 
     def test_filters_low_ratings(self):
         seqs = build_user_sequences(self._make_ratings(), min_rating=3.5, min_interactions=2)

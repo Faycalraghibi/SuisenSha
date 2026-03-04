@@ -61,8 +61,7 @@ def run_batch(limit: int | None = None) -> None:
 
     elapsed = time.perf_counter() - t0
     logger.info(
-        "Batch complete — %d generated, %d skipped (cached), %.1f s elapsed. "
-        "Total cached: %d.",
+        "Batch complete — %d generated, %d skipped (cached), %.1f s elapsed. Total cached: %d.",
         len(user_ids) - skipped,
         skipped,
         elapsed,
