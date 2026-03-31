@@ -1,13 +1,3 @@
-"""Batch pre-computation of RAG recommendations into the SQLite cache.
-
-Usage:
-    python -m pipeline.cli --phase 8            # all users
-    python -m pipeline.cli --phase 8 --limit 10 # first 10 users only
-
-This avoids the ~30-60 s per-request CPU inference cost by generating
-all rationale texts ahead of time.
-"""
-
 from __future__ import annotations
 
 import logging
@@ -26,9 +16,6 @@ logger = logging.getLogger(__name__)
 
 
 def run_batch(limit: int | None = None) -> None:
-    """Generate and cache RAG rationale for every user (or first *limit*)."""
-
-    # 1. Load data
     movies = pd.read_csv(MOVIES_CSV)
     with open(USER_SEQUENCES_PKL, "rb") as f:
         sequences: dict[int, list[int]] = pickle.load(f)

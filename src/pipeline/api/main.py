@@ -27,7 +27,6 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Load all ML models and data into memory on startup."""
     init_data()
 
     logger.info("Loading ML Artifacts into memory...")
@@ -35,15 +34,12 @@ async def lifespan(app: FastAPI):
     from pipeline.models.rag import _get_generator
     from pipeline.models.sequential import load_sasrec_model
 
-    # 1. FAISS & Embeddings
     index, item_ids, embeddings = load_artefacts()
     app.state.faiss_artifacts = (index, item_ids, embeddings)
 
-    # 2. PyTorch SASRec
     sasrec_model, _ = load_sasrec_model()
     app.state.sasrec_model = sasrec_model
 
-    # 3. LLM Generator — _get_generator is always sync
     app.state.llm_generator = _get_generator()
 
     logger.info("Application startup complete.")
@@ -78,7 +74,6 @@ def get_user_history(
 
     history_ids = sequences[user_id]
     recent = []
-    # Fetch last 10 items
     for item_id in reversed(history_ids[-10:]):
         info = lookup.get(item_id, {})
         recent.append(

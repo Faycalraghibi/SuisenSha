@@ -102,7 +102,6 @@ def evaluate(
     index: faiss.IndexFlatIP,
     k: int = 10,
 ) -> dict[str, float]:
-    """Leave-last-one-out: train on seq[:-1], test on seq[-1]."""
     hits, ndcgs = [], []
     for seq in tqdm(sequences.values(), desc=f"Eval embedding @{k}"):
         if len(seq) < 2:

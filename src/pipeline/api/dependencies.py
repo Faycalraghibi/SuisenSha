@@ -11,14 +11,12 @@ from pipeline.config import MOVIES_CSV, USER_SEQUENCES_PKL
 logger = logging.getLogger(__name__)
 
 
-# Global objects to hold into memory.
 _movies_df: pd.DataFrame | None = None
 _sequences: dict[int, list[int]] | None = None
 _movie_lookup: dict[int, dict] | None = None
 
 
 def init_data() -> None:
-    """Load datasets into memory once on startup."""
     global _movies_df, _sequences, _movie_lookup
     logger.info("Initializing datasets for API...")
 
@@ -26,7 +24,7 @@ def init_data() -> None:
     with open(USER_SEQUENCES_PKL, "rb") as f:
         _sequences = pickle.load(f)
 
-    _movie_lookup = _movies_df.set_index("item_id").to_dict("index")
+    _movie_lookup = _movies_df.set_index("item_id").to_dict("index")  # type: ignore[assignment]
     logger.info("Datasets loaded successfully.")
 
 

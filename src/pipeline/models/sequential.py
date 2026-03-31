@@ -24,11 +24,6 @@ logger = logging.getLogger(__name__)
 
 
 class SequentialDataset(Dataset):
-    """
-    Train mode: target = seq[-2], input = seq[:-2]  — holds out last item for test.
-    Test mode:  target = seq[-1], input = seq[:-1].
-    """
-
     def __init__(
         self,
         sequences: dict[int, list[int]],
@@ -62,8 +57,6 @@ class SequentialDataset(Dataset):
 
 
 class SASRec(nn.Module):
-    """Kang & McAuley, 2018 — self-attentive sequential recommendation."""
-
     def __init__(
         self,
         num_items: int,
@@ -111,7 +104,6 @@ class SASRec(nn.Module):
         x = self.transformer(x, mask=causal_mask, src_key_padding_mask=padding_mask)
         x = self.layer_norm(x)
 
-        # Use the last non-padding position as the sequence representation
         lengths = (seq != 0).sum(dim=1).clamp(min=1) - 1
         last_hidden = x[torch.arange(_batch, device=device), lengths]
         return self.output_proj(last_hidden)
@@ -195,7 +187,6 @@ def predict_next_items(
 
 
 def evaluate_sasrec(sequences: dict[int, list[int]], k: int = 10) -> dict[str, float]:
-    """Leave-last-one-out: train on seq[:-1], test on seq[-1]."""
     model, _ = load_sasrec_model()
     hits, ndcgs = [], []
 

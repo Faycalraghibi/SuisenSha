@@ -26,7 +26,6 @@ def hit_rate_at_k(recommended: list[int], target: int, k: int = 10) -> float:
 
 
 def ndcg_at_k(recommended: list[int], target: int, k: int = 10) -> float:
-    """Single binary-relevant target — log discount from position."""
     for i, item in enumerate(recommended[:k]):
         if item == target:
             return 1.0 / math.log2(i + 2)

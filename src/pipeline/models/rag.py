@@ -121,7 +121,6 @@ def generate_recommendations(
         num_return_sequences=1,
         pad_token_id=gen.tokenizer.eos_token_id,
     )
-    # Strip the prompt prefix — only return the generated continuation
     return output[0]["generated_text"][len(prompt) :].strip()
 
 
