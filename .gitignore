@@ -37,3 +37,6 @@ suisensha-venv/
 
 # Local project report (LaTeX source, PDF, build files)
 docs/report/
+
+# Local implementation plan for the coding agent
+docs/AGENT_PLAN.md
