@@ -50,8 +50,11 @@ class SASRecConfig:
 @dataclass(frozen=True)
 class RAGConfig:
     llm_model_name: str = "distilgpt2"
+    llm_backend: str = "local"
     max_new_tokens: int = 300
     retrieval_k: int = 20
+    api_base_url: str | None = None
+    api_key: str | None = None
 
 
 @dataclass(frozen=True)
