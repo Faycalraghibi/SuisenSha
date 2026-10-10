@@ -69,13 +69,15 @@ def retrieve_candidates(
             for iid, score in item_index.search(user_history_ids, top_k)
         ]
 
-    if hasattr(recommender, "eval"):
+    import torch
+
+    if isinstance(recommender, torch.nn.Module):
         from pipeline.models.sequential import predict_next_items
 
         candidate_ids = predict_next_items(
             recommender, user_history_ids, top_k=top_k, exclude=set(user_history_ids)
         )
-    elif hasattr(recommender, "search"):
+    elif hasattr(recommender, "search") and not callable(recommender):
         return [
             {
                 "item_id": iid,
