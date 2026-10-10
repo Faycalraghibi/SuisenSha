@@ -88,7 +88,7 @@ jobs:
           docker build -t suisensha:${{ github.sha }} .
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.29.0
+        uses: aquasecurity/trivy-action@v0.29.0
         with:
           image-ref: suisensha:${{ github.sha }}
           format: table
