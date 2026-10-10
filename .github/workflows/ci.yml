@@ -87,12 +87,10 @@ jobs:
         run: |
           docker build -t suisensha:${{ github.sha }} .
 
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@v0.32.0
-        with:
-          image-ref: suisensha:${{ github.sha }}
-          format: table
-          exit-code: "0"
-          ignore-unfixed: true
-          vuln-type: os,library
-          severity: CRITICAL,HIGH
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.69.3
+
+      - name: Run Trivy vulnerability scan
+        run: |
+          trivy image --exit-code 0 --severity CRITICAL,HIGH --ignore-unfixed --pkg-types os,library --format table suisensha:${{ github.sha }}
