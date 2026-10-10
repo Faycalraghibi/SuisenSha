@@ -34,11 +34,29 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=None,
         help="(Phase 8 only) Max number of users to batch-generate RAG for.",
     )
+    parser.add_argument(
+        "--config",
+        type=str,
+        default=None,
+        help="Path to custom TOML configuration file.",
+    )
+    parser.add_argument(
+        "--set",
+        dest="overrides",
+        action="append",
+        default=[],
+        help="Override a config setting (e.g. --set sasrec.epochs=40). Can be repeated.",
+    )
     return parser.parse_args(argv)
 
 
 def main(argv: list[str] | None = None) -> None:
     args = _parse_args(argv)
+    from pipeline.config import load_config, set_active_config
+
+    cfg = load_config(config_path=args.config, overrides=args.overrides)
+    set_active_config(cfg)
+
     # Windows consoles/pipes default to cp1252, which can't encode the banner and log glyphs
     for stream in (sys.stdout, sys.stderr):
         if isinstance(stream, io.TextIOWrapper):

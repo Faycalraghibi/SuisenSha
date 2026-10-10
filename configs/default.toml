@@ -1,0 +1,44 @@
+# SuisenSha Default Pipeline Configuration
+
+[general]
+seed = 42
+
+[embedding]
+model_name = "sentence-transformers/all-MiniLM-L6-v2"
+dim = 384
+top_k = 10
+
+[sasrec]
+max_seq_len = 50
+hidden_dim = 64
+num_heads = 2
+num_layers = 2
+dropout = 0.2
+lr = 0.001
+epochs = 20
+batch_size = 128
+patience = 5
+window_stride = 10
+
+[rag]
+llm_model_name = "distilgpt2"
+llm_backend = "local"
+max_new_tokens = 300
+retrieval_k = 20
+api_base_url = ""
+api_key = ""
+
+[eval]
+k_values = [5, 10]
+
+[split]
+strategy = "leave_two_out"
+min_rating = 3.5
+min_interactions = 5
+temporal_val_ratio = 0.1
+temporal_test_ratio = 0.1
+
+[tracking]
+enabled = false
+experiment_name = "suisensha-benchmark"
+tracking_uri = "artifacts/mlruns"
