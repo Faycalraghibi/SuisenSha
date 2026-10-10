@@ -44,3 +44,5 @@ python -m pipeline.cli --phase 8  # Batch Pre-compute RAG via SQLite Cache
 ## Documentation
 
 For further information, please refer to the 📖 [Documentation](docs/GUIDE.md).
+
+Planned enhancements, client requirements and the benchmark plan are in the 🗺️ [Roadmap](docs/ROADMAP.md).
