@@ -1,7 +1,6 @@
-from __future__ import annotations
-
 import logging
 from dataclasses import dataclass, field
+from typing import Any
 
 import faiss
 import numpy as np
@@ -19,12 +18,13 @@ from pipeline.config import (
 )
 from pipeline.data.loader import load_processed_movies, load_sequences
 from pipeline.evaluation.metrics import evaluate_leave_one_out
+from pipeline.models.base import Recommender
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
-class ItemIndex:
+class ItemIndex(Recommender):
     """FAISS index plus the item-id ↔ row mapping needed to query it."""
 
     index: faiss.Index
@@ -34,6 +34,10 @@ class ItemIndex:
 
     def __post_init__(self) -> None:
         self.id_to_idx = {int(iid): idx for idx, iid in enumerate(self.item_ids)}
+
+    def fit(self, train_data: Any) -> None:
+        """ItemIndex is typically pre-computed via generate_embeddings and build_faiss_index."""
+        pass
 
     def user_vector(self, history_ids: list[int]) -> np.ndarray | None:
         hist_idx = [self.id_to_idx[i] for i in history_ids if i in self.id_to_idx]
