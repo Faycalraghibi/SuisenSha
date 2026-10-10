@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import logging
 import time
 
@@ -8,7 +9,7 @@ from tqdm import tqdm
 from pipeline.cache import RecommendationCache
 from pipeline.data.loader import build_movie_lookup, load_processed_movies, load_sequences
 from pipeline.models.embedding import load_artefacts
-from pipeline.models.rag import generate_recommendations
+from pipeline.models.rag import format_explanations, generate_recommendations
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +33,15 @@ def run_batch(limit: int | None = None) -> None:
             if cache.has(uid):
                 skipped += 1
                 continue
-            cache.put(uid, generate_recommendations(sequences[uid], item_index, movie_lookup))
+            items = generate_recommendations(sequences[uid], item_index, movie_lookup)
+            rationale = format_explanations(items)
+            to_cache = json.dumps(
+                {
+                    "rationale": rationale,
+                    "recommendations": [item.model_dump() for item in items],
+                }
+            )
+            cache.put(uid, to_cache)
 
         logger.info(
             "Batch complete — %d generated, %d skipped (cached), %.1f s elapsed. Total cached: %d.",

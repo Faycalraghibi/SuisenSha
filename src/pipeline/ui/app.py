@@ -84,12 +84,23 @@ if current_user:
         ):
             rag_data = api_get(f"/recommend/rag/{current_user}", timeout=120)
             if rag_data:
-                st.session_state["rag_explanation"] = rag_data["rationale"]
+                st.session_state["rag_explanation"] = rag_data
             else:
                 st.error("Failed to generate RAG explanation.")
 
-    if st.session_state.get("rag_explanation"):
-        st.info(st.session_state["rag_explanation"])
+    rag_data = st.session_state.get("rag_explanation")
+    if rag_data:
+        if isinstance(rag_data, dict) and rag_data.get("recommendations"):
+            st.subheader("Explained Recommendations")
+            df_recs = pd.DataFrame(rag_data["recommendations"])
+            st.dataframe(df_recs, use_container_width=True, hide_index=True)
+            if rag_data.get("rationale"):
+                with st.expander("📝 Full Summary Rationale"):
+                    st.info(rag_data["rationale"])
+        elif isinstance(rag_data, dict) and rag_data.get("rationale"):
+            st.info(rag_data["rationale"])
+        elif isinstance(rag_data, str):
+            st.info(rag_data)
 
 else:
     st.info("👈 Enter a User ID in the sidebar and click 'Fetch Details' to begin.")

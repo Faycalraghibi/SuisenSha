@@ -16,6 +16,7 @@ from pipeline.api.dependencies import (
 )
 from pipeline.api.models import (
     ErrorResponse,
+    ExplainedItem,
     HistoryResponse,
     MovieItem,
     RAGResponse,
@@ -140,10 +141,33 @@ def recommend_rag(
     # Check the SQLite cache first for an instant response
     cached = cache.get(user_id)
     if cached is not None:
-        return RAGResponse(user_id=user_id, rationale=cached)
+        import json
 
-    from pipeline.models.rag import generate_recommendations
+        try:
+            cached_data = json.loads(cached)
+            if isinstance(cached_data, dict) and "recommendations" in cached_data:
+                return RAGResponse(
+                    user_id=user_id,
+                    rationale=cached_data.get("rationale", ""),
+                    recommendations=[
+                        ExplainedItem(**item) for item in cached_data["recommendations"]
+                    ],
+                )
+        except Exception:
+            pass
+        return RAGResponse(user_id=user_id, rationale=cached, recommendations=[])
 
-    rationale = generate_recommendations(history, item_index, lookup)
-    cache.put(user_id, rationale)
-    return RAGResponse(user_id=user_id, rationale=rationale)
+    import json
+
+    from pipeline.models.rag import format_explanations, generate_recommendations
+
+    items = generate_recommendations(history, item_index, lookup)
+    rationale = format_explanations(items)
+    to_cache = json.dumps(
+        {
+            "rationale": rationale,
+            "recommendations": [item.model_dump() for item in items],
+        }
+    )
+    cache.put(user_id, to_cache)
+    return RAGResponse(user_id=user_id, rationale=rationale, recommendations=items)
