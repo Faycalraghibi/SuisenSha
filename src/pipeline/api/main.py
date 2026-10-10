@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from contextlib import asynccontextmanager
+from typing import Any
 
 from fastapi import Depends, FastAPI
 
@@ -133,13 +134,32 @@ def recommend_sasrec(
 )
 def recommend_rag(
     user_id: int,
+    recommender: str = "sasrec",
+    lang: str = "en",
     history: list[int] = Depends(get_user_history),
     lookup: dict[int, dict] = Depends(get_movie_lookup),
     item_index=Depends(get_item_index),
+    sasrec_model=Depends(get_sasrec_model),
     cache: RecommendationCache = Depends(get_cache),
 ):
+    from pipeline.models.rag import (
+        format_explanations,
+        generate_recommendations,
+        retrieve_candidates,
+    )
+
+    rec_engine: Any = (
+        sasrec_model
+        if (recommender == "sasrec" and sasrec_model is not None)
+        else (item_index if recommender == "embedding" else recommender)
+    )
+    candidates = retrieve_candidates(
+        history, recommender=rec_engine, movie_lookup=lookup, top_k=TOP_K
+    )
+    candidate_ids = [c["item_id"] for c in candidates]
+
     # Check the SQLite cache first for an instant response
-    cached = cache.get(user_id)
+    cached = cache.get(user_id, candidate_ids=candidate_ids, lang=lang)
     if cached is not None:
         import json
 
@@ -159,9 +179,13 @@ def recommend_rag(
 
     import json
 
-    from pipeline.models.rag import format_explanations, generate_recommendations
-
-    items = generate_recommendations(history, item_index, lookup)
+    items = generate_recommendations(
+        history,
+        recommender=rec_engine,
+        movie_lookup=lookup,
+        candidates=candidates,
+        lang=lang,
+    )
     rationale = format_explanations(items)
     to_cache = json.dumps(
         {
@@ -169,5 +193,5 @@ def recommend_rag(
             "recommendations": [item.model_dump() for item in items],
         }
     )
-    cache.put(user_id, to_cache)
+    cache.put(user_id, to_cache, candidate_ids=candidate_ids, lang=lang)
     return RAGResponse(user_id=user_id, rationale=rationale, recommendations=items)

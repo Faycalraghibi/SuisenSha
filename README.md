@@ -6,7 +6,7 @@ SuisenSha is a movie recommendation engine pipeline combining embedding similari
 - **Data Ingestion**: Automatically downloads and processes the MovieLens-100K dataset.
 - **Embedding Recommender (FAISS)**: Uses SentenceTransformers to embed movie titles and genres, forming user profiles from interaction histories.
 - **SASRec Neural Recommender**: Implements self-attentive sequential recommendations (Kang & McAuley, 2018) in PyTorch.
-- **LLM Concierge (RAG)**: Generates human-readable rationales using DistilGPT-2 based on candidates retrieved from FAISS.
+- **LLM Concierge (RAG)**: Generates grounded, structured rationales per item using flexible LLM backends (local instruction-tuned models, hosted APIs, or deterministic template safety nets) based on SASRec candidates.
 - **FastAPI Backend**: Serves realtime recommendations.
 - **Streamlit UI**: An interactive dashboard to inspect user histories, compare recommendation models, and request RAG rationales.
 

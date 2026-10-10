@@ -79,7 +79,7 @@ def test_recommend_rag_served_from_cache(client: TestClient, tmp_path: Path):
 
 
 def test_recommend_rag_uncached_returns_one_reason_per_item(client: TestClient):
-    response = client.get("/recommend/rag/1")
+    response = client.get("/recommend/rag/1?recommender=embedding")
     assert response.status_code == 200
     data = response.json()
     assert data["user_id"] == 1
@@ -88,6 +88,15 @@ def test_recommend_rag_uncached_returns_one_reason_per_item(client: TestClient):
     assert first_item["item_id"] == 40
     assert first_item["title"] == "Delta"
     assert "reason" in first_item and len(first_item["reason"]) > 0
+
+
+def test_recommend_rag_default_sasrec(client: TestClient):
+    response = client.get("/recommend/rag/1")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["user_id"] == 1
+    assert len(data["recommendations"]) > 0
+    assert "reason" in data["recommendations"][0]
 
 
 def test_api_docs_available(client: TestClient):

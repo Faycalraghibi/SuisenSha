@@ -69,7 +69,7 @@ SuisenSha/
 | **1** | `data.loader` | Downloads MovieLens-100K (943 users, 1 682 items), runs EDA, builds per-user interaction sequences |
 | **2** | `models.embedding` | Embeds movie descriptions with `all-MiniLM-L6-v2`, indexes 1 682 vectors in FAISS, recommends by user-profile similarity |
 | **3** | `models.sequential` | SASRec — causal self-attention over item-ID sequences, trained for next-item prediction (20 epochs on CPU) |
-| **4** | `models.rag` | Retrieves top-20 candidates via FAISS, feeds them with user history to DistilGPT-2 for natural-language explained recommendations |
+| **4** | `models.rag` | Retrieves candidates (defaulting to SASRec), validates grounding, and returns structured per-item reasons with deterministic template fallback |
 | **5** | `evaluation.metrics` | HitRate@k, NDCG@k, Precision@k, Recall@k — side-by-side comparison with bar chart |
 
 ---

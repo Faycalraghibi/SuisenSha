@@ -46,9 +46,9 @@ def get_cache() -> Iterator[RecommendationCache]:
 
 
 # ML artifacts are loaded into app state by the lifespan handler
-def get_item_index(request: Request) -> ItemIndex:
-    return request.app.state.item_index
+def get_item_index(request: Request) -> ItemIndex | None:
+    return getattr(request.app.state, "item_index", None)
 
 
-def get_sasrec_model(request: Request) -> SASRec:
-    return request.app.state.sasrec_model
+def get_sasrec_model(request: Request) -> SASRec | None:
+    return getattr(request.app.state, "sasrec_model", None)

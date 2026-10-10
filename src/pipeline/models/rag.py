@@ -15,7 +15,7 @@ from pipeline.models.explanations import generate_template_explanation, get_safe
 from pipeline.models.llm import LLMBackend, get_llm_backend
 
 if TYPE_CHECKING:
-    from pipeline.models.embedding import ItemIndex
+    pass
 
 logger = logging.getLogger(__name__)
 
@@ -27,19 +27,76 @@ class LLMItemOutput(BaseModel):
 
 def retrieve_candidates(
     user_history_ids: list[int],
-    item_index: ItemIndex,
-    movie_lookup: dict[int, dict],
+    recommender: Any = "sasrec",
+    movie_lookup: dict[int, dict] | None = None,
     top_k: int = rag_cfg.retrieval_k,
 ) -> list[dict]:
+    """Retrieve top-k candidate items from SASRec, embedding index, or a custom recommender."""
+    if movie_lookup is None:
+        movie_lookup = {}
+
+    candidate_ids: list[int] = []
+
+    if recommender == "sasrec" or (
+        isinstance(recommender, str) and recommender.lower() == "sasrec"
+    ):
+        try:
+            from pipeline.models.sequential import load_sasrec_model, predict_next_items
+
+            model, _ = load_sasrec_model()
+            candidate_ids = predict_next_items(
+                model, user_history_ids, top_k=top_k, exclude=set(user_history_ids)
+            )
+        except Exception as exc:
+            logger.warning(
+                "Could not load SASRec checkpoint (%s), falling back to embedding index.", exc
+            )
+            recommender = "embedding"
+
+    if recommender == "embedding" or (
+        isinstance(recommender, str) and recommender.lower() == "embedding"
+    ):
+        from pipeline.models.embedding import load_artefacts
+
+        item_index = load_artefacts()
+        return [
+            {
+                "item_id": iid,
+                "title": movie_lookup.get(iid, {}).get("title", f"Item {iid}"),
+                "genres": movie_lookup.get(iid, {}).get("genres", ""),
+                "score": score,
+            }
+            for iid, score in item_index.search(user_history_ids, top_k)
+        ]
+
+    if callable(recommender):
+        res = recommender(user_history_ids, top_k)
+        candidate_ids = [r[0] if isinstance(r, tuple | list) else r for r in res]
+    elif hasattr(recommender, "search"):
+        return [
+            {
+                "item_id": iid,
+                "title": movie_lookup.get(iid, {}).get("title", f"Item {iid}"),
+                "genres": movie_lookup.get(iid, {}).get("genres", ""),
+                "score": score,
+            }
+            for iid, score in recommender.search(user_history_ids, top_k)
+        ]
+    elif hasattr(recommender, "eval"):
+        from pipeline.models.sequential import predict_next_items
+
+        candidate_ids = predict_next_items(
+            recommender, user_history_ids, top_k=top_k, exclude=set(user_history_ids)
+        )
+
     candidates: list[dict] = []
-    for iid, score in item_index.search(user_history_ids, top_k):
+    for iid in candidate_ids:
         info = movie_lookup.get(iid, {})
         candidates.append(
             {
                 "item_id": iid,
                 "title": info.get("title", f"Item {iid}"),
                 "genres": info.get("genres", ""),
-                "score": score,
             }
         )
     return candidates
@@ -145,8 +202,8 @@ def format_explanations(items: list[ExplainedItem]) -> str:
 
 def generate_recommendations(
     user_history_ids: list[int],
-    recommender: Any,
-    movie_lookup: dict[int, dict],
+    recommender: Any = "sasrec",
+    movie_lookup: dict[int, dict] | None = None,
     candidates: list[dict] | None = None,
     backend: LLMBackend | None = None,
     top_k: int = 5,
@@ -154,13 +211,11 @@ def generate_recommendations(
     catalogue_titles: set[str] | None = None,
 ) -> list[ExplainedItem]:
     """Generate grounded, structured recommendations with explanations."""
+    if movie_lookup is None:
+        movie_lookup = {}
+
     if candidates is None:
-        if hasattr(recommender, "search"):
-            candidates = retrieve_candidates(
-                user_history_ids, recommender, movie_lookup, top_k=top_k
-            )
-        else:
-            candidates = []
+        candidates = retrieve_candidates(user_history_ids, recommender, movie_lookup, top_k=top_k)
 
     if not candidates:
         return []
@@ -213,9 +268,6 @@ def run_phase4(
     if sequences is None:
         sequences = load_sequences()
 
-    from pipeline.models.embedding import load_artefacts
-
-    item_index = load_artefacts()
     movie_lookup = build_movie_lookup(movies)
 
     for uid in list(sequences)[:3]:
@@ -225,5 +277,13 @@ def run_phase4(
         logger.info("  🎬  User %d — Recent: %s", uid, ", ".join(recent))
         logger.info("═" * 65)
 
-        items = generate_recommendations(seq, item_index, movie_lookup, top_k=5)
-        logger.info("🤖 Grounded Explanations:\n%s\n", format_explanations(items))
+        items = generate_recommendations(
+            seq,
+            recommender="sasrec",
+            movie_lookup=movie_lookup,
+            top_k=5,
+        )
+        logger.info(
+            "🤖 Grounded Explanations (SASRec Candidates):\n%s\n",
+            format_explanations(items),
+        )
