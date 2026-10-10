@@ -69,9 +69,12 @@ def retrieve_candidates(
             for iid, score in item_index.search(user_history_ids, top_k)
         ]
 
-    if callable(recommender):
-        res = recommender(user_history_ids, top_k)
-        candidate_ids = [r[0] if isinstance(r, tuple | list) else r for r in res]
+    if hasattr(recommender, "eval"):
+        from pipeline.models.sequential import predict_next_items
+
+        candidate_ids = predict_next_items(
+            recommender, user_history_ids, top_k=top_k, exclude=set(user_history_ids)
+        )
     elif hasattr(recommender, "search"):
         return [
             {
@@ -82,12 +85,9 @@ def retrieve_candidates(
             }
             for iid, score in recommender.search(user_history_ids, top_k)
         ]
-    elif hasattr(recommender, "eval"):
-        from pipeline.models.sequential import predict_next_items
-
-        candidate_ids = predict_next_items(
-            recommender, user_history_ids, top_k=top_k, exclude=set(user_history_ids)
-        )
+    elif callable(recommender):
+        res = recommender(user_history_ids, top_k)
+        candidate_ids = [r[0] if isinstance(r, tuple | list) else r for r in res]
 
     candidates: list[dict] = []
     for iid in candidate_ids:
