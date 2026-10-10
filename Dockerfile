@@ -15,6 +15,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 COPY pyproject.toml .
 COPY requirements.txt .
+COPY README.md .
+COPY src/ ./src/
 
 # Install dependencies into /install
 RUN pip install --no-cache-dir --prefix=/install .
