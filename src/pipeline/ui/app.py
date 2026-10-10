@@ -13,36 +13,12 @@ st.set_page_config(
 API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
 
-def fetch_history(user_id: int):
+def api_get(path: str, timeout: float = 5) -> dict | None:
     try:
-        resp = requests.get(f"{API_URL}/users/{user_id}/history", timeout=5)
-        return resp.json() if resp.status_code == 200 else None
-    except requests.exceptions.ConnectionError:
+        resp = requests.get(f"{API_URL}{path}", timeout=timeout)
+    except requests.exceptions.RequestException:
         return None
-
-
-def fetch_embedding_recs(user_id: int):
-    try:
-        resp = requests.get(f"{API_URL}/recommend/embedding/{user_id}", timeout=5)
-        return resp.json() if resp.status_code == 200 else None
-    except requests.exceptions.ConnectionError:
-        return None
-
-
-def fetch_sasrec_recs(user_id: int):
-    try:
-        resp = requests.get(f"{API_URL}/recommend/sasrec/{user_id}", timeout=5)
-        return resp.json() if resp.status_code == 200 else None
-    except requests.exceptions.ConnectionError:
-        return None
-
-
-def fetch_rag_explanation(user_id: int):
-    try:
-        resp = requests.get(f"{API_URL}/recommend/rag/{user_id}", timeout=120)
-        return resp.json() if resp.status_code == 200 else None
-    except requests.exceptions.ConnectionError:
-        return None
+    return resp.json() if resp.status_code == 200 else None
 
 
 st.title("🎬 SuisenSha Recommendations")
@@ -64,7 +40,7 @@ if current_user:
     st.header(f"User {current_user} Profile")
 
     with st.expander("👁️ View Watch History", expanded=True):
-        history_data = fetch_history(current_user)
+        history_data = api_get(f"/users/{current_user}/history")
         if history_data:
             df_hist = pd.DataFrame(history_data["recent_history"])
             st.dataframe(df_hist, use_container_width=True, hide_index=True)
@@ -78,7 +54,7 @@ if current_user:
 
     with col1:
         st.subheader("FAISS Baseline (Item Embeddings)")
-        emb_data = fetch_embedding_recs(current_user)
+        emb_data = api_get(f"/recommend/embedding/{current_user}")
         if emb_data:
             df_emb = pd.DataFrame(emb_data["recommendations"])
             st.dataframe(df_emb, use_container_width=True, hide_index=True)
@@ -87,7 +63,7 @@ if current_user:
 
     with col2:
         st.subheader("SASRec (Sequential Transformer)")
-        sas_data = fetch_sasrec_recs(current_user)
+        sas_data = api_get(f"/recommend/sasrec/{current_user}")
         if sas_data:
             df_sas = pd.DataFrame(sas_data["recommendations"])
             st.dataframe(df_sas, use_container_width=True, hide_index=True)
@@ -106,7 +82,7 @@ if current_user:
         with st.spinner(
             "Generating natural language explanation... (this may take a moment on CPU)"
         ):
-            rag_data = fetch_rag_explanation(current_user)
+            rag_data = api_get(f"/recommend/rag/{current_user}", timeout=120)
             if rag_data:
                 st.session_state["rag_explanation"] = rag_data["rationale"]
             else:

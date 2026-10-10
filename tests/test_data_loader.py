@@ -27,6 +27,18 @@ class TestBuildUserSequences:
         assert 2 not in seqs
 
     def test_sorted_by_timestamp(self):
+        ratings = pd.DataFrame(
+            {
+                "user_id": [1, 1, 1, 1],
+                "item_id": [10, 20, 30, 40],
+                "rating": [5.0, 5.0, 5.0, 5.0],
+                "timestamp": [30, 10, 40, 20],
+            }
+        )
+        seqs = build_user_sequences(ratings, min_rating=3.5, min_interactions=1)
+        assert seqs[1] == [20, 40, 10, 30]
+
+    def test_returns_plain_ints(self):
         seqs = build_user_sequences(self._make_ratings(), min_rating=3.5, min_interactions=2)
-        seq = seqs[1]
-        assert seq == sorted(seq, key=lambda x: seq.index(x))  # monotonic
+        assert all(type(u) is int for u in seqs)
+        assert all(type(i) is int for seq in seqs.values() for i in seq)

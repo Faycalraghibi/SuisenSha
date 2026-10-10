@@ -32,10 +32,10 @@
 | Pipeline | HitRate@5 | HitRate@10 | NDCG@5 | NDCG@10 |
 |----------|-----------|------------|--------|---------|
 | Embedding + FAISS | 0.0107 | 0.0160 | 0.0068 | 0.0085 |
-| **SASRec (Transformer)** | **0.0267** | **0.0352** | **0.0169** | **0.0190** |
-| RAG (Retrieval) | 0.0107 | 0.0160 | 0.0068 | 0.0085 |
+| **SASRec (Transformer)** | **0.0480** | **0.0885** | **0.0278** | **0.0406** |
 
-> SASRec outperforms the embedding baseline by **~2.2×** on HitRate@10.
+> SASRec outperforms the embedding baseline by **~5.5×** on HitRate@10.
+> RAG reuses the embedding retriever, so its ranking metrics equal the embedding row and are not listed separately.
 
 ---
 
@@ -53,7 +53,7 @@ SuisenSha/
 │   │   └── rag.py           # Phase 4 — Retrieval + DistilGPT-2
 │   └── evaluation/
 │       └── metrics.py       # Phase 5 — HR, NDCG, comparison chart
-├── tests/                   # 15 unit tests
+├── tests/                   # 41 unit tests
 ├── data/                    # Downloaded dataset (gitignored)
 ├── artifacts/               # Model checkpoints, FAISS index
 ├── outputs/                 # EDA plots, comparison chart
@@ -164,6 +164,10 @@ All hyperparameters live in [`src/pipeline/config.py`](../src/pipeline/config.py
 python -m pytest tests/ -v --tb=short
 ```
 
-15 tests covering:
-- **Metrics** — HitRate, NDCG, Precision, Recall (hit/miss/edge cases)
+41 tests covering:
+- **Metrics** — HitRate, NDCG, Precision, Recall, leave-one-out evaluation
 - **Data loader** — filtering by rating, minimum interactions, timestamp ordering
+- **Embedding index** — similarity ranking, history exclusion, unknown items
+- **SASRec** — padding, training targets, finite logits, sensitivity to the latest item
+- **Cache** — SQLite put/get/replace
+- **API** — every endpoint against in-memory fakes (no dataset or model files needed)

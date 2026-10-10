@@ -4,7 +4,6 @@ import io
 import logging
 import pickle
 import zipfile
-from collections import defaultdict
 from pathlib import Path
 
 import matplotlib
@@ -149,14 +148,14 @@ def build_user_sequences(
     min_interactions: int = 5,
 ) -> dict[int, list[int]]:
     """Only keeps ratings >= min_rating as an implicit positive signal."""
-    positive = ratings.loc[ratings["rating"] >= min_rating].copy()
-    positive.sort_values(["user_id", "timestamp"], inplace=True)
+    positive = ratings.loc[ratings["rating"] >= min_rating]
+    # Stable sort keeps the original order for ties on timestamp
+    positive = positive.sort_values(["user_id", "timestamp"], kind="stable")
+    grouped = positive.groupby("user_id", sort=True)["item_id"].agg(list)
 
-    sequences: dict[int, list[int]] = defaultdict(list)
-    for _, row in positive.iterrows():
-        sequences[int(row["user_id"])].append(int(row["item_id"]))
-
-    sequences = {u: seq for u, seq in sequences.items() if len(seq) >= min_interactions}
+    sequences = {
+        int(u): [int(i) for i in seq] for u, seq in grouped.items() if len(seq) >= min_interactions
+    }
     logger.info(
         "Built sequences for %d users (min %d positive interactions, rating ≥ %.1f)",
         len(sequences),
@@ -179,6 +178,19 @@ def save_processed(
     logger.info("Saved interactions → %s", INTERACTIONS_CSV)
     logger.info("Saved movies       → %s", MOVIES_CSV)
     logger.info("Saved sequences    → %s", USER_SEQUENCES_PKL)
+
+
+def load_processed_movies() -> pd.DataFrame:
+    return pd.read_csv(MOVIES_CSV)
+
+
+def load_sequences() -> dict[int, list[int]]:
+    with open(USER_SEQUENCES_PKL, "rb") as fh:
+        return pickle.load(fh)
+
+
+def build_movie_lookup(movies: pd.DataFrame) -> dict[int, dict]:
+    return movies.set_index("item_id").to_dict("index")  # type: ignore[return-value]
 
 
 def run_phase1() -> tuple[pd.DataFrame, pd.DataFrame, dict[int, list[int]]]:

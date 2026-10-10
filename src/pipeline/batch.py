@@ -1,14 +1,12 @@
 from __future__ import annotations
 
 import logging
-import pickle
 import time
 
-import pandas as pd
 from tqdm import tqdm
 
 from pipeline.cache import RecommendationCache
-from pipeline.config import MOVIES_CSV, USER_SEQUENCES_PKL
+from pipeline.data.loader import build_movie_lookup, load_processed_movies, load_sequences
 from pipeline.models.embedding import load_artefacts
 from pipeline.models.rag import generate_recommendations
 
@@ -16,42 +14,30 @@ logger = logging.getLogger(__name__)
 
 
 def run_batch(limit: int | None = None) -> None:
-    movies = pd.read_csv(MOVIES_CSV)
-    with open(USER_SEQUENCES_PKL, "rb") as f:
-        sequences: dict[int, list[int]] = pickle.load(f)
+    movie_lookup = build_movie_lookup(load_processed_movies())
+    sequences = load_sequences()
+    item_index = load_artefacts()
 
-    index, item_ids, embeddings = load_artefacts()
-
-    user_ids = list(sequences.keys())
+    user_ids = list(sequences)
     if limit is not None:
         user_ids = user_ids[:limit]
 
     logger.info("Batch RAG: %d users to process.", len(user_ids))
 
-    cache = RecommendationCache()
     skipped = 0
     t0 = time.perf_counter()
 
-    for uid in tqdm(user_ids, desc="Batch RAG inference"):
-        if cache.has(uid):
-            skipped += 1
-            continue
+    with RecommendationCache() as cache:
+        for uid in tqdm(user_ids, desc="Batch RAG inference"):
+            if cache.has(uid):
+                skipped += 1
+                continue
+            cache.put(uid, generate_recommendations(sequences[uid], item_index, movie_lookup))
 
-        rationale = generate_recommendations(
-            user_history_ids=sequences[uid],
-            item_ids=item_ids,
-            embeddings=embeddings,
-            index=index,
-            movies_df=movies,
+        logger.info(
+            "Batch complete — %d generated, %d skipped (cached), %.1f s elapsed. Total cached: %d.",
+            len(user_ids) - skipped,
+            skipped,
+            time.perf_counter() - t0,
+            cache.count(),
         )
-        cache.put(uid, rationale)
-
-    elapsed = time.perf_counter() - t0
-    logger.info(
-        "Batch complete — %d generated, %d skipped (cached), %.1f s elapsed. Total cached: %d.",
-        len(user_ids) - skipped,
-        skipped,
-        elapsed,
-        cache.count(),
-    )
-    cache.close()
