@@ -34,3 +34,6 @@ docs/skills.md
 docs/todo.md
 *.egg-info/
 suisensha-venv/
+
+# Local project report (LaTeX source, PDF, build files)
+docs/report/
