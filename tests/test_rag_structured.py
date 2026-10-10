@@ -101,3 +101,27 @@ def test_parse_and_validate_per_item_fallback_on_hallucination(sample_candidates
     assert "Because you liked" in items[0].reason
     # Item 102 is valid
     assert items[1].reason == "Fun family animation."
+
+
+def test_template_fallback_works_with_llm_disabled(sample_candidates):
+    movie_lookup = {
+        101: {"title": "The Matrix", "genres": "Action|Sci-Fi"},
+        102: {"title": "Toy Story", "genres": "Animation|Children"},
+        1: {"title": "Terminator 2", "genres": "Action|Sci-Fi"},
+        2: {"title": "Aliens", "genres": "Action|Sci-Fi"},
+    }
+    from unittest.mock import patch
+
+    with patch("pipeline.models.rag.get_llm_backend", return_value=None):
+        from pipeline.models.rag import generate_recommendations
+
+        items = generate_recommendations(
+            user_history_ids=[1, 2],
+            recommender="embedding",
+            movie_lookup=movie_lookup,
+            candidates=sample_candidates,
+            backend=None,
+        )
+    assert len(items) == 2
+    assert "Because you liked" in items[0].reason
+    assert items[0].title == "The Matrix"
