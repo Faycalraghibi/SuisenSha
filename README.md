@@ -13,7 +13,7 @@ SuisenSha is a movie recommendation engine pipeline combining embedding similari
 ## Setup and Installation
 
 ### Prerequisites
-- Python 3.9+
+- Python 3.10+
 - See `requirements.txt` for dependencies.
 
 ### Installation

@@ -1,59 +1,54 @@
 from __future__ import annotations
 
-import logging
-import pickle
+from collections.abc import Iterator
+from functools import lru_cache
+from typing import TYPE_CHECKING
 
 import pandas as pd
-from fastapi import Request
+from fastapi import Depends, HTTPException, Request
 
-from pipeline.config import MOVIES_CSV, USER_SEQUENCES_PKL
+from pipeline.cache import RecommendationCache
+from pipeline.data.loader import build_movie_lookup, load_processed_movies, load_sequences
 
-logger = logging.getLogger(__name__)
-
-
-_movies_df: pd.DataFrame | None = None
-_sequences: dict[int, list[int]] | None = None
-_movie_lookup: dict[int, dict] | None = None
+if TYPE_CHECKING:
+    from pipeline.models.embedding import ItemIndex
+    from pipeline.models.sequential import SASRec
 
 
-def init_data() -> None:
-    global _movies_df, _sequences, _movie_lookup
-    logger.info("Initializing datasets for API...")
-
-    _movies_df = pd.read_csv(MOVIES_CSV)
-    with open(USER_SEQUENCES_PKL, "rb") as f:
-        _sequences = pickle.load(f)
-
-    _movie_lookup = _movies_df.set_index("item_id").to_dict("index")  # type: ignore[assignment]
-    logger.info("Datasets loaded successfully.")
-
-
+# Datasets are read once on first use and shared across requests
+@lru_cache(maxsize=1)
 def get_movies_df() -> pd.DataFrame:
-    if _movies_df is None:
-        init_data()
-    return _movies_df  # type: ignore
+    return load_processed_movies()
 
 
+@lru_cache(maxsize=1)
 def get_sequences() -> dict[int, list[int]]:
-    if _sequences is None:
-        init_data()
-    return _sequences  # type: ignore
+    return load_sequences()
 
 
+@lru_cache(maxsize=1)
 def get_movie_lookup() -> dict[int, dict]:
-    if _movie_lookup is None:
-        init_data()
-    return _movie_lookup  # type: ignore
+    return build_movie_lookup(get_movies_df())
 
 
-# ML Artifacts (loaded via App State to avoid circular imports during startup)
-def get_faiss_artifacts(request: Request):
-    return request.app.state.faiss_artifacts
+def get_user_history(
+    user_id: int,
+    sequences: dict[int, list[int]] = Depends(get_sequences),
+) -> list[int]:
+    if user_id not in sequences:
+        raise HTTPException(status_code=404, detail="User not found.")
+    return sequences[user_id]
 
 
-def get_sasrec_model(request: Request):
+def get_cache() -> Iterator[RecommendationCache]:
+    with RecommendationCache() as cache:
+        yield cache
+
+
+# ML artifacts are loaded into app state by the lifespan handler
+def get_item_index(request: Request) -> ItemIndex:
+    return request.app.state.item_index
+
+
+def get_sasrec_model(request: Request) -> SASRec:
     return request.app.state.sasrec_model
-
-
-def get_llm_generator(request: Request):
-    return request.app.state.llm_generator

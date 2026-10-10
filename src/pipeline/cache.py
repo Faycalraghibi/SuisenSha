@@ -26,7 +26,9 @@ class RecommendationCache:
     def __init__(self, db_path: Path | str = RAG_CACHE_DB) -> None:
         self._db_path = str(db_path)
         Path(self._db_path).parent.mkdir(parents=True, exist_ok=True)
-        self._conn = sqlite3.connect(self._db_path)
+        # FastAPI may open and use one connection on different worker threads;
+        # each connection is still used by only one request at a time.
+        self._conn = sqlite3.connect(self._db_path, check_same_thread=False)
         self._conn.execute(_CREATE_TABLE)
         self._conn.commit()
 
@@ -37,7 +39,8 @@ class RecommendationCache:
         return row[0] if row else None
 
     def has(self, user_id: int) -> bool:
-        return self.get(user_id) is not None
+        row = self._conn.execute("SELECT 1 FROM rag_cache WHERE user_id = ?", (user_id,)).fetchone()
+        return row is not None
 
     def put(self, user_id: int, rationale: str) -> None:
         now = datetime.now(timezone.utc).isoformat()

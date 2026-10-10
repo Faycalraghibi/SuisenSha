@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import io
 import logging
 import sys
 
@@ -38,6 +39,10 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> None:
     args = _parse_args(argv)
+    # Windows consoles/pipes default to cp1252, which can't encode the banner and log glyphs
+    for stream in (sys.stdout, sys.stderr):
+        if isinstance(stream, io.TextIOWrapper):
+            stream.reconfigure(encoding="utf-8", errors="replace")
     print(_BANNER)
 
     movies = sequences = None

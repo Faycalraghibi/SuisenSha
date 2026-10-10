@@ -2,21 +2,16 @@ from __future__ import annotations
 
 import logging
 import math
-import pickle
+from collections.abc import Callable
 
 import matplotlib
-import pandas as pd
+import numpy as np
+from tqdm import tqdm
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from pipeline.config import (
-    MOVIES_CSV,
-    OUTPUTS_DIR,
-    USER_SEQUENCES_PKL,
-    ensure_dirs,
-    eval_cfg,
-)
+from pipeline.config import OUTPUTS_DIR, ensure_dirs, eval_cfg
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +37,35 @@ def recall_at_k(recommended: list[int], relevant: set[int], k: int = 10) -> floa
     if not relevant:
         return 0.0
     return sum(1 for item in recommended[:k] if item in relevant) / len(relevant)
+
+
+def evaluate_leave_one_out(
+    sequences: dict[int, list[int]],
+    recommend: Callable[[list[int], int], list[int]],
+    k_values: tuple[int, ...] = eval_cfg.k_values,
+    desc: str = "Evaluating",
+) -> dict[str, float]:
+    """Hold out each user's last item and score ``recommend(history, top_k)`` against it.
+
+    Recommendations are requested once at ``max(k_values)``; smaller k are prefixes.
+    """
+    max_k = max(k_values)
+    hits: dict[int, list[float]] = {k: [] for k in k_values}
+    ndcgs: dict[int, list[float]] = {k: [] for k in k_values}
+
+    for seq in tqdm(sequences.values(), desc=desc):
+        if len(seq) < 2:
+            continue
+        recs = recommend(seq[:-1], max_k)
+        for k in k_values:
+            hits[k].append(hit_rate_at_k(recs, seq[-1], k))
+            ndcgs[k].append(ndcg_at_k(recs, seq[-1], k))
+
+    result: dict[str, float] = {}
+    for k in k_values:
+        result[f"HitRate@{k}"] = float(np.mean(hits[k])) if hits[k] else 0.0
+        result[f"NDCG@{k}"] = float(np.mean(ndcgs[k])) if ndcgs[k] else 0.0
+    return result
 
 
 def compare_pipelines(results: dict[str, dict[str, float]]) -> None:
@@ -96,30 +120,19 @@ def compare_pipelines(results: dict[str, dict[str, float]]) -> None:
 
 
 def run_phase5() -> None:
-    _movies = pd.read_csv(MOVIES_CSV)  # noqa: F841
-    with open(USER_SEQUENCES_PKL, "rb") as f:
-        sequences = pickle.load(f)
+    from pipeline.data.loader import load_sequences
+    from pipeline.models.embedding import evaluate, load_artefacts
+    from pipeline.models.sequential import evaluate_sasrec
 
+    sequences = load_sequences()
+
+    # RAG reuses the embedding retriever, so it has no separate ranking metrics
     all_results: dict[str, dict[str, float]] = {}
 
     logger.info("Evaluating Embedding Recommender …")
-    from pipeline.models.embedding import evaluate, load_artefacts
-
-    index, item_ids, embeddings = load_artefacts()
-    emb = {}
-    for k in eval_cfg.k_values:
-        emb.update(evaluate(sequences, item_ids, embeddings, index, k=k))
-    all_results["Embedding + FAISS"] = emb
+    all_results["Embedding + FAISS"] = evaluate(sequences, load_artefacts())
 
     logger.info("Evaluating SASRec Recommender …")
-    from pipeline.models.sequential import evaluate_sasrec
-
-    seq = {}
-    for k in eval_cfg.k_values:
-        seq.update(evaluate_sasrec(sequences, k=k))
-    all_results["SASRec (Transformer)"] = seq
-
-    # RAG retrieval uses the same FAISS index, so retrieval metrics match embedding
-    all_results["RAG (Retrieval)"] = emb.copy()
+    all_results["SASRec (Transformer)"] = evaluate_sasrec(sequences)
 
     compare_pipelines(all_results)

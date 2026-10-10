@@ -1,19 +1,17 @@
 from __future__ import annotations
 
 import logging
-import pickle
+from typing import TYPE_CHECKING
 
-import faiss
-import numpy as np
 import pandas as pd
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers import pipeline as hf_pipeline
 
-from pipeline.config import (
-    MOVIES_CSV,
-    USER_SEQUENCES_PKL,
-    rag_cfg,
-)
+from pipeline.config import rag_cfg
+from pipeline.data.loader import build_movie_lookup, load_processed_movies, load_sequences
+
+if TYPE_CHECKING:
+    from pipeline.models.embedding import ItemIndex
 
 logger = logging.getLogger(__name__)
 
@@ -23,44 +21,21 @@ _generator = None
 
 def retrieve_candidates(
     user_history_ids: list[int],
-    item_ids: np.ndarray,
-    embeddings: np.ndarray,
-    index: faiss.IndexFlatIP,
-    movies_df: pd.DataFrame,
+    item_index: ItemIndex,
+    movie_lookup: dict[int, dict],
     top_k: int = rag_cfg.retrieval_k,
 ) -> list[dict]:
-    id_to_idx = {int(iid): idx for idx, iid in enumerate(item_ids)}
-    hist_idx = [id_to_idx[i] for i in user_history_ids if i in id_to_idx]
-    if not hist_idx:
-        return []
-
-    user_vec = embeddings[hist_idx].mean(axis=0, keepdims=True)
-    norm = np.linalg.norm(user_vec)
-    if norm > 0:
-        user_vec /= norm
-
-    scores, indices = index.search(user_vec.astype("float32"), top_k + len(hist_idx))
-    movie_info = movies_df.set_index("item_id").to_dict("index")
-    history_set = set(user_history_ids)
-
     candidates: list[dict] = []
-    for score, idx in zip(scores[0], indices[0]):
-        if idx < 0:
-            continue
-        iid = int(item_ids[idx])
-        if iid in history_set:
-            continue
-        info = movie_info.get(iid, {})
+    for iid, score in item_index.search(user_history_ids, top_k):
+        info = movie_lookup.get(iid, {})
         candidates.append(
             {
                 "item_id": iid,
                 "title": info.get("title", f"Item {iid}"),
                 "genres": info.get("genres", ""),
-                "score": float(score),
+                "score": score,
             }
         )
-        if len(candidates) >= top_k:
-            break
     return candidates
 
 
@@ -97,17 +72,16 @@ def _build_prompt(history_titles: list[str], candidate_titles: list[str]) -> str
 
 def generate_recommendations(
     user_history_ids: list[int],
-    item_ids: np.ndarray,
-    embeddings: np.ndarray,
-    index: faiss.IndexFlatIP,
-    movies_df: pd.DataFrame,
+    item_index: ItemIndex,
+    movie_lookup: dict[int, dict],
 ) -> str:
-    candidates = retrieve_candidates(user_history_ids, item_ids, embeddings, index, movies_df)
+    candidates = retrieve_candidates(user_history_ids, item_index, movie_lookup)
     if not candidates:
         return "No candidates found for this user."
 
-    title_lookup = movies_df.set_index("item_id")["title"].to_dict()
-    history_titles = [title_lookup.get(i, f"Item {i}") for i in user_history_ids[-10:]]
+    history_titles = [
+        movie_lookup.get(i, {}).get("title", f"Item {i}") for i in user_history_ids[-10:]
+    ]
     candidate_titles = [c["title"] for c in candidates]
 
     prompt = _build_prompt(history_titles, candidate_titles)
@@ -129,24 +103,21 @@ def run_phase4(
     sequences: dict[int, list[int]] | None = None,
 ) -> None:
     if movies is None:
-        movies = pd.read_csv(MOVIES_CSV)
+        movies = load_processed_movies()
     if sequences is None:
-        with open(USER_SEQUENCES_PKL, "rb") as f:
-            sequences = pickle.load(f)
+        sequences = load_sequences()
 
     from pipeline.models.embedding import load_artefacts
 
-    index, item_ids, embeddings = load_artefacts()
+    item_index = load_artefacts()
+    movie_lookup = build_movie_lookup(movies)
 
-    title_lookup = movies.set_index("item_id")["title"].to_dict()
-    sample_users = list(sequences.keys())[:3]
-
-    for uid in sample_users:
+    for uid in list(sequences)[:3]:
         seq = sequences[uid]
-        recent = [title_lookup.get(i, f"Item {i}") for i in seq[-5:]]
+        recent = [movie_lookup.get(i, {}).get("title", f"Item {i}") for i in seq[-5:]]
         logger.info("═" * 65)
         logger.info("  🎬  User %d — Recent: %s", uid, ", ".join(recent))
         logger.info("═" * 65)
 
-        response = generate_recommendations(seq, item_ids, embeddings, index, movies)
+        response = generate_recommendations(seq, item_index, movie_lookup)
         logger.info("🤖 LLM output:\n%s\n", response)
