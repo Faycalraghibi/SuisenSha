@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Container vulnerability scanning with Trivy in CI.
 - Automated release workflow publishing Docker images and GitHub releases on semantic tags.
 
+### Changed
+- RAG cache strictly enforces matching user ID, candidate set, and language; wildcard and legacy-table fallbacks removed from lookups. Legacy table writes removed.
+
 ## [0.1.0] - 2026-10-10
 
 ### Added
