@@ -74,3 +74,39 @@ class ErasureResponse(BaseModel):
     erased_at: str
     erased_cache_entries: int
     message: str
+
+
+class BusinessRuleCreate(BaseModel):
+    rule_id: str
+    rule_type: str = Field(description="'exclude', 'boost', or 'pin'")
+    item_ids: list[int] = Field(default_factory=list)
+    genres: list[str] = Field(default_factory=list)
+    value: float = Field(default=1.0)
+    position: int | None = Field(default=None)
+    start_date: str | None = Field(default=None)
+    end_date: str | None = Field(default=None)
+    priority: int = Field(default=0)
+
+
+class BusinessRuleResponse(BaseModel):
+    rule_id: str
+    rule_type: str
+    item_ids: list[int]
+    genres: list[str]
+    value: float
+    position: int | None
+    start_date: str | None
+    end_date: str | None
+    priority: int
+    is_active: bool
+
+
+class ConflictResponse(BaseModel):
+    rule_ids: list[str]
+    conflict_type: str
+    description: str
+
+
+class RulesListResponse(BaseModel):
+    rules: list[BusinessRuleResponse]
+    conflicts: list[ConflictResponse]

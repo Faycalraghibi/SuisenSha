@@ -62,6 +62,7 @@ from pipeline.models.baselines import (
 from pipeline.models.explanations import generate_template_explanation
 from pipeline.models.llm import FakeLLMBackend, LLMBackend
 from pipeline.models.sequential import train_sasrec
+from pipeline.ranking.diversity import maximal_marginal_relevance
 
 logger = logging.getLogger(__name__)
 
@@ -338,6 +339,87 @@ def run_benchmark(
         judge_backend=judge,
     )
 
+    # Diversity Trade-Off Evaluation (MMR re-ranking)
+    logger.info("Evaluating accuracy vs. diversity trade-off...")
+    diversity_tradeoff: list[dict[str, Any]] = []
+    base_rec = PopularityRecommender()
+    base_rec.fit(splits.train_sequences)
+    test_uids_sample = list(splits.test_targets.keys())
+    tradeoff_divs = [0.0, 0.3, 0.7, 1.0]
+
+    for div_val in tradeoff_divs:
+        div_recs: dict[int, list[int]] = {}
+        for u in test_uids_sample:
+            u_hist = splits.test_history.get(u, [])
+            cands = base_rec.recommend(u_hist, k=max(max(k_values) * 3, 30))
+            scores = {cid: 1.0 / (idx + 1.0) for idx, cid in enumerate(cands)}
+            reranked = maximal_marginal_relevance(
+                cands,
+                item_features=item_genres,
+                scores=scores,
+                diversity=div_val,
+                k=10,
+            )
+            div_recs[u] = reranked
+
+        hr10 = (
+            float(
+                np.mean(
+                    [
+                        hit_rate_at_k(div_recs[u], splits.test_targets[u], 10)
+                        for u in test_uids_sample
+                    ]
+                )
+            )
+            if test_uids_sample
+            else 0.0
+        )
+        ndcg10 = (
+            float(
+                np.mean(
+                    [ndcg_at_k(div_recs[u], splits.test_targets[u], 10) for u in test_uids_sample]
+                )
+            )
+            if test_uids_sample
+            else 0.0
+        )
+        div10 = (
+            float(
+                np.mean(
+                    [
+                        intra_list_diversity_at_k(div_recs[u], item_genres, 10)
+                        for u in test_uids_sample
+                    ]
+                )
+            )
+            if test_uids_sample
+            else 0.0
+        )
+        nov10 = (
+            float(
+                np.mean(
+                    [
+                        novelty_at_k(div_recs[u], item_popularity, total_users, 10)
+                        for u in test_uids_sample
+                    ]
+                )
+            )
+            if test_uids_sample
+            else 0.0
+        )
+        gini10 = gini_exposure(div_recs, num_items, k=10)
+
+        diversity_tradeoff.append(
+            {
+                "diversity": div_val,
+                "HitRate@10": hr10,
+                "NDCG@10": ndcg10,
+                "Diversity@10": div10,
+                "Novelty@10": nov10,
+                "GiniExposure@10": gini10,
+            }
+        )
+
     # Write CSV
     csv_path = out_dir / "benchmark.csv"
     _write_csv(raw_results, aggregated_results, csv_path)
@@ -354,6 +436,7 @@ def run_benchmark(
         num_items,
         md_path,
         dataset_name=dataset_name,
+        diversity_tradeoff=diversity_tradeoff,
     )
     logger.info("Benchmark report written → %s", md_path)
 
@@ -361,6 +444,7 @@ def run_benchmark(
         "raw_results": raw_results,
         "aggregated_results": aggregated_results,
         "explanation_report": exp_report.to_dict(),
+        "diversity_tradeoff": diversity_tradeoff,
         "csv_path": str(csv_path),
         "md_path": str(md_path),
     }
@@ -395,6 +479,7 @@ def _write_markdown(
     n_items: int,
     md_path: Path,
     dataset_name: str = "MovieLens-100K",
+    diversity_tradeoff: list[dict[str, Any]] | None = None,
 ) -> None:
     now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
@@ -510,6 +595,25 @@ def _write_markdown(
             "",
         ]
     )
+
+    if diversity_tradeoff:
+        lines.extend(
+            [
+                "## 6. Accuracy vs. Diversity Trade-off (MMR Re-ranking)",
+                "",
+                "| Diversity | HitRate@10 | NDCG@10 | Diversity@10 | Novelty@10 | Gini |",
+                "|:---|:---:|:---:|:---:|:---:|:---:|",
+            ]
+        )
+        for row in diversity_tradeoff:
+            d_val = row["diversity"]
+            hr = f"{row['HitRate@10']:.4f}"
+            ndcg = f"{row['NDCG@10']:.4f}"
+            div = f"{row['Diversity@10']:.4f}"
+            nov = f"{row['Novelty@10']:.2f}"
+            gini = f"{row['GiniExposure@10']:.4f}"
+            lines.append(f"| {d_val:.1f} | {hr} | {ndcg} | {div} | {nov} | {gini} |")
+        lines.append("")
 
     with open(md_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))

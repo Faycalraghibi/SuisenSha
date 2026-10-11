@@ -44,6 +44,23 @@ def get_user_history(
     return sequences[user_id]
 
 
+def get_user_history_or_cold(
+    user_id: int,
+    sequences: dict[int, list[int]] = Depends(get_sequences),
+    sec_mgr: Any = Depends(get_security_manager),
+) -> list[int] | None:
+    if sec_mgr.is_user_erased(user_id):
+        raise HTTPException(status_code=404, detail="User not found.")
+    return sequences.get(user_id)
+
+
+@lru_cache(maxsize=1)
+def get_rule_engine() -> Any:
+    from pipeline.ranking.rules import RuleEngine
+
+    return RuleEngine()
+
+
 @lru_cache(maxsize=1)
 def get_popular_items() -> list[int]:
     from collections import Counter
