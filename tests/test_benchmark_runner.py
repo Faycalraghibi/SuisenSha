@@ -84,9 +84,10 @@ def test_cli_parse_phase_args():
 def test_cli_main_benchmark_execution(tmp_path: Path, monkeypatch):
     called = {}
 
-    def fake_run_benchmark(seeds=5, output_dir=None):
+    def fake_run_benchmark(seeds=5, output_dir=None, dataset="ml-100k", **kwargs):
         called["seeds"] = seeds
         called["output_dir"] = output_dir
+        called["dataset"] = dataset
         return {
             "md_path": str(tmp_path / "benchmark.md"),
             "csv_path": str(tmp_path / "benchmark.csv"),

@@ -25,6 +25,7 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+import pandas as pd
 
 from pipeline.config import (
     REPORTS_DIR,
@@ -104,6 +105,7 @@ def run_benchmark(
     max_eval_users: int | None = None,
     sequences: dict[int, list[int]] | None = None,
     movies_df: Any | None = None,
+    dataset: str = "ml-100k",
 ) -> dict[str, Any]:
     """Run multi-seed benchmark across all models and generate Markdown and CSV reports."""
     ensure_dirs()
@@ -115,10 +117,34 @@ def run_benchmark(
     else:
         seed_list = list(seeds)
 
+    dataset_clean = dataset.lower().replace("_", "-")
     if sequences is None:
-        sequences = load_sequences()
-    if movies_df is None:
-        movies_df = load_movies()
+        if dataset_clean in ("ml-1m", "movielens-1m"):
+            dataset_name = "MovieLens-1M"
+            from pipeline.config import DATA_DIR
+            from pipeline.data.connectors.movielens import MovieLensConnector
+
+            ml_1m_dir = DATA_DIR / "ml-1m"
+            if not (ml_1m_dir / "ratings.dat").is_file():
+                ml_1m_dir = MovieLensConnector.download_1m()
+            conn = MovieLensConnector(ml_1m_dir, variant="1m")
+            movies_df, _ = conn.validate()
+            sequences = conn.build_sequences(min_rating=3.5, min_interactions=5)
+        else:
+            dataset_name = "MovieLens-100K"
+            sequences = load_sequences()
+            if movies_df is None:
+                movies_df = load_movies()
+    else:
+        if "1m" in dataset_clean:
+            dataset_name = "MovieLens-1M"
+        elif "100k" in dataset_clean:
+            dataset_name = "MovieLens-100K"
+        else:
+            dataset_name = dataset
+
+        if movies_df is None:
+            movies_df = load_movies()
 
     # Pre-compute catalogue metadata and popularity
     catalogue_titles = set(movies_df["title"].dropna().tolist())
@@ -130,8 +156,10 @@ def run_benchmark(
         movie_dict[mid] = {
             "item_id": mid,
             "title": str(row["title"]),
-            "genres": str(row["genres"]),
-            "release_date": str(row["release_date"]),
+            "genres": str(row.get("genres", "")),
+            "release_date": str(row["release_date"])
+            if "release_date" in row and pd.notna(row["release_date"])
+            else "",
         }
         item_genres[mid] = genres_set
 
@@ -325,6 +353,7 @@ def run_benchmark(
         total_users,
         num_items,
         md_path,
+        dataset_name=dataset_name,
     )
     logger.info("Benchmark report written → %s", md_path)
 
@@ -365,6 +394,7 @@ def _write_markdown(
     n_users: int,
     n_items: int,
     md_path: Path,
+    dataset_name: str = "MovieLens-100K",
 ) -> None:
     now_str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
@@ -375,7 +405,7 @@ def _write_markdown(
         "- **Evaluation Protocol**: Leave-two-out sequential split "
         "(validation held-out, test isolated)",
         f"- **Seeds Evaluated**: {num_seeds} ({seed_list})",
-        f"- **Dataset**: MovieLens-100K ({n_users:,} users, {n_items:,} items)",
+        f"- **Dataset**: {dataset_name} ({n_users:,} users, {n_items:,} items)",
         "",
         "## 1. Ranking Accuracy (Mean ± 95% CI)",
         "",

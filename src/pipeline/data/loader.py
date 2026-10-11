@@ -46,54 +46,48 @@ def download_movielens() -> Path:
 
 
 def load_ratings(data_dir: Path | None = None) -> pd.DataFrame:
-    path = (data_dir or MOVIELENS_DIR) / "u.data"
-    return pd.read_csv(
-        path,
-        sep="\t",
-        names=["user_id", "item_id", "rating", "timestamp"],
-        engine="python",
+    from pipeline.data.connectors.movielens import MovieLensConnector
+
+    conn = MovieLensConnector(data_dir or MOVIELENS_DIR, variant="100k")
+    df = conn.load_interactions()
+    return pd.DataFrame(
+        {
+            "user_id": df["user_id"],
+            "item_id": df["item_id"],
+            "rating": df["value"],
+            "timestamp": df["timestamp"],
+        }
     )
-
-
-_GENRE_COLS = [
-    "unknown",
-    "Action",
-    "Adventure",
-    "Animation",
-    "Children",
-    "Comedy",
-    "Crime",
-    "Documentary",
-    "Drama",
-    "Fantasy",
-    "Film-Noir",
-    "Horror",
-    "Musical",
-    "Mystery",
-    "Romance",
-    "Sci-Fi",
-    "Thriller",
-    "War",
-    "Western",
-]
 
 
 def load_movies(data_dir: Path | None = None) -> pd.DataFrame:
-    path = (data_dir or MOVIELENS_DIR) / "u.item"
-    columns = ["item_id", "title", "release_date", "video_release_date", "imdb_url"] + _GENRE_COLS
+    from pipeline.data.connectors.movielens import MovieLensConnector
 
-    df = pd.read_csv(path, sep="|", names=columns, encoding="latin-1", engine="python")
-
-    df["genres"] = df[_GENRE_COLS].apply(
-        lambda row: ", ".join(g for g, v in zip(_GENRE_COLS, row) if v == 1),
-        axis=1,
-    )
-    # Combine title + genres for embedding — richer signal than title alone
-    df["description"] = df.apply(
-        lambda r: f"{r['title']} — Genres: {r['genres']}" if r["genres"] else r["title"],
-        axis=1,
-    )
+    conn = MovieLensConnector(data_dir or MOVIELENS_DIR, variant="100k")
+    df = conn.load_items()
     return df[["item_id", "title", "release_date", "genres", "description"]]
+
+
+def export_movielens_csv(
+    items_path: Path | str,
+    interactions_path: Path | str,
+    data_dir: Path | None = None,
+) -> tuple[Path, Path]:
+    from pipeline.data.connectors.movielens import MovieLensConnector
+
+    conn = MovieLensConnector(data_dir or MOVIELENS_DIR, variant="100k")
+    return conn.export_csv(items_path, interactions_path)
+
+
+def export_movielens_parquet(
+    items_path: Path | str,
+    interactions_path: Path | str,
+    data_dir: Path | None = None,
+) -> tuple[Path, Path]:
+    from pipeline.data.connectors.movielens import MovieLensConnector
+
+    conn = MovieLensConnector(data_dir or MOVIELENS_DIR, variant="100k")
+    return conn.export_parquet(items_path, interactions_path)
 
 
 def run_eda(ratings: pd.DataFrame, movies: pd.DataFrame) -> None:

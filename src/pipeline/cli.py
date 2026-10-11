@@ -50,6 +50,13 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=[],
         help="Override a config setting (e.g. --set sasrec.epochs=40). Can be repeated.",
     )
+    bench_parser.add_argument(
+        "--dataset",
+        type=str,
+        default="ml-100k",
+        choices=["ml-100k", "ml-1m", "movielens-100k", "movielens-1m"],
+        help="Dataset to benchmark on (default: ml-100k).",
+    )
 
     # Legacy/direct phase flags
     parser.add_argument(
@@ -100,8 +107,9 @@ def main(argv: list[str] | None = None) -> None:
 
         seeds = getattr(args, "seeds", None) or cfg.benchmark.seeds
         out_dir = getattr(args, "output_dir", None) or cfg.benchmark.output_dir
-        results = run_benchmark(seeds=seeds, output_dir=out_dir)
-        print(f"\n✅ Benchmark complete across {seeds} seeds.")
+        dataset = getattr(args, "dataset", "ml-100k")
+        results = run_benchmark(seeds=seeds, output_dir=out_dir, dataset=dataset)
+        print(f"\n✅ Benchmark complete across {seeds} seeds on {dataset}.")
         print(f"  Markdown report → {results['md_path']}")
         print(f"  CSV metrics     → {results['csv_path']}")
         return
