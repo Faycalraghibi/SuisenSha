@@ -98,4 +98,6 @@ jobs:
 
       - name: Run Trivy vulnerability scan
         run: |
+          trivy image --severity CRITICAL,HIGH --ignore-unfixed --pkg-types os,library --format json -o trivy.json suisensha:${{ github.sha }} || true
+          python3 -c "import json; [print('FINDING:', r.get('Target'), v.get('PkgName'), v.get('InstalledVersion'), v.get('PkgPath')) for r in json.load(open('trivy.json')).get('Results', []) for v in r.get('Vulnerabilities', [])]" || true
           trivy image --exit-code 1 --severity CRITICAL,HIGH --ignore-unfixed --pkg-types os,library --format table suisensha:${{ github.sha }}
