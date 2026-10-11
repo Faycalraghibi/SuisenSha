@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install CPU-only torch first to avoid massive CUDA wheels
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
+RUN pip install --no-cache-dir --upgrade pip "setuptools>=78.1.1" "wheel>=0.46.2" && \
     pip install --no-cache-dir torch>=2.0.0 --extra-index-url https://download.pytorch.org/whl/cpu
 
 COPY pyproject.toml .
@@ -19,7 +19,7 @@ COPY README.md .
 COPY src/ ./src/
 
 # Install dependencies into /install
-RUN pip install --no-cache-dir --prefix=/install --upgrade \
+RUN pip install --no-cache-dir --prefix=/install --no-build-isolation --upgrade \
     "setuptools>=78.1.1" \
     "wheel>=0.46.2" \
     "jaraco.context>=6.1.0" \
@@ -57,8 +57,9 @@ RUN pip install --no-cache-dir --upgrade \
 COPY src/ /app/src/
 COPY pyproject.toml /app/
 
-# Install the app itself in editable mode without reinstalling deps
-RUN pip install --no-cache-dir --no-deps -e .
+# Install the app itself in editable mode without reinstalling deps, avoiding isolated build env remnants
+RUN pip install --no-cache-dir --no-deps --no-build-isolation -e . && \
+    rm -rf /tmp/* /var/tmp/* /root/.cache
 
 # Prepare directories with non-root permissions
 RUN mkdir -p /app/data /app/artifacts /app/outputs && \
