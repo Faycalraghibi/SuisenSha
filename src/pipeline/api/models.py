@@ -142,3 +142,53 @@ class EventBatchResponse(BaseModel):
     ingested_count: int
     is_idempotent_replay: bool = False
     idempotency_key: str | None = None
+
+
+class VariantModel(BaseModel):
+    name: str
+    weight: float = 1.0
+    model_type: str = "sasrec"
+    params: dict[str, Any] = Field(default_factory=dict)
+
+
+class ExperimentCreate(BaseModel):
+    id: str
+    name: str
+    variants: list[VariantModel] = Field(min_length=2)
+    description: str = ""
+
+
+class ExperimentResponse(BaseModel):
+    id: str
+    name: str
+    variants: list[VariantModel]
+    status: str
+    created_at: str
+    description: str = ""
+
+
+class VariantMetricsModel(BaseModel):
+    variant_name: str
+    exposures: int
+    conversions: int
+    conversion_rate: float
+
+
+class UpliftResponse(BaseModel):
+    experiment_id: str
+    control: VariantMetricsModel
+    treatment: VariantMetricsModel
+    absolute_uplift: float
+    relative_uplift_pct: float
+    ci_lower: float
+    ci_upper: float
+    p_value: float
+    is_significant: bool
+    confidence_level: float = 0.95
+
+
+class SampleSizeResponse(BaseModel):
+    baseline_conversion: float
+    minimum_detectable_effect: float
+    required_sample_size_per_variant: int
+    total_required_sample_size: int

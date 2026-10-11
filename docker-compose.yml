@@ -65,5 +65,5 @@ services:
     depends_on:
       api:
         condition: service_healthy
-    command: ["streamlit", "run", "src/pipeline/ui/app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
+    command: ["streamlit", "run", "src/pipeline/ui/admin.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
     restart: unless-stopped
