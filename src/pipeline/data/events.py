@@ -27,7 +27,10 @@ class EventType(str, Enum):
 
 class UserEvent(BaseModel):
     event_id: str | None = None
-    user_id: int = Field(gt=0, description="Positive user identifier")
+    user_id: int | None = Field(default=None, gt=0, description="Positive user identifier")
+    session_id: str | None = Field(
+        default=None, description="Optional anonymous session identifier"
+    )
     item_id: int = Field(gt=0, description="Positive item identifier")
     event_type: EventType = Field(description="Interaction or feedback type")
     timestamp: datetime = Field(
@@ -82,7 +85,8 @@ class EventStore:
                 CREATE TABLE IF NOT EXISTS events (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     event_id TEXT UNIQUE NOT NULL,
-                    user_id INTEGER NOT NULL,
+                    user_id INTEGER,
+                    session_id TEXT,
                     item_id INTEGER NOT NULL,
                     event_type TEXT NOT NULL,
                     timestamp TEXT NOT NULL,
@@ -91,7 +95,12 @@ class EventStore:
                 )
                 """
             )
+            try:
+                conn.execute("ALTER TABLE events ADD COLUMN session_id TEXT")
+            except sqlite3.OperationalError:
+                pass
             conn.execute("CREATE INDEX IF NOT EXISTS idx_events_user ON events(user_id)")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_events_session ON events(session_id)")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_events_type ON events(event_type)")
             conn.execute(
                 """
@@ -151,12 +160,14 @@ class EventStore:
                 conn.execute(
                     """
                     INSERT OR REPLACE INTO events
-                    (event_id, user_id, item_id, event_type, timestamp, rating, metadata)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    (event_id, user_id, session_id, item_id,
+                     event_type, timestamp, rating, metadata)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         eid,
                         ev.user_id,
+                        ev.session_id,
                         ev.item_id,
                         ev.event_type.value,
                         ts_str,
@@ -165,7 +176,7 @@ class EventStore:
                     ),
                 )
 
-                if ev.event_type == EventType.NOT_INTERESTED:
+                if ev.event_type == EventType.NOT_INTERESTED and ev.user_id is not None:
                     conn.execute(
                         """
                         INSERT OR REPLACE INTO user_exclusions
@@ -208,8 +219,8 @@ class EventStore:
         event_types: list[EventType] | None = None,
     ) -> list[UserEvent]:
         query = (
-            "SELECT event_id, user_id, item_id, event_type, timestamp, rating, metadata "
-            "FROM events WHERE user_id = ?"
+            "SELECT event_id, user_id, session_id, item_id, "
+            "event_type, timestamp, rating, metadata FROM events WHERE user_id = ?"
         )
         params: list[Any] = [user_id]
         if event_types:
@@ -228,6 +239,43 @@ class EventStore:
                     UserEvent(
                         event_id=row["event_id"],
                         user_id=row["user_id"],
+                        session_id=row["session_id"],
+                        item_id=row["item_id"],
+                        event_type=EventType(row["event_type"]),
+                        timestamp=ts,
+                        rating=row["rating"],
+                        metadata=meta,
+                    )
+                )
+            return results
+
+    def get_session_events(
+        self,
+        session_id: str,
+        event_types: list[EventType] | None = None,
+    ) -> list[UserEvent]:
+        query = (
+            "SELECT event_id, user_id, session_id, item_id, "
+            "event_type, timestamp, rating, metadata FROM events WHERE session_id = ?"
+        )
+        params: list[Any] = [session_id]
+        if event_types:
+            placeholders = ",".join("?" for _ in event_types)
+            query += f" AND event_type IN ({placeholders})"
+            params.extend(e.value for e in event_types)
+        query += " ORDER BY timestamp ASC"
+
+        with self._get_connection() as conn:
+            cur = conn.execute(query, tuple(params))
+            results: list[UserEvent] = []
+            for row in cur.fetchall():
+                ts = datetime.fromisoformat(row["timestamp"])
+                meta = json.loads(row["metadata"]) if row["metadata"] else {}
+                results.append(
+                    UserEvent(
+                        event_id=row["event_id"],
+                        user_id=row["user_id"],
+                        session_id=row["session_id"],
                         item_id=row["item_id"],
                         event_type=EventType(row["event_type"]),
                         timestamp=ts,

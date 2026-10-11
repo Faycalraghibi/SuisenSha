@@ -52,6 +52,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Minimum sample size calculator (`calculate_sample_size`) based on baseline conversion, MDE, statistical power, and significance levels.
 - Online experiment management API endpoints (`/v1/experiments`, `/v1/experiments/{id}/uplift`, `/v1/experiments/sample-size`).
 - Comprehensive Client Admin Console (`src/pipeline/ui/admin.py`) for managing API keys, business rules, live A/B experiments, uplift metrics, and model inspectability.
+- Real-time event ingestion immediate cache invalidation across Redis and in-memory caches upon interaction event arrival (`POST /v1/events`).
+- Dynamic real-time sequence aggregation augmenting static historical interaction sequences with chronologically ordered live events for instant next-item prediction without retraining.
+- Thread-safe SQLite-backed session store and manager (`SessionStore`, `SessionManager`) for tracking anonymous user interaction sequences and lifecycle.
+- Real-time anonymous session recommendation endpoints (`GET /v1/recommend/session/{session_id}` and `POST /v1/recommend/session`) serving SASRec next-item predictions with popularity fallback for empty sessions.
+- Anonymous session lifecycle endpoints (`POST /v1/sessions/{session_id}/events`, `GET /v1/sessions/{session_id}`, `DELETE /v1/sessions/{session_id}`).
 
 
 

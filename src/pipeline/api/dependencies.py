@@ -32,26 +32,67 @@ def get_movie_lookup() -> dict[int, dict]:
     return build_movie_lookup(get_movies_df())
 
 
+@lru_cache(maxsize=1)
+def get_event_store() -> Any:
+    from pipeline.data.events import EventStore
+
+    return EventStore()
+
+
+def _augment_history_with_events(
+    user_id: int,
+    base_history: list[int],
+    event_store: Any,
+) -> list[int]:
+    hist = list(base_history)
+    if hasattr(event_store, "get_user_events"):
+        from pipeline.data.events import EventType
+
+        recent_events = event_store.get_user_events(
+            user_id,
+            event_types=[
+                EventType.CLICK,
+                EventType.PURCHASE,
+                EventType.THUMBS_UP,
+                EventType.RATING,
+                EventType.VIEW,
+            ],
+        )
+        for ev in recent_events:
+            if ev.event_type == EventType.RATING and ev.rating is not None and ev.rating < 3.0:
+                continue
+            hist.append(ev.item_id)
+    return hist
+
+
 def get_user_history(
     user_id: int,
     sequences: dict[int, list[int]] = Depends(get_sequences),
     sec_mgr: Any = Depends(get_security_manager),
+    event_store: Any = Depends(get_event_store),
 ) -> list[int]:
     if sec_mgr.is_user_erased(user_id):
         raise HTTPException(status_code=404, detail="User not found.")
-    if user_id not in sequences:
+    base = list(sequences.get(user_id, []))
+    hist = _augment_history_with_events(user_id, base, event_store)
+    if not hist:
         raise HTTPException(status_code=404, detail="User not found.")
-    return sequences[user_id]
+    return hist
 
 
 def get_user_history_or_cold(
     user_id: int,
     sequences: dict[int, list[int]] = Depends(get_sequences),
     sec_mgr: Any = Depends(get_security_manager),
+    event_store: Any = Depends(get_event_store),
 ) -> list[int] | None:
     if sec_mgr.is_user_erased(user_id):
         raise HTTPException(status_code=404, detail="User not found.")
-    return sequences.get(user_id)
+    base = list(sequences.get(user_id, []))
+    hist = _augment_history_with_events(user_id, base, event_store)
+    if not hist and user_id not in sequences:
+        return None
+    return hist
 
 
 @lru_cache(maxsize=1)
@@ -105,13 +146,6 @@ def get_sasrec_model(request: Request) -> SASRec | None:
 
 
 @lru_cache(maxsize=1)
-def get_event_store() -> Any:
-    from pipeline.data.events import EventStore
-
-    return EventStore()
-
-
-@lru_cache(maxsize=1)
 def get_redis_cache() -> Any:
     from pipeline.cache import RedisCache
 
@@ -130,3 +164,10 @@ def get_experiment_manager() -> Any:
     from pipeline.experiments.manager import ExperimentManager
 
     return ExperimentManager()
+
+
+@lru_cache(maxsize=1)
+def get_session_manager() -> Any:
+    from pipeline.sessions.manager import SessionManager
+
+    return SessionManager()

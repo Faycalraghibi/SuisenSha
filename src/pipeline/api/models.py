@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 class ErrorResponse(BaseModel):
@@ -116,7 +116,12 @@ class RulesListResponse(BaseModel):
 
 
 class EventItem(BaseModel):
-    user_id: int = Field(gt=0, description="Positive user identifier")
+    user_id: int | None = Field(
+        default=None, description="Positive user identifier (optional if session_id provided)"
+    )
+    session_id: str | None = Field(
+        default=None, description="Optional anonymous session identifier"
+    )
     item_id: int = Field(gt=0, description="Positive item identifier")
     event_type: str = Field(
         description=(
@@ -128,6 +133,14 @@ class EventItem(BaseModel):
         default=None, ge=0.5, le=5.0, description="Rating value (0.5 to 5.0) for rating events"
     )
     metadata: dict[str, Any] = Field(default_factory=dict, description="Custom event metadata")
+
+    @model_validator(mode="after")
+    def validate_identity(self) -> EventItem:
+        if self.user_id is None and not self.session_id:
+            raise ValueError("Either user_id or session_id must be provided.")
+        if self.user_id is not None and self.user_id <= 0:
+            raise ValueError("user_id must be a positive integer.")
+        return self
 
 
 class EventBatchRequest(BaseModel):
@@ -192,3 +205,28 @@ class SampleSizeResponse(BaseModel):
     minimum_detectable_effect: float
     required_sample_size_per_variant: int
     total_required_sample_size: int
+
+
+class SessionEventRequest(BaseModel):
+    item_id: int = Field(gt=0, description="Item identifier")
+    event_type: str = Field(default="click", description="Event type, e.g. click, view, purchase")
+    timestamp: datetime | None = Field(default=None, description="Optional UTC event timestamp")
+    metadata: dict[str, Any] = Field(default_factory=dict, description="Custom event metadata")
+
+
+class SessionResponse(BaseModel):
+    session_id: str
+    item_ids: list[int]
+    created_at: str
+    updated_at: str
+    event_count: int
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class SessionRecommendRequest(BaseModel):
+    session_id: str | None = Field(default=None, description="Session identifier")
+    item_ids: list[int] | None = Field(default=None, description="Explicit sequence of item IDs")
+    k: int = Field(default=10, ge=1, le=100, description="Number of recommendations")
+    exclude: str | None = Field(default=None, description="Comma-separated item IDs to exclude")
+    genres: str | None = Field(default=None, description="Comma-separated genre filters")
+    diversity: float = Field(default=0.0, ge=0.0, le=1.0, description="MMR diversity parameter")
