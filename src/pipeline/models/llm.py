@@ -110,7 +110,7 @@ class HostedAPIBackend(LLMBackend):
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
         }
-        payload = {
+        payload: dict[str, Any] = {
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.7,
