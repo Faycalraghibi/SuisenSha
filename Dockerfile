@@ -47,7 +47,8 @@ RUN pip install --no-cache-dir --upgrade \
     "jaraco.context>=6.1.0" \
     "msgpack>=1.2.1" \
     "urllib3>=2.8.0" && \
-    rm -rf /usr/local/lib/python3.11/site-packages/*wheel-0.45* \
+    rm -rf /usr/local/lib/python3.11/ensurepip \
+           /usr/local/lib/python3.11/site-packages/*wheel-0.45* \
            /usr/local/lib/python3.11/site-packages/*jaraco.context-5* \
            /usr/local/lib/python3.11/site-packages/*setuptools-70* \
            /usr/local/lib/python3.11/site-packages/*urllib3-2.7* \
