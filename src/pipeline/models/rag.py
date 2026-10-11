@@ -88,6 +88,8 @@ def retrieve_candidates(
             }
             for iid, score in recommender.search(user_history_ids, top_k)
         ]
+    elif hasattr(recommender, "recommend") and not callable(recommender):
+        candidate_ids = recommender.recommend(user_history_ids, k=top_k)
     elif callable(recommender):
         res = recommender(user_history_ids, top_k)
         candidate_ids = [r[0] if isinstance(r, tuple | list) else r for r in res]

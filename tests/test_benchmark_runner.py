@@ -63,9 +63,12 @@ def test_benchmark_synthetic(tmp_path: Path):
     assert "Beyond-Accuracy & Exposure Metrics" in md_content
     assert "Performance by User Activity Quartile" in md_content
     assert "Explanation Quality Evaluation" in md_content
+    assert "Accuracy vs. Diversity Trade-off" in md_content
 
     assert "Random" in results["aggregated_results"]
     assert "Popularity" in results["aggregated_results"]
+    assert "diversity_tradeoff" in results
+    assert len(results["diversity_tradeoff"]) == 4
 
 
 def test_cli_parse_benchmark_args():
