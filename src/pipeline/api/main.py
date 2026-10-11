@@ -22,6 +22,7 @@ from pipeline.api.dependencies import (
     get_rule_engine,
     get_sasrec_model,
     get_sequences,
+    get_session_manager,
     get_user_history,
     get_user_history_or_cold,
     parse_exclude_ids,
@@ -46,6 +47,9 @@ from pipeline.api.models import (
     RecommendationResponse,
     RulesListResponse,
     SampleSizeResponse,
+    SessionEventRequest,
+    SessionRecommendRequest,
+    SessionResponse,
     SimilarItemsResponse,
     TransparencyResponse,
     UpliftResponse,
@@ -499,6 +503,8 @@ def ingest_events(
     batch: EventBatchRequest,
     idempotency_key_header: str | None = Header(None, alias="Idempotency-Key"),
     event_store=Depends(get_event_store),
+    redis_cache=Depends(get_redis_cache),
+    session_manager=Depends(get_session_manager),
     auth: dict[str, Any] = Depends(get_api_key),
 ) -> EventBatchResponse:
     from pipeline.data.events import EventType, UserEvent
@@ -517,6 +523,7 @@ def ingest_events(
         user_events.append(
             UserEvent(
                 user_id=item.user_id,
+                session_id=item.session_id,
                 item_id=item.item_id,
                 event_type=etype,
                 timestamp=item.timestamp or datetime.now(timezone.utc),
@@ -524,8 +531,23 @@ def ingest_events(
                 metadata=item.metadata,
             )
         )
+        if item.session_id:
+            session_manager.record_event(
+                session_id=item.session_id,
+                item_id=item.item_id,
+                event_type=etype.value,
+                metadata=item.metadata,
+                timestamp=item.timestamp,
+            )
 
     ingested, is_replay = event_store.record_batch(user_events, idempotency_key=effective_key)
+
+    # Invalidate cached recommendations for affected users immediately
+    if hasattr(redis_cache, "delete_user"):
+        for ev in user_events:
+            if ev.user_id:
+                redis_cache.delete_user(ev.user_id)
+
     return EventBatchResponse(
         status="success",
         ingested_count=ingested,
@@ -1424,4 +1446,236 @@ def calculate_experiment_sample_size(
         minimum_detectable_effect=mde,
         required_sample_size_per_variant=n_per_variant,
         total_required_sample_size=n_per_variant * 2,
+    )
+
+
+# ---------------------------------------------------------------------------
+# Anonymous Sessions & Real-Time Session Recommendations
+# ---------------------------------------------------------------------------
+@v1_router.post(
+    "/sessions/{session_id}/events",
+    response_model=SessionResponse,
+    tags=["Sessions"],
+)
+def record_session_event(
+    session_id: str,
+    event: SessionEventRequest,
+    session_manager=Depends(get_session_manager),
+    auth: dict[str, Any] = Depends(get_api_key),
+) -> SessionResponse:
+    """Record an interaction event into an anonymous session sequence."""
+    sess = session_manager.record_event(
+        session_id=session_id,
+        item_id=event.item_id,
+        event_type=event.event_type,
+        metadata=event.metadata,
+        timestamp=event.timestamp,
+    )
+    return SessionResponse(**sess.to_dict())
+
+
+@v1_router.get(
+    "/sessions/{session_id}",
+    response_model=SessionResponse,
+    tags=["Sessions"],
+)
+def get_session_info(
+    session_id: str,
+    session_manager=Depends(get_session_manager),
+    auth: dict[str, Any] = Depends(get_api_key),
+) -> SessionResponse:
+    """Retrieve current state and items for an anonymous session."""
+    sess = session_manager.get_session(session_id)
+    if sess is None:
+        raise HTTPException(status_code=404, detail=f"Session '{session_id}' not found.")
+    return SessionResponse(**sess.to_dict())
+
+
+@v1_router.delete(
+    "/sessions/{session_id}",
+    tags=["Sessions"],
+)
+def delete_session(
+    session_id: str,
+    session_manager=Depends(get_session_manager),
+    auth: dict[str, Any] = Depends(get_api_key),
+) -> dict[str, Any]:
+    """Clear all interactions and state for an anonymous session."""
+    cleared = session_manager.clear_session(session_id)
+    return {"status": "cleared", "session_id": session_id, "found": cleared}
+
+
+@v1_router.get(
+    "/recommend/session/{session_id}",
+    response_model=RecommendationResponse,
+    tags=["Recommendations", "Sessions"],
+)
+def recommend_session(
+    session_id: str,
+    k: int = Query(default=TOP_K, ge=1, le=100),
+    item_ids: str | None = Query(
+        default=None, description="Optional comma-separated explicit item sequence override"
+    ),
+    exclude: str | None = Query(default=None),
+    genres: str | None = Query(default=None),
+    diversity: float = Query(default=0.0, ge=0.0, le=1.0),
+    session_manager=Depends(get_session_manager),
+    lookup: dict[int, dict] = Depends(get_movie_lookup),
+    popular_items: list[int] = Depends(get_popular_items),
+    model=Depends(get_sasrec_model),
+    item_index=Depends(get_item_index),
+    rule_engine=Depends(get_rule_engine),
+    auth: dict[str, Any] | None = Depends(get_api_key),
+) -> RecommendationResponse:
+    """Generate real-time next-item recommendations from anonymous session items."""
+    exclude_set = parse_exclude_ids(exclude)
+    genre_filters = parse_genre_filter(genres)
+
+    seq_items: list[int] = []
+    if item_ids:
+        for x in item_ids.split(","):
+            x = x.strip()
+            if x.isdigit():
+                seq_items.append(int(x))
+    elif session_id:
+        seq_items = session_manager.get_session_items(session_id)
+
+    if not seq_items:
+        items = _filter_and_build_recs(
+            popular_items,
+            lookup,
+            exclude_set,
+            genre_filters,
+            k=k,
+            diversity=diversity,
+            rule_engine=rule_engine,
+        )
+        return RecommendationResponse(
+            user_id=0,
+            model_name="Popularity (Empty Session Fallback)",
+            recommendations=items,
+        )
+
+    from pipeline.models.sequential import predict_next_items
+
+    exclude_set |= set(seq_items)
+    fetch_k = max(k * 5, 50)
+    cand_ids = (
+        predict_next_items(model, seq_items, top_k=fetch_k, exclude=exclude_set)
+        if model is not None
+        else []
+    )
+
+    if not cand_ids:
+        cand_ids = [iid for iid in popular_items if iid not in exclude_set]
+
+    item_feats = None
+    if (
+        item_index is not None
+        and hasattr(item_index, "id_to_idx")
+        and hasattr(item_index, "embeddings")
+    ):
+        item_feats = {
+            iid: item_index.embeddings[item_index.id_to_idx[iid]]
+            for iid in cand_ids
+            if iid in item_index.id_to_idx
+        }
+
+    items = _filter_and_build_recs(
+        cand_ids,
+        lookup,
+        exclude_set,
+        genre_filters,
+        k=k,
+        diversity=diversity,
+        item_features=item_feats,
+        rule_engine=rule_engine,
+    )
+    return RecommendationResponse(
+        user_id=0,
+        model_name="SASRec (Session-Based)",
+        recommendations=items,
+    )
+
+
+@v1_router.post(
+    "/recommend/session",
+    response_model=RecommendationResponse,
+    tags=["Recommendations", "Sessions"],
+)
+def recommend_session_post(
+    req: SessionRecommendRequest,
+    session_manager=Depends(get_session_manager),
+    lookup: dict[int, dict] = Depends(get_movie_lookup),
+    popular_items: list[int] = Depends(get_popular_items),
+    model=Depends(get_sasrec_model),
+    item_index=Depends(get_item_index),
+    rule_engine=Depends(get_rule_engine),
+    auth: dict[str, Any] | None = Depends(get_api_key),
+) -> RecommendationResponse:
+    """Generate real-time next-item recommendations via POST with session ID or item IDs."""
+    exclude_set = parse_exclude_ids(req.exclude)
+    genre_filters = parse_genre_filter(req.genres)
+
+    seq_items: list[int] = []
+    if req.item_ids:
+        seq_items = list(req.item_ids)
+    elif req.session_id:
+        seq_items = session_manager.get_session_items(req.session_id)
+
+    if not seq_items:
+        items = _filter_and_build_recs(
+            popular_items,
+            lookup,
+            exclude_set,
+            genre_filters,
+            k=req.k,
+            diversity=req.diversity,
+            rule_engine=rule_engine,
+        )
+        return RecommendationResponse(
+            user_id=0,
+            model_name="Popularity (Empty Session Fallback)",
+            recommendations=items,
+        )
+
+    from pipeline.models.sequential import predict_next_items
+
+    exclude_set |= set(seq_items)
+    fetch_k = max(req.k * 5, 50)
+    cand_ids = (
+        predict_next_items(model, seq_items, top_k=fetch_k, exclude=exclude_set)
+        if model is not None
+        else []
+    )
+
+    if not cand_ids:
+        cand_ids = [iid for iid in popular_items if iid not in exclude_set]
+
+    item_feats = None
+    if (
+        item_index is not None
+        and hasattr(item_index, "id_to_idx")
+        and hasattr(item_index, "embeddings")
+    ):
+        item_feats = {
+            iid: item_index.embeddings[item_index.id_to_idx[iid]]
+            for iid in cand_ids
+            if iid in item_index.id_to_idx
+        }
+
+    items = _filter_and_build_recs(
+        cand_ids,
+        lookup,
+        exclude_set,
+        genre_filters,
+        k=req.k,
+        diversity=req.diversity,
+        item_features=item_feats,
+        rule_engine=rule_engine,
+    )
+    return RecommendationResponse(
+        user_id=0,
+        model_name="SASRec (Session-Based)",
+        recommendations=items,
     )
