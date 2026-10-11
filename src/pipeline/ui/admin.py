@@ -156,7 +156,7 @@ if page == "A/B Experiments":
 
             submitted = st.form_submit_button("Create Experiment", type="primary")
             if submitted:
-                payload = {
+                exp_payload = {
                     "id": new_id,
                     "name": new_name,
                     "description": new_desc,
@@ -175,7 +175,7 @@ if page == "A/B Experiments":
                         },
                     ],
                 }
-                res = api_request("POST", "/v1/experiments", json_data=payload)
+                res = api_request("POST", "/v1/experiments", json_data=exp_payload)
                 if res:
                     st.success(f"Experiment '{res['name']}' successfully launched!")
                     st.rerun()
@@ -267,7 +267,7 @@ elif page == "Business Rules":
 
             sub = st.form_submit_button("Save Rule", type="primary")
             if sub:
-                payload = {
+                rule_payload = {
                     "id": rule_id,
                     "action": action,
                     "genre": genre if genre else None,
@@ -276,7 +276,7 @@ elif page == "Business Rules":
                     "position": pos if action == "pin" else None,
                     "priority": priority,
                 }
-                res = api_request("POST", "/v1/rules", json_data=payload)
+                res = api_request("POST", "/v1/rules", json_data=rule_payload)
                 if res:
                     st.success(f"Rule '{res['id']}' saved successfully.")
                     st.rerun()
