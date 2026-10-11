@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install CPU-only torch first to avoid massive CUDA wheels
-RUN pip install --no-cache-dir --upgrade pip setuptools "wheel>=0.46.2" "jaraco.context>=6.1.0" && \
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
     pip install --no-cache-dir torch>=2.0.0 --extra-index-url https://download.pytorch.org/whl/cpu
 
 COPY pyproject.toml .
@@ -19,7 +19,13 @@ COPY README.md .
 COPY src/ ./src/
 
 # Install dependencies into /install
-RUN pip install --no-cache-dir --prefix=/install "wheel>=0.46.2" "jaraco.context>=6.1.0" .
+RUN pip install --no-cache-dir --prefix=/install --upgrade \
+    "setuptools>=78.1.1" \
+    "wheel>=0.46.2" \
+    "jaraco.context>=6.1.0" \
+    "msgpack>=1.2.1" \
+    "urllib3>=2.8.0" \
+    .
 
 # Runtime stage: minimal image with non-root user
 FROM python:3.11-slim AS runtime
@@ -34,9 +40,18 @@ RUN groupadd -g 1000 appgroup && \
 COPY --from=builder /install /usr/local
 
 # Upgrade packages to remediate CVEs and remove any stale dist-info
-RUN pip install --no-cache-dir --upgrade pip setuptools "wheel>=0.46.2" "jaraco.context>=6.1.0" && \
+RUN pip install --no-cache-dir --upgrade \
+    pip \
+    "setuptools>=78.1.1" \
+    "wheel>=0.46.2" \
+    "jaraco.context>=6.1.0" \
+    "msgpack>=1.2.1" \
+    "urllib3>=2.8.0" && \
     rm -rf /usr/local/lib/python3.11/site-packages/*wheel-0.45* \
-           /usr/local/lib/python3.11/site-packages/*jaraco.context-5*
+           /usr/local/lib/python3.11/site-packages/*jaraco.context-5* \
+           /usr/local/lib/python3.11/site-packages/*setuptools-70* \
+           /usr/local/lib/python3.11/site-packages/*urllib3-2.7* \
+           /usr/local/lib/python3.11/site-packages/*msgpack-1.1*
 
 # Copy application source code
 COPY src/ /app/src/
