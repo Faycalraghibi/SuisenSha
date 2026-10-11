@@ -89,8 +89,8 @@ jobs:
 
       - name: Install Trivy
         run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.69.3
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/v0.69.3/contrib/install.sh | sh -s -- -b /usr/local/bin v0.69.3
 
       - name: Run Trivy vulnerability scan
         run: |
-          trivy image --exit-code 0 --severity CRITICAL,HIGH --ignore-unfixed --pkg-types os,library --format table suisensha:${{ github.sha }}
+          trivy image --exit-code 1 --severity CRITICAL,HIGH --ignore-unfixed --pkg-types os,library --format table suisensha:${{ github.sha }}
