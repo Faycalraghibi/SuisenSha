@@ -167,7 +167,11 @@ class ModelRegistry:
         self._save_metadata(data)
 
         # Mirror production artifact to active default SEQ_MODEL_PATH if applicable
-        if model_name == "sasrec" and Path(target_mv.artifact_path).exists():
+        if (
+            model_name == "sasrec"
+            and self.registry_dir == (ARTIFACTS_DIR / "registry")
+            and Path(target_mv.artifact_path).exists()
+        ):
             shutil.copy2(target_mv.artifact_path, SEQ_MODEL_PATH)
 
         logger.info("Promoted %s v%d to production (previous: %s)", model_name, version, prev_prod)

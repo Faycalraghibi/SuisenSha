@@ -210,11 +210,11 @@ def main(argv: list[str] | None = None) -> None:
         uvicorn.run("pipeline.api.main:app", host="127.0.0.1", port=8000)
 
     if args.phase == 7:
-        print("\n▓▓▓  PHASE 7 — Starting Streamlit UI  ▓▓▓")
+        print("\n▓▓▓  PHASE 7 — Starting Streamlit Admin Console  ▓▓▓")
         import subprocess
         from pathlib import Path
 
-        ui_path = Path(__file__).resolve().parent / "ui" / "app.py"
+        ui_path = Path(__file__).resolve().parent / "ui" / "admin.py"
         subprocess.run([sys.executable, "-m", "streamlit", "run", str(ui_path)])
 
     if args.phase == 8:

@@ -46,6 +46,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Statistical drift detection (`DriftDetector`, `calculate_psi`) using Kolmogorov-Smirnov two-sample tests and Population Stability Index (PSI) over interaction volumes and recommendation score distributions.
 - Instant single-command model rollback (`suisensha rollback` / `ModelRegistry.rollback`) restoring previous production models.
 - Dynamic production model resolution during FastAPI startup lifespan from the Model Registry.
+- A/B testing experimentation framework (`ExperimentManager`) with deterministic salt-hashed user assignment across variants.
+- Real-time exposure and conversion event tracking per experiment variant.
+- Statistical conversion uplift reporting with two-proportion z-tests, p-values, and 95% confidence intervals.
+- Minimum sample size calculator (`calculate_sample_size`) based on baseline conversion, MDE, statistical power, and significance levels.
+- Online experiment management API endpoints (`/v1/experiments`, `/v1/experiments/{id}/uplift`, `/v1/experiments/sample-size`).
+- Comprehensive Client Admin Console (`src/pipeline/ui/admin.py`) for managing API keys, business rules, live A/B experiments, uplift metrics, and model inspectability.
+
 
 
 

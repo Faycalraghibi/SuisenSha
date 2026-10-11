@@ -123,3 +123,10 @@ def get_model_registry() -> Any:
     from pipeline.mlops.registry import ModelRegistry
 
     return ModelRegistry()
+
+
+@lru_cache(maxsize=1)
+def get_experiment_manager() -> Any:
+    from pipeline.experiments.manager import ExperimentManager
+
+    return ExperimentManager()

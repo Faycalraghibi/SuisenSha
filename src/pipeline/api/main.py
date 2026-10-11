@@ -13,6 +13,7 @@ from fastapi.responses import HTMLResponse
 from pipeline.api.dependencies import (
     get_cache,
     get_event_store,
+    get_experiment_manager,
     get_item_index,
     get_movie_lookup,
     get_movies_df,
@@ -35,6 +36,8 @@ from pipeline.api.models import (
     ErrorResponse,
     EventBatchRequest,
     EventBatchResponse,
+    ExperimentCreate,
+    ExperimentResponse,
     ExplainedItem,
     HistoryResponse,
     MovieItem,
@@ -42,8 +45,12 @@ from pipeline.api.models import (
     RecommendationItem,
     RecommendationResponse,
     RulesListResponse,
+    SampleSizeResponse,
     SimilarItemsResponse,
     TransparencyResponse,
+    UpliftResponse,
+    VariantMetricsModel,
+    VariantModel,
 )
 from pipeline.api.security import (
     SecurityManager,
@@ -1268,3 +1275,153 @@ def legacy_transparency(
     format: str | None = Query(None),
 ):
     return get_transparency_page(request=request, format=format)
+
+
+# ---------------------------------------------------------------------------
+# Experiments Routes (/v1/experiments)
+# ---------------------------------------------------------------------------
+@v1_router.get("/experiments", response_model=list[ExperimentResponse], tags=["Experiments"])
+def list_experiments(
+    exp_mgr=Depends(get_experiment_manager),
+    auth: dict[str, Any] = Depends(get_api_key),
+) -> list[ExperimentResponse]:
+    """List all online A/B experiments."""
+    experiments = exp_mgr.list_experiments()
+    return [
+        ExperimentResponse(
+            id=e.id,
+            name=e.name,
+            variants=[
+                VariantModel(
+                    name=v.name,
+                    weight=v.weight,
+                    model_type=v.model_type,
+                    params=v.params,
+                )
+                for v in e.variants
+            ],
+            status=e.status,
+            created_at=e.created_at,
+            description=e.description,
+        )
+        for e in experiments
+    ]
+
+
+@v1_router.post(
+    "/experiments", response_model=ExperimentResponse, status_code=201, tags=["Experiments"]
+)
+def create_experiment(
+    req: ExperimentCreate,
+    exp_mgr=Depends(get_experiment_manager),
+    auth: dict[str, Any] = Depends(get_api_key),
+) -> ExperimentResponse:
+    """Create a new A/B experiment."""
+    from pipeline.experiments.manager import Variant
+
+    variants = [
+        Variant(
+            name=v.name,
+            weight=v.weight,
+            model_type=v.model_type,
+            params=v.params,
+        )
+        for v in req.variants
+    ]
+    try:
+        exp = exp_mgr.create_experiment(
+            exp_id=req.id,
+            name=req.name,
+            variants=variants,
+            description=req.description,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+    return ExperimentResponse(
+        id=exp.id,
+        name=exp.name,
+        variants=[
+            VariantModel(
+                name=v.name,
+                weight=v.weight,
+                model_type=v.model_type,
+                params=v.params,
+            )
+            for v in exp.variants
+        ],
+        status=exp.status,
+        created_at=exp.created_at,
+        description=exp.description,
+    )
+
+
+@v1_router.get("/experiments/{exp_id}/uplift", response_model=UpliftResponse, tags=["Experiments"])
+def get_experiment_uplift(
+    exp_id: str,
+    control: str = Query("control", description="Control variant name"),
+    treatment: str | None = Query(
+        None, description="Treatment variant name (defaults to first non-control)"
+    ),
+    exp_mgr=Depends(get_experiment_manager),
+    auth: dict[str, Any] = Depends(get_api_key),
+) -> UpliftResponse:
+    """Compute live conversion uplift and statistical confidence intervals for an experiment."""
+    try:
+        rep = exp_mgr.get_uplift_report(
+            exp_id=exp_id, control_name=control, treatment_name=treatment
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+    return UpliftResponse(
+        experiment_id=rep.experiment_id,
+        control=VariantMetricsModel(
+            variant_name=rep.control.variant_name,
+            exposures=rep.control.exposures,
+            conversions=rep.control.conversions,
+            conversion_rate=rep.control.conversion_rate,
+        ),
+        treatment=VariantMetricsModel(
+            variant_name=rep.treatment.variant_name,
+            exposures=rep.treatment.exposures,
+            conversions=rep.treatment.conversions,
+            conversion_rate=rep.treatment.conversion_rate,
+        ),
+        absolute_uplift=rep.absolute_uplift,
+        relative_uplift_pct=rep.relative_uplift_pct,
+        ci_lower=rep.ci_lower,
+        ci_upper=rep.ci_upper,
+        p_value=rep.p_value,
+        is_significant=rep.is_significant,
+        confidence_level=rep.confidence_level,
+    )
+
+
+@v1_router.get("/experiments/sample-size", response_model=SampleSizeResponse, tags=["Experiments"])
+def calculate_experiment_sample_size(
+    baseline_conversion: float = Query(
+        ..., gt=0.0, lt=1.0, description="Current baseline conversion rate (e.g. 0.05)"
+    ),
+    mde: float = Query(
+        ..., gt=0.0, lt=1.0, description="Minimum detectable effect relative uplift (e.g. 0.10)"
+    ),
+    alpha: float = Query(0.05, gt=0.0, lt=0.5, description="Significance level alpha"),
+    power: float = Query(0.80, gt=0.5, lt=1.0, description="Statistical power (1 - beta)"),
+    auth: dict[str, Any] = Depends(get_api_key),
+) -> SampleSizeResponse:
+    """Calculate required sample size per variant for two-proportion A/B test."""
+    from pipeline.experiments.manager import calculate_sample_size
+
+    n_per_variant = calculate_sample_size(
+        baseline_conversion=baseline_conversion,
+        minimum_detectable_effect=mde,
+        alpha=alpha,
+        power=power,
+    )
+    return SampleSizeResponse(
+        baseline_conversion=baseline_conversion,
+        minimum_detectable_effect=mde,
+        required_sample_size_per_variant=n_per_variant,
+        total_required_sample_size=n_per_variant * 2,
+    )
