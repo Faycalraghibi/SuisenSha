@@ -48,3 +48,26 @@ def test_split_temporal():
     assert 1 in splits.train_sequences
     assert len(splits.train_sequences[1]) >= 5
     assert 1 in splits.test_targets
+
+
+def test_test_split_never_touched_during_tuning():
+    """Assert that test split items are strictly excluded from train and val data."""
+    sequences = {
+        1: [10, 20, 30, 40, 50, 60],
+        2: [100, 200, 300, 400],
+        3: [1, 2, 3, 4, 5],
+    }
+
+    splits = split_leave_two_out(sequences, min_length=3)
+
+    for user_id, test_target in splits.test_targets.items():
+        # Test target must not appear as validation target
+        assert test_target != splits.val_targets[user_id]
+        # Test target must not be in training sequences for the user
+        assert test_target not in splits.train_sequences[user_id]
+        # Test target must not be in validation history
+        assert test_target not in splits.val_history[user_id]
+        # Test target is the very last element in the full user sequence
+        assert test_target == sequences[user_id][-1]
+        # Validation target is the penultimate element
+        assert splits.val_targets[user_id] == sequences[user_id][-2]
