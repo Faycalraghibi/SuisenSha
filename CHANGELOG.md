@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Versioned `/v1` API routes with query parameters (`k`, `exclude`, `genres`, `personalised`).
 - Product-page similar items endpoint `GET /v1/items/{item_id}/similar`.
 - EU DSA Art. 27 ranking transparency endpoint `GET /v1/transparency` in JSON and HTML.
+- Data platform contracts for `items` and `interactions` with Pandera schema validation and readable error messages.
+- Extensible data connectors for CSV, Parquet, SQL (PostgreSQL/SQLite), MovieLens (100K/1M), Amazon Reviews, and Steam.
+- Multi-dataset benchmark evaluation support with MovieLens-1M integration.
 
 ### Changed
 - RAG cache strictly enforces matching user ID, candidate set, and language; wildcard and legacy-table fallbacks removed from lookups. Legacy table writes removed.
