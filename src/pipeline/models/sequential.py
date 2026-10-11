@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import copy
 import logging
 import random
+from typing import Any
 
 import numpy as np
 import torch
@@ -16,7 +18,9 @@ from pipeline.config import (
     sasrec_cfg,
 )
 from pipeline.data.loader import load_sequences
-from pipeline.evaluation.metrics import evaluate_leave_one_out
+from pipeline.data.splits import split_leave_two_out
+from pipeline.evaluation.metrics import evaluate_leave_one_out, ndcg_at_k
+from pipeline.models.base import Recommender
 
 logger = logging.getLogger(__name__)
 
@@ -31,26 +35,46 @@ def pad_right(seq: list[int], maxlen: int) -> list[int]:
     return seq + [0] * (maxlen - len(seq))
 
 
-class SequentialDataset(Dataset):
-    """Next-item training pairs over every position of each user's sequence.
+def generate_sliding_windows(
+    seq: list[int],
+    maxlen: int = sasrec_cfg.max_seq_len,
+    stride: int = sasrec_cfg.window_stride,
+) -> list[list[int]]:
+    """Slice sequences longer than maxlen into overlapping sub-sequences."""
+    if len(seq) <= maxlen:
+        return [seq]
+    windows = []
+    for start in range(0, len(seq) - 1, stride):
+        sub = seq[start : start + maxlen + 1]
+        if len(sub) >= 2:
+            windows.append(sub)
+    if not windows or windows[-1] != seq[-maxlen - 1 :]:
+        windows.append(seq[-maxlen - 1 :])
+    return windows
 
-    The last item of each sequence is held out for evaluation, so training
-    uses ``seq[:-1]``: inputs ``seq[:-2]`` and targets shifted by one.
-    """
+
+class SequentialDataset(Dataset):
+    """Next-item training pairs over sequences with sliding window augmentation."""
 
     def __init__(
         self,
         sequences: dict[int, list[int]],
         maxlen: int = sasrec_cfg.max_seq_len,
+        stride: int = sasrec_cfg.window_stride,
+        hold_out_last: bool = True,
     ) -> None:
         self.maxlen = maxlen
         self.samples: list[tuple[list[int], list[int]]] = []
 
         for seq in sequences.values():
-            train_seq = seq[:-1]
-            if len(train_seq) < 2:
+            work_seq = seq[:-1] if hold_out_last else seq
+            if len(work_seq) < 2:
                 continue
-            self.samples.append((train_seq[:-1], train_seq[1:]))
+            windows = generate_sliding_windows(work_seq, maxlen=maxlen, stride=stride)
+            for window in windows:
+                if len(window) < 2:
+                    continue
+                self.samples.append((window[:-1], window[1:]))
 
     def __len__(self) -> int:
         return len(self.samples)
@@ -59,12 +83,11 @@ class SequentialDataset(Dataset):
         inp, tgt = self.samples[idx]
         return (
             torch.tensor(pad_right(inp, self.maxlen), dtype=torch.long),
-            # Padded targets are 0, which the loss ignores
             torch.tensor(pad_right(tgt, self.maxlen), dtype=torch.long),
         )
 
 
-class SASRec(nn.Module):
+class SASRec(nn.Module, Recommender):
     def __init__(
         self,
         num_items: int,
@@ -78,7 +101,6 @@ class SASRec(nn.Module):
         self.num_items = num_items
         self.maxlen = maxlen
 
-        # padding_idx=0 so zero-padded positions produce zero gradients
         self.item_emb = nn.Embedding(num_items + 1, hidden_dim, padding_idx=0)
         self.pos_emb = nn.Embedding(maxlen, hidden_dim)
         self.emb_dropout = nn.Dropout(dropout)
@@ -106,8 +128,6 @@ class SASRec(nn.Module):
         pos_e = self.pos_emb(torch.arange(seq_len, device=device).unsqueeze(0))
         x = self.emb_dropout(item_e + pos_e)
 
-        # Causal mask prevents attending to future items (autoregressive).
-        # With right padding it also keeps real positions from seeing padding.
         causal_mask = torch.triu(
             torch.ones(seq_len, seq_len, device=device, dtype=torch.bool),
             diagonal=1,
@@ -125,32 +145,87 @@ class SASRec(nn.Module):
         last = (seq != 0).sum(dim=1).clamp(min=1) - 1
         return self.output_proj(hidden[torch.arange(seq.shape[0], device=seq.device), last])
 
+    def fit(self, train_data: Any) -> None:
+        """Recommender protocol fit implementation."""
+        if isinstance(train_data, dict):
+            train_sasrec(train_data)
 
-def train_sasrec(sequences: dict[int, list[int]]) -> SASRec:
+    def recommend(self, history: list[int], k: int = 10) -> list[int]:
+        """Recommender protocol recommend implementation."""
+        return predict_next_items(self, history, top_k=k, exclude=set(history))
+
+
+def compute_val_ndcg(
+    model: SASRec,
+    val_history: dict[int, list[int]],
+    val_targets: dict[int, int],
+    top_k: int = 10,
+) -> float:
+    """Evaluate mean NDCG@k on validation split."""
+    scores = []
+    for uid, target in val_targets.items():
+        hist = val_history.get(uid, [])
+        recs = predict_next_items(model, hist, top_k=top_k, exclude=set(hist))
+        scores.append(ndcg_at_k(recs, target, k=top_k))
+    return float(np.mean(scores)) if scores else 0.0
+
+
+def train_sasrec(
+    sequences: dict[int, list[int]],
+    val_history: dict[int, list[int]] | None = None,
+    val_targets: dict[int, int] | None = None,
+) -> SASRec:
     ensure_dirs()
     random.seed(SEED)
     np.random.seed(SEED)
     torch.manual_seed(SEED)
 
-    num_items = max(item for seq in sequences.values() for item in seq)
+    # If validation split is not explicitly passed, partition train and val
+    if val_history is None or val_targets is None:
+        splits = split_leave_two_out(sequences)
+        train_seqs = splits.train_sequences
+        v_hist = splits.val_history
+        v_tgts = splits.val_targets
+    else:
+        train_seqs = sequences
+        v_hist = val_history
+        v_tgts = val_targets
+
+    all_items = set()
+    for seq in train_seqs.values():
+        all_items.update(seq)
+    for seq in v_hist.values():
+        all_items.update(seq)
+    all_items.update(v_tgts.values())
+
+    num_items = max(all_items) if all_items else 0
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(
-        "Training SASRec — %d items, %d users, %d epochs, device=%s",
+        "Training SASRec — %d items, %d train sequences, patience=%d, device=%s",
         num_items,
-        len(sequences),
-        sasrec_cfg.epochs,
+        len(train_seqs),
+        sasrec_cfg.patience,
         device,
     )
 
-    train_ds = SequentialDataset(sequences)
+    train_ds = SequentialDataset(
+        train_seqs,
+        maxlen=sasrec_cfg.max_seq_len,
+        stride=sasrec_cfg.window_stride,
+        hold_out_last=False,
+    )
     loader = DataLoader(train_ds, batch_size=sasrec_cfg.batch_size, shuffle=True, num_workers=0)
 
     model = SASRec(num_items=num_items).to(device)
     optimiser = torch.optim.Adam(model.parameters(), lr=sasrec_cfg.lr)
     criterion = nn.CrossEntropyLoss(ignore_index=0)
 
-    model.train()
+    best_val_ndcg = -1.0
+    best_weights: dict[str, Any] | None = None
+    patience_counter = 0
+
     for epoch in range(1, sasrec_cfg.epochs + 1):
+        model.train()
         total_loss = 0.0
         for batch_seq, batch_tgt in loader:
             logits = model(batch_seq.to(device))
@@ -160,13 +235,42 @@ def train_sasrec(sequences: dict[int, list[int]]) -> SASRec:
             optimiser.step()
             total_loss += loss.item()
 
-        avg = total_loss / max(len(loader), 1)
-        if epoch % 5 == 0 or epoch == 1:
-            logger.info("  Epoch %3d/%d  loss=%.4f", epoch, sasrec_cfg.epochs, avg)
+        avg_loss = total_loss / max(len(loader), 1)
 
+        # Validation check for early stopping
+        model.eval()
+        val_ndcg = compute_val_ndcg(model, v_hist, v_tgts, top_k=10)
+
+        if epoch % 5 == 0 or epoch == 1 or val_ndcg > best_val_ndcg:
+            logger.info(
+                "  Epoch %3d/%d  loss=%.4f  val_ndcg@10=%.4f",
+                epoch,
+                sasrec_cfg.epochs,
+                avg_loss,
+                val_ndcg,
+            )
+
+        if val_ndcg > best_val_ndcg:
+            best_val_ndcg = val_ndcg
+            best_weights = copy.deepcopy(model.state_dict())
+            patience_counter = 0
+        else:
+            patience_counter += 1
+            if patience_counter >= sasrec_cfg.patience:
+                logger.info(
+                    "Early stopping triggered at epoch %d (best val_ndcg@10=%.4f)",
+                    epoch,
+                    best_val_ndcg,
+                )
+                break
+
+    # Restore best checkpoint
+    if best_weights is not None:
+        model.load_state_dict(best_weights)
     model.eval()
+
     torch.save({"model_state": model.state_dict(), "num_items": num_items}, str(SEQ_MODEL_PATH))
-    logger.info("SASRec checkpoint → %s", SEQ_MODEL_PATH)
+    logger.info("Best SASRec checkpoint saved → %s", SEQ_MODEL_PATH)
     return model
 
 
@@ -185,7 +289,6 @@ def predict_next_items(
     exclude: set[int] | None = None,
 ) -> list[int]:
     device = next(model.parameters()).device
-    # Unknown ids would index past the embedding table
     seq = [i for i in seq if 0 < i <= model.num_items]
     if not seq:
         return []
@@ -194,13 +297,12 @@ def predict_next_items(
     with torch.no_grad():
         logits = model.last_logits(inp)[0]
 
-    # Mask out the padding token (idx 0) so it's never recommended
     logits[0] = -float("inf")
     if exclude:
         idx = [i for i in exclude if 0 < i < logits.shape[0]]
         logits[idx] = -float("inf")
 
-    return logits.topk(top_k).indices.cpu().tolist()
+    return logits.topk(min(top_k, model.num_items)).indices.cpu().tolist()
 
 
 def evaluate_sasrec(
