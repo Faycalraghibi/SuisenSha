@@ -68,3 +68,37 @@ def test_bprmf_recommender():
     assert len(recs) == 2
     assert 1 not in recs
     assert 2 not in recs
+
+
+def test_all_baselines_beat_random():
+    """Verify that Popularity, ItemKNN, and BPR-MF all beat Random recommender."""
+    train_data = {}
+    test_data = {}
+    for u in range(1, 31):
+        train_data[u] = [1, 2, 10 + (u % 10)]
+        test_data[u] = 3
+
+    for u in range(1, 25):
+        train_data[u].append(3)
+
+    k = 3
+    models = {
+        "random": RandomRecommender(seed=42),
+        "popularity": PopularityRecommender(),
+        "item_knn": ItemKNNRecommender(k_neighbors=5),
+        "bpr_mf": BPRMFRecommender(embedding_dim=8, epochs=15, lr=0.05, batch_size=16, seed=42),
+    }
+
+    hit_rates = {}
+    for name, model in models.items():
+        model.fit(train_data)
+        hits = 0
+        for u, target in test_data.items():
+            recs = model.recommend(history=[1, 2], k=k)
+            if target in recs:
+                hits += 1
+        hit_rates[name] = hits / len(test_data)
+
+    assert hit_rates["popularity"] > hit_rates["random"]
+    assert hit_rates["item_knn"] > hit_rates["random"]
+    assert hit_rates["bpr_mf"] > hit_rates["random"]
