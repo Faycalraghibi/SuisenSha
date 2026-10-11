@@ -17,7 +17,12 @@ from pipeline.data.loader import build_user_sequences
 from pipeline.evaluation.metrics import run_phase5
 from pipeline.models.embedding import run_phase2
 from pipeline.models.rag import run_phase4
-from pipeline.models.sequential import SASRec, pad_right, run_phase3
+from pipeline.models.sequential import (
+    SASRec,
+    pad_right,
+    predict_next_items,
+    run_phase3,
+)
 
 
 @pytest.fixture
@@ -159,24 +164,33 @@ def test_e2e_fixture_pipeline_under_one_minute(fixture_env):
 
 
 def test_reverting_padding_fix_fails():
-    """Verify that evaluating at the padding index (the old padding bug) produces invalid logits.
-
-    The bug in old SASRec was left-padding sequences but taking the hidden state at index
-    len-1 (a padding position for sequences shorter than maxlen), causing corrupt/NaN outputs.
+    """Verify that reproducing the old defect (left-padding and reading hidden state at len-1)
+    differs from the correct last_logits result and that predictions change with recent items.
     """
     model = SASRec(num_items=50, hidden_dim=16, maxlen=20, num_heads=2, num_layers=2)
     model.eval()
 
-    # Short sequence of 3 items
     short_seq = [10, 20, 30]
 
-    # Correct right-padding: logits are taken from valid last item index
+    # Correct right-padding and last_logits evaluation
     padded_right = pad_right(short_seq, 20)
-    logits_fixed = model.last_logits(torch.tensor([padded_right]))
-    assert torch.isfinite(logits_fixed).all()
+    tensor_right = torch.tensor([padded_right], dtype=torch.long)
+    logits_correct = model.last_logits(tensor_right)[0]
 
-    # Reverting fix: if someone took the state from the end of a sequence filled with pad=0
-    all_padded = torch.zeros(1, 20, dtype=torch.long)
-    corrupted_logits = model.last_logits(all_padded)
-    # The output does not depend on the user's history at all
-    assert not torch.allclose(logits_fixed, corrupted_logits)
+    # Old buggy behaviour: left-padding a short sequence and indexing at index len-1
+    left_padded = [0] * (20 - len(short_seq)) + short_seq
+    tensor_left = torch.tensor([left_padded], dtype=torch.long)
+    hidden_left = model.encode(tensor_left)
+    # Reading index len - 1 or taking position corrupted by padding mask
+    buggy_logits = model.output_proj(hidden_left[0, len(short_seq) - 1])
+
+    # Assert that the buggy approach produces different representations than correct last_logits
+    assert not torch.allclose(logits_correct, buggy_logits, atol=1e-3)
+    assert torch.isfinite(logits_correct).all()
+
+    # Assert that predict_next_items output changes when the most recent item changes
+    seq_a = [10, 20, 30]
+    seq_b = [10, 20, 35]
+    preds_a = predict_next_items(model, seq_a, top_k=5)
+    preds_b = predict_next_items(model, seq_b, top_k=5)
+    assert preds_a != preds_b
