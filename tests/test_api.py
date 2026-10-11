@@ -21,8 +21,21 @@ LOOKUP = {
 
 
 class FakeItemIndex:
-    def search(self, history_ids: list[int], top_k: int) -> list[tuple[int, float]]:
-        return [(40, 0.9)][:top_k]
+    def search(
+        self, history_ids: list[int], top_k: int, exclude: set[int] | None = None
+    ) -> list[tuple[int, float]]:
+        res = [(40, 0.9)]
+        if exclude:
+            res = [(iid, sc) for iid, sc in res if iid not in exclude]
+        return res[:top_k]
+
+    def similar_items(
+        self, item_id: int, top_k: int = 10, exclude: set[int] | None = None
+    ) -> list[tuple[int, float]]:
+        res = [(40, 0.9)]
+        exclude_set = {item_id} | (exclude or set())
+        res = [(iid, sc) for iid, sc in res if iid not in exclude_set]
+        return res[:top_k]
 
 
 @pytest.fixture

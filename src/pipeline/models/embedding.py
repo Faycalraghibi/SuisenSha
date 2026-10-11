@@ -49,13 +49,18 @@ class ItemIndex(Recommender):
             user_vec /= norm
         return user_vec.astype("float32")
 
-    def search(self, history_ids: list[int], top_k: int) -> list[tuple[int, float]]:
+    def search(
+        self,
+        history_ids: list[int],
+        top_k: int,
+        exclude: set[int] | None = None,
+    ) -> list[tuple[int, float]]:
         """Return (item_id, cosine score) for the top_k unseen items closest to the user."""
         user_vec = self.user_vector(history_ids)
         if user_vec is None:
             return []
 
-        history_set = set(history_ids)
+        history_set = set(history_ids) | (set(exclude) if exclude else set())
         # Over-fetch to compensate for filtering out already-seen items
         fetch = min(top_k + len(history_set), self.index.ntotal)
         scores, indices = self.index.search(user_vec, fetch)
@@ -66,6 +71,37 @@ class ItemIndex(Recommender):
                 continue
             iid = int(self.item_ids[idx])
             if iid in history_set:
+                continue
+            results.append((iid, float(score)))
+            if len(results) >= top_k:
+                break
+        return results
+
+    def similar_items(
+        self,
+        item_id: int,
+        top_k: int = 10,
+        exclude: set[int] | None = None,
+    ) -> list[tuple[int, float]]:
+        """Return (item_id, cosine score) for items closest to the given item_id."""
+        if item_id not in self.id_to_idx:
+            return []
+        idx = self.id_to_idx[item_id]
+        item_vec = self.embeddings[idx : idx + 1].astype("float32")
+        norm = np.linalg.norm(item_vec)
+        if norm > 0:
+            item_vec = (item_vec / norm).astype("float32")
+
+        exclude_set = (set(exclude) if exclude else set()) | {item_id}
+        fetch = min(top_k + len(exclude_set), self.index.ntotal)
+        scores, indices = self.index.search(item_vec, fetch)
+
+        results: list[tuple[int, float]] = []
+        for score, i in zip(scores[0], indices[0]):
+            if i < 0:
+                continue
+            iid = int(self.item_ids[i])
+            if iid in exclude_set:
                 continue
             results.append((iid, float(score)))
             if len(results) >= top_k:

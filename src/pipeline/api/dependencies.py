@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 from functools import lru_cache
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import pandas as pd
 from fastapi import Depends, HTTPException, Request
@@ -38,6 +38,35 @@ def get_user_history(
     if user_id not in sequences:
         raise HTTPException(status_code=404, detail="User not found.")
     return sequences[user_id]
+
+
+@lru_cache(maxsize=1)
+def get_popular_items() -> list[int]:
+    from collections import Counter
+
+    sequences = get_sequences()
+    counter: Counter[int] = Counter()
+    for seq in sequences.values():
+        counter.update(seq)
+    return [item for item, _ in counter.most_common()]
+
+
+def parse_exclude_ids(exclude: Any) -> set[int]:
+    if not isinstance(exclude, str) or not exclude:
+        return set()
+    res: set[int] = set()
+    for part in exclude.split(","):
+        part = part.strip()
+        if part.isdigit():
+            res.add(int(part))
+    return res
+
+
+def parse_genre_filter(genres: Any) -> set[str] | None:
+    if not isinstance(genres, str) or not genres:
+        return None
+    res = {g.strip().lower() for g in genres.split(",") if g.strip()}
+    return res if res else None
 
 
 def get_cache() -> Iterator[RecommendationCache]:
