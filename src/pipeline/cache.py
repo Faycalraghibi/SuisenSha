@@ -4,10 +4,12 @@ instantly instead of running the LLM on every request.
 
 from __future__ import annotations
 
+import json
 import logging
 import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 from pipeline.config import RAG_CACHE_DB
 
@@ -116,3 +118,103 @@ class RecommendationCache:
 
     def __exit__(self, *exc) -> None:  # noqa: ANN002
         self.close()
+
+
+class RedisCache:
+    """Redis cache for serving precomputed top-N recommendations with in-memory fallback."""
+
+    def __init__(
+        self,
+        redis_url: str = "redis://localhost:6379/0",
+        prefix: str = "rec:",
+        fallback_to_memory: bool = True,
+    ) -> None:
+        self.prefix = prefix
+        self.is_fallback_mode = False
+        self._memory_store: dict[str, tuple[str, float | None]] = {}
+        self._redis_client: Any = None
+
+        try:
+            import redis
+
+            client = redis.from_url(redis_url, socket_connect_timeout=0.5, socket_timeout=0.5)
+            client.ping()
+            self._redis_client = client
+        except Exception:
+            if fallback_to_memory:
+                self.is_fallback_mode = True
+                self._redis_client = None
+            else:
+                raise
+
+    def _make_key(self, user_id: int, model: str) -> str:
+        return f"{self.prefix}{model.lower()}:{user_id}"
+
+    def get_top_n(self, user_id: int, model: str = "sasrec") -> list[dict[str, Any]] | None:
+        key = self._make_key(user_id, model)
+        if self.is_fallback_mode or self._redis_client is None:
+            entry = self._memory_store.get(key)
+            if entry is None:
+                return None
+            val_str, exp_time = entry
+            if exp_time is not None and datetime.now(timezone.utc).timestamp() > exp_time:
+                self._memory_store.pop(key, None)
+                return None
+            return json.loads(val_str)
+
+        try:
+            val = self._redis_client.get(key)
+            if val is None:
+                return None
+            if isinstance(val, bytes):
+                val = val.decode("utf-8")
+            return json.loads(val)
+        except Exception as exc:
+            logger.warning("Redis get error, falling back: %s", exc)
+            return None
+
+    def set_top_n(
+        self,
+        user_id: int,
+        items: list[dict[str, Any]],
+        model: str = "sasrec",
+        ttl_seconds: int = 86400,
+    ) -> None:
+        key = self._make_key(user_id, model)
+        val_str = json.dumps(items)
+        if self.is_fallback_mode or self._redis_client is None:
+            exp_time = (
+                datetime.now(timezone.utc).timestamp() + ttl_seconds if ttl_seconds > 0 else None
+            )
+            self._memory_store[key] = (val_str, exp_time)
+            return
+
+        try:
+            if ttl_seconds > 0:
+                self._redis_client.setex(key, ttl_seconds, val_str)
+            else:
+                self._redis_client.set(key, val_str)
+        except Exception as exc:
+            logger.warning("Redis set error: %s", exc)
+            exp_time = (
+                datetime.now(timezone.utc).timestamp() + ttl_seconds if ttl_seconds > 0 else None
+            )
+            self._memory_store[key] = (val_str, exp_time)
+
+    def delete_user(self, user_id: int) -> int:
+        count = 0
+        if self.is_fallback_mode or self._redis_client is None:
+            keys_to_del = [k for k in self._memory_store if k.endswith(f":{user_id}")]
+            for k in keys_to_del:
+                self._memory_store.pop(k, None)
+                count += 1
+            return count
+
+        try:
+            pattern = f"{self.prefix}*:{user_id}"
+            keys = self._redis_client.keys(pattern)
+            if keys:
+                count = self._redis_client.delete(*keys)
+        except Exception as exc:
+            logger.warning("Redis delete error: %s", exc)
+        return count

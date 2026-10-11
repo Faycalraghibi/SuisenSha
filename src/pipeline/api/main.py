@@ -16,6 +16,7 @@ from pipeline.api.dependencies import (
     get_movie_lookup,
     get_movies_df,
     get_popular_items,
+    get_redis_cache,
     get_rule_engine,
     get_sasrec_model,
     get_sequences,
@@ -24,6 +25,7 @@ from pipeline.api.dependencies import (
     parse_exclude_ids,
     parse_genre_filter,
 )
+from pipeline.api.middleware import TracingAndMetricsMiddleware, get_metrics_response
 from pipeline.api.models import (
     BusinessRuleCreate,
     BusinessRuleResponse,
@@ -246,6 +248,13 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+app.add_middleware(TracingAndMetricsMiddleware)
+
+
+@app.get("/metrics", tags=["Observability"])
+def prometheus_metrics():
+    return get_metrics_response()
+
 
 v1_router = APIRouter(prefix="/v1")
 
@@ -560,6 +569,7 @@ def recommend_embedding(
     item_index=Depends(get_item_index),
     rule_engine=Depends(get_rule_engine),
     event_store=Depends(get_event_store),
+    redis_cache=Depends(get_redis_cache),
     auth: dict[str, Any] | None = Depends(get_api_key),
 ):
     if history is None:
@@ -594,6 +604,21 @@ def recommend_embedding(
             )
         )
         return RecommendationResponse(user_id=user_id, model_name=model_name, recommendations=items)
+
+    if hasattr(redis_cache, "get_top_n") and not exclude and not genres and not onboarding_genres:
+        cached_recs = redis_cache.get_top_n(user_id=user_id, model="embedding")
+        if cached_recs is not None:
+            filtered_cached = [it for it in cached_recs if it.get("item_id") not in exclude_set]
+            if len(filtered_cached) >= k:
+                from pipeline.api.middleware import CACHE_HITS
+
+                CACHE_HITS.labels(cache_type="redis_top_n").inc()
+                items = [RecommendationItem(**it) for it in filtered_cached[:k]]
+                return RecommendationResponse(
+                    user_id=user_id,
+                    model_name="Embedding (Precomputed Cache)",
+                    recommendations=items,
+                )
 
     exclude_set |= set(history)
     scores_dict: dict[int, float] = {}
@@ -655,6 +680,7 @@ def recommend_sasrec(
     item_index=Depends(get_item_index),
     rule_engine=Depends(get_rule_engine),
     event_store=Depends(get_event_store),
+    redis_cache=Depends(get_redis_cache),
     auth: dict[str, Any] | None = Depends(get_api_key),
 ):
     if history is None:
@@ -689,6 +715,21 @@ def recommend_sasrec(
             )
         )
         return RecommendationResponse(user_id=user_id, model_name=model_name, recommendations=items)
+
+    if hasattr(redis_cache, "get_top_n") and not exclude and not genres and not onboarding_genres:
+        cached_recs = redis_cache.get_top_n(user_id=user_id, model="sasrec")
+        if cached_recs is not None:
+            filtered_cached = [it for it in cached_recs if it.get("item_id") not in exclude_set]
+            if len(filtered_cached) >= k:
+                from pipeline.api.middleware import CACHE_HITS
+
+                CACHE_HITS.labels(cache_type="redis_top_n").inc()
+                items = [RecommendationItem(**it) for it in filtered_cached[:k]]
+                return RecommendationResponse(
+                    user_id=user_id,
+                    model_name="SASRec (Precomputed Cache)",
+                    recommendations=items,
+                )
 
     from pipeline.models.sequential import predict_next_items
 

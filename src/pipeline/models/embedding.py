@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 from dataclasses import dataclass, field
 from typing import Any
@@ -30,10 +32,30 @@ class ItemIndex(Recommender):
     index: faiss.Index
     item_ids: np.ndarray
     embeddings: np.ndarray
+    index_type: str = "flat"
     id_to_idx: dict[int, int] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
         self.id_to_idx = {int(iid): idx for idx, iid in enumerate(self.item_ids)}
+
+    @classmethod
+    def build(
+        cls,
+        embeddings: np.ndarray,
+        item_ids: np.ndarray,
+        index_type: str = "flat",
+        m: int = 32,
+        ef_construction: int = 64,
+        ef_search: int = 64,
+    ) -> ItemIndex:
+        return build_item_index(
+            item_ids=item_ids,
+            embeddings=embeddings,
+            index_type=index_type,
+            m=m,
+            ef_construction=ef_construction,
+            ef_search=ef_search,
+        )
 
     def fit(self, train_data: Any) -> None:
         """ItemIndex is typically pre-computed via generate_embeddings and build_faiss_index."""
@@ -129,13 +151,77 @@ def generate_item_embeddings(
     return movies["item_id"].values, np.asarray(embeddings, dtype="float32")  # type: ignore[return-value]
 
 
-def build_item_index(item_ids: np.ndarray, embeddings: np.ndarray) -> ItemIndex:
-    """IndexFlatIP because embeddings are L2-normalised — IP ≡ cosine."""
+def build_hnsw_index(
+    dim: int,
+    m: int = 32,
+    ef_construction: int = 64,
+    ef_search: int = 64,
+) -> faiss.IndexHNSWFlat:
+    """Build an approximate nearest neighbor index using HNSW with inner product."""
+    index = faiss.IndexHNSWFlat(dim, m, faiss.METRIC_INNER_PRODUCT)
+    index.hnsw.efConstruction = ef_construction
+    index.hnsw.efSearch = ef_search
+    return index
+
+
+def evaluate_hnsw_recall(
+    flat_index: faiss.Index,
+    hnsw_index: faiss.Index,
+    query_vectors: np.ndarray,
+    k: int = 10,
+) -> float:
+    """Evaluate top-k recall of HNSW approximate index compared to exact flat index."""
+    q_vecs = query_vectors.astype("float32")
+    _, flat_indices = flat_index.search(q_vecs, k)
+    _, hnsw_indices = hnsw_index.search(q_vecs, k)
+
+    recalls: list[float] = []
+    for f_row, h_row in zip(flat_indices, hnsw_indices):
+        target_set = {int(idx) for idx in f_row if idx >= 0}
+        retrieved_set = {int(idx) for idx in h_row if idx >= 0}
+        if not target_set:
+            continue
+        recall = len(target_set & retrieved_set) / len(target_set)
+        recalls.append(recall)
+
+    return float(np.mean(recalls)) if recalls else 0.0
+
+
+def build_item_index(
+    item_ids: np.ndarray,
+    embeddings: np.ndarray,
+    index_type: str = "flat",
+    m: int = 32,
+    ef_construction: int = 64,
+    ef_search: int = 64,
+) -> ItemIndex:
+    """Build ItemIndex using either exact flat inner-product or HNSW ANN index."""
     dim = embeddings.shape[1]
-    index = faiss.IndexFlatIP(dim)
+    index: faiss.Index
+    if index_type.lower() == "hnsw":
+        index = build_hnsw_index(
+            dim=dim,
+            m=m,
+            ef_construction=ef_construction,
+            ef_search=ef_search,
+        )
+    else:
+        index = faiss.IndexFlatIP(dim)
+
     index.add(embeddings)
-    logger.info("FAISS index built — %d vectors, dim=%d", index.ntotal, dim)
-    return ItemIndex(index=index, item_ids=item_ids, embeddings=embeddings)
+
+    logger.info(
+        "FAISS %s index built — %d vectors, dim=%d",
+        index_type.upper(),
+        index.ntotal,
+        dim,
+    )
+    return ItemIndex(
+        index=index,
+        item_ids=item_ids,
+        embeddings=embeddings,
+        index_type=index_type.lower(),
+    )
 
 
 def save_artefacts(item_index: ItemIndex) -> None:

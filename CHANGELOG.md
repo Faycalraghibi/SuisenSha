@@ -33,6 +33,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Batched event ingestion endpoint `POST /v1/events` with idempotency keys and validation for views, clicks, purchases, ratings, and feedback signals.
 - User feedback system supporting thumbs up/down and "not interested", with instantaneous exclusion from subsequent recommendations across all model endpoints.
 - Integration of newly ingested events into user interaction datasets and retraining pipelines (`load_interactions_with_events`).
+- Approximate Nearest Neighbor (ANN) indexing with FAISS `IndexHNSWFlat` and recall evaluation verifying >= 0.95 recall against exact flat search.
+- Redis cache layer (`RedisCache`) with automatic in-memory fallback, supporting precomputed nightly batch top-N recommendations.
+- Nightly batch precomputation pipeline (`precompute_batch_top_n`) caching top-N items per user before real-time inference fallback.
+- Prometheus metrics exposition (`GET /metrics`) tracking `recommendation_requests_total`, `recommendation_latency_seconds`, and cache hit/miss rates.
+- Structured JSON access logging with `X-Request-ID` propagation and correlation across requests.
+- Provisioned Grafana dashboard configuration (`recommender_overview.json`) and Docker compose monitoring services (Redis, Prometheus, Grafana).
+- Locust load test scenarios (`tests/load/locustfile.py`) measuring p95 serving latency under concurrent traffic.
+- Serving cost benchmark report (`reports/cost_benchmark.md`) demonstrating 28% savings vs. AWS Personalize and 94% vs. GCP Vertex AI Retail.
+
 
 ### Changed
 - RAG cache strictly enforces matching user ID, candidate set, and language; wildcard and legacy-table fallbacks removed from lookups. Legacy table writes removed.
