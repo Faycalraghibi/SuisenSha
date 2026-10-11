@@ -32,6 +32,11 @@ jobs:
           source suisensha-venv/bin/activate
           pip-audit
 
+      - name: Run type check with installed dependencies
+        run: |
+          source suisensha-venv/bin/activate
+          mypy --config-file=pyproject.toml src/
+
   test:
     name: Tests (${{ matrix.os }})
     needs: lint

@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import re
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import pandas as pd
 from pydantic import BaseModel
@@ -14,10 +14,10 @@ from pipeline.data.loader import build_movie_lookup, load_processed_movies, load
 from pipeline.models.explanations import generate_template_explanation, get_safe_explanation
 from pipeline.models.llm import LLMBackend, get_llm_backend
 
-if TYPE_CHECKING:
-    pass
-
 logger = logging.getLogger(__name__)
+
+_DEFAULT_SASREC_MODEL = None
+_DEFAULT_ITEM_INDEX = None
 
 
 class LLMItemOutput(BaseModel):
@@ -32,6 +32,7 @@ def retrieve_candidates(
     top_k: int = rag_cfg.retrieval_k,
 ) -> list[dict]:
     """Retrieve top-k candidate items from SASRec, embedding index, or a custom recommender."""
+    global _DEFAULT_SASREC_MODEL, _DEFAULT_ITEM_INDEX
     if movie_lookup is None:
         movie_lookup = {}
 
@@ -41,11 +42,12 @@ def retrieve_candidates(
         isinstance(recommender, str) and recommender.lower() == "sasrec"
     ):
         try:
-            from pipeline.models.sequential import load_sasrec_model, predict_next_items
+            from pipeline.models.sequential import SASRec, load_sasrec_model, predict_next_items
 
-            model, _ = load_sasrec_model()
+            if _DEFAULT_SASREC_MODEL is None:
+                _DEFAULT_SASREC_MODEL, _ = load_sasrec_model()
             candidate_ids = predict_next_items(
-                model, user_history_ids, top_k=top_k, exclude=set(user_history_ids)
+                _DEFAULT_SASREC_MODEL, user_history_ids, top_k=top_k, exclude=set(user_history_ids)
             )
         except Exception as exc:
             logger.warning(
@@ -58,7 +60,8 @@ def retrieve_candidates(
     ):
         from pipeline.models.embedding import load_artefacts
 
-        item_index = load_artefacts()
+        if _DEFAULT_ITEM_INDEX is None:
+            _DEFAULT_ITEM_INDEX = load_artefacts()
         return [
             {
                 "item_id": iid,
@@ -66,14 +69,12 @@ def retrieve_candidates(
                 "genres": movie_lookup.get(iid, {}).get("genres", ""),
                 "score": score,
             }
-            for iid, score in item_index.search(user_history_ids, top_k)
+            for iid, score in _DEFAULT_ITEM_INDEX.search(user_history_ids, top_k)
         ]
 
-    import torch
+    from pipeline.models.sequential import SASRec, predict_next_items
 
-    if isinstance(recommender, torch.nn.Module):
-        from pipeline.models.sequential import predict_next_items
-
+    if isinstance(recommender, SASRec):
         candidate_ids = predict_next_items(
             recommender, user_history_ids, top_k=top_k, exclude=set(user_history_ids)
         )
