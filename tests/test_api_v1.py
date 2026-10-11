@@ -53,12 +53,20 @@ def client(tmp_path: Path):
         with RecommendationCache(db_path=tmp_path / "cache.db") as cache:
             yield cache
 
+    from pipeline.api.security import get_api_key
+
     app.dependency_overrides = {
         deps.get_sequences: lambda: SEQUENCES,
         deps.get_movie_lookup: lambda: LOOKUP,
         deps.get_item_index: lambda: FakeItemIndex(),
         deps.get_popular_items: lambda: [20, 10, 30, 40, 50, 60],
         deps.get_cache: cache_override,
+        get_api_key: lambda: {
+            "client_id": "test_client",
+            "is_active": True,
+            "rate_limit": 1000,
+            "scopes": ["read", "write", "admin"],
+        },
     }
     yield TestClient(app)
     app.dependency_overrides = {}

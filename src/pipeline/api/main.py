@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from typing import Any
 
 from fastapi import APIRouter, Depends, FastAPI, HTTPException, Query, Request
@@ -21,6 +22,7 @@ from pipeline.api.dependencies import (
     parse_genre_filter,
 )
 from pipeline.api.models import (
+    ErasureResponse,
     ErrorResponse,
     ExplainedItem,
     HistoryResponse,
@@ -30,6 +32,11 @@ from pipeline.api.models import (
     RecommendationResponse,
     SimilarItemsResponse,
     TransparencyResponse,
+)
+from pipeline.api.security import (
+    SecurityManager,
+    get_api_key,
+    get_security_manager,
 )
 from pipeline.cache import RecommendationCache
 
@@ -230,6 +237,12 @@ def _filter_and_build_recs(
 
 
 @v1_router.get(
+    "/users/{user_id}",
+    response_model=HistoryResponse,
+    responses={404: {"model": ErrorResponse}},
+    tags=["Users"],
+)
+@v1_router.get(
     "/users/{user_id}/history",
     response_model=HistoryResponse,
     responses={404: {"model": ErrorResponse}},
@@ -239,9 +252,42 @@ def user_history(
     user_id: int,
     history: list[int] = Depends(get_user_history),
     lookup: dict[int, dict] = Depends(get_movie_lookup),
+    auth: dict[str, Any] = Depends(get_api_key),
 ):
     recent = [MovieItem(**_movie_fields(iid, lookup)) for iid in reversed(history[-10:])]
     return HistoryResponse(user_id=user_id, recent_history=recent)
+
+
+@v1_router.delete(
+    "/users/{user_id}",
+    response_model=ErasureResponse,
+    responses={404: {"model": ErrorResponse}},
+    tags=["Users", "Privacy"],
+)
+def erase_user_data(
+    user_id: int,
+    auth: dict[str, Any] = Depends(get_api_key),
+    sec_mgr: SecurityManager = Depends(get_security_manager),
+    cache: RecommendationCache = Depends(get_cache),
+    sequences: dict[int, list[int]] = Depends(get_sequences),
+) -> ErasureResponse:
+    if user_id not in sequences and not cache.has(user_id) and not sec_mgr.is_user_erased(user_id):
+        raise HTTPException(status_code=404, detail="User not found.")
+
+    sequences.pop(user_id, None)
+    erased_cache = cache.delete_user(user_id)
+    sec_mgr.erase_user(user_id=user_id, client_id=str(auth.get("client_id", "unknown")))
+
+    return ErasureResponse(
+        user_id=user_id,
+        status="erased",
+        erased_at=datetime.now(timezone.utc).isoformat(),
+        erased_cache_entries=erased_cache,
+        message=(
+            f"All interactions, cached explanations, and profile data for "
+            f"user {user_id} have been permanently erased (GDPR Art. 17)."
+        ),
+    )
 
 
 @v1_router.get(
@@ -260,6 +306,7 @@ def recommend_embedding(
     lookup: dict[int, dict] = Depends(get_movie_lookup),
     popular_items: list[int] = Depends(get_popular_items),
     item_index=Depends(get_item_index),
+    auth: dict[str, Any] = Depends(get_api_key),
 ):
     exclude_set = parse_exclude_ids(exclude)
     genre_filters = parse_genre_filter(genres)
@@ -306,6 +353,7 @@ def recommend_sasrec(
     lookup: dict[int, dict] = Depends(get_movie_lookup),
     popular_items: list[int] = Depends(get_popular_items),
     model=Depends(get_sasrec_model),
+    auth: dict[str, Any] = Depends(get_api_key),
 ):
     exclude_set = parse_exclude_ids(exclude)
     genre_filters = parse_genre_filter(genres)
@@ -349,6 +397,7 @@ def recommend_rag(
     item_index=Depends(get_item_index),
     sasrec_model=Depends(get_sasrec_model),
     cache: RecommendationCache = Depends(get_cache),
+    auth: dict[str, Any] = Depends(get_api_key),
 ):
     exclude_set = parse_exclude_ids(exclude)
     genre_filters = parse_genre_filter(genres)
@@ -469,6 +518,7 @@ def get_similar_items(
     lookup: dict[int, dict] = Depends(get_movie_lookup),
     popular_items: list[int] = Depends(get_popular_items),
     item_index=Depends(get_item_index),
+    auth: dict[str, Any] = Depends(get_api_key),
 ):
     if item_id not in lookup:
         raise HTTPException(status_code=404, detail="Item not found.")

@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING, Any
 import pandas as pd
 from fastapi import Depends, HTTPException, Request
 
+from pipeline.api.security import get_security_manager
 from pipeline.cache import RecommendationCache
 from pipeline.data.loader import build_movie_lookup, load_processed_movies, load_sequences
 
@@ -34,7 +35,10 @@ def get_movie_lookup() -> dict[int, dict]:
 def get_user_history(
     user_id: int,
     sequences: dict[int, list[int]] = Depends(get_sequences),
+    sec_mgr: Any = Depends(get_security_manager),
 ) -> list[int]:
+    if sec_mgr.is_user_erased(user_id):
+        raise HTTPException(status_code=404, detail="User not found.")
     if user_id not in sequences:
         raise HTTPException(status_code=404, detail="User not found.")
     return sequences[user_id]

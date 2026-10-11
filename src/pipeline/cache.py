@@ -95,6 +95,19 @@ class RecommendationCache:
         row_v2 = self._conn.execute("SELECT COUNT(*) FROM rag_cache_v2").fetchone()
         return row_v2[0] if row_v2 else 0
 
+    def delete_user(self, user_id: int) -> int:
+        """Remove all cached entries for user_id (GDPR right to erasure)."""
+        cursor = self._conn.execute("DELETE FROM rag_cache_v2 WHERE user_id = ?", (user_id,))
+        self._conn.commit()
+        return cursor.rowcount
+
+    def user_entry_count(self, user_id: int) -> int:
+        """Count cached entries for a specific user."""
+        row = self._conn.execute(
+            "SELECT COUNT(*) FROM rag_cache_v2 WHERE user_id = ?", (user_id,)
+        ).fetchone()
+        return row[0] if row else 0
+
     def close(self) -> None:
         self._conn.close()
 

@@ -66,3 +66,11 @@ class TransparencyResponse(BaseModel):
     models_summary: dict[str, str]
     user_controls: list[str]
     dsa_compliance: str
+
+
+class ErasureResponse(BaseModel):
+    user_id: int
+    status: str
+    erased_at: str
+    erased_cache_entries: int
+    message: str
