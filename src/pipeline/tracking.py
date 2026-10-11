@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import os
 import subprocess
 from collections.abc import Generator
 from contextlib import contextmanager
@@ -8,9 +9,20 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
-from pipeline.config import PipelineConfig, tracking_cfg
+import pipeline.config as cfg_module
+from pipeline.config import PipelineConfig, TrackingConfig
+
+# Enable filesystem storage for local runs and silence agent hints
+os.environ.setdefault("MLFLOW_ALLOW_FILE_STORE", "true")
+os.environ.setdefault("MLFLOW_DISABLE_AGENT_HINT", "1")
 
 logger = logging.getLogger(__name__)
+
+
+def _get_tracking_cfg(cfg: PipelineConfig | None = None) -> TrackingConfig:
+    if cfg is not None:
+        return cfg.tracking
+    return cfg_module.tracking_cfg
 
 
 def get_git_commit() -> str:
@@ -33,14 +45,15 @@ def start_run(
     tags: dict[str, str] | None = None,
 ) -> Generator[Any, None, None]:
     """Start an MLflow run if tracking is enabled, or a no-op context manager if disabled."""
-    if not tracking_cfg.enabled:
+    active_tracking = _get_tracking_cfg(cfg)
+    if not active_tracking.enabled:
         yield None
         return
 
     import mlflow
 
-    mlflow.set_tracking_uri(tracking_cfg.tracking_uri)
-    mlflow.set_experiment(tracking_cfg.experiment_name)
+    mlflow.set_tracking_uri(active_tracking.tracking_uri)
+    mlflow.set_experiment(active_tracking.experiment_name)
 
     run_tags = {"git_commit": get_git_commit()}
     if tags:
@@ -54,7 +67,7 @@ def start_run(
 
 def log_config(cfg: PipelineConfig) -> None:
     """Flatten and log pipeline configuration parameters to MLflow."""
-    if not tracking_cfg.enabled:
+    if not _get_tracking_cfg(cfg).enabled:
         return
 
     import mlflow
@@ -77,18 +90,19 @@ def log_config(cfg: PipelineConfig) -> None:
 
 def log_metrics(metrics: dict[str, float], step: int | None = None) -> None:
     """Log evaluation metrics to MLflow."""
-    if not tracking_cfg.enabled:
+    if not _get_tracking_cfg().enabled:
         return
 
     import mlflow
 
-    clean_metrics = {k: float(v) for k, v in metrics.items()}
+    # MLflow metric keys only allow alphanumerics, underscores, dashes, periods, spaces, slashes
+    clean_metrics = {k.replace("@", "_at_"): float(v) for k, v in metrics.items()}
     mlflow.log_metrics(clean_metrics, step=step)
 
 
 def log_artifact(local_path: Path | str, artifact_path: str | None = None) -> None:
     """Log an artifact file to MLflow."""
-    if not tracking_cfg.enabled:
+    if not _get_tracking_cfg().enabled:
         return
 
     import mlflow
