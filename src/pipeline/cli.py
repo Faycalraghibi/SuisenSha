@@ -58,7 +58,36 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Dataset to benchmark on (default: ml-100k).",
     )
 
+    # mlops retrain subcommand
+    retrain_parser = subparsers.add_parser(
+        "retrain", help="Run automated retraining and gated promotion."
+    )
+    retrain_parser.add_argument(
+        "--epochs",
+        type=int,
+        default=None,
+        help="Number of epochs to train candidate model.",
+    )
+    retrain_parser.add_argument(
+        "--force",
+        action="store_true",
+        default=False,
+        help="Force promotion even if candidate metrics degrade.",
+    )
+
+    # mlops rollback subcommand
+    rollback_parser = subparsers.add_parser(
+        "rollback", help="Roll back production model to previous registered version."
+    )
+    rollback_parser.add_argument(
+        "--model",
+        type=str,
+        default="sasrec",
+        help="Model name to rollback (default: sasrec).",
+    )
+
     # Legacy/direct phase flags
+
     parser.add_argument(
         "--phase",
         type=int,
@@ -111,7 +140,33 @@ def main(argv: list[str] | None = None) -> None:
         results = run_benchmark(seeds=seeds, output_dir=out_dir, dataset=dataset)
         print(f"\n✅ Benchmark complete across {seeds} seeds on {dataset}.")
         print(f"  Markdown report → {results['md_path']}")
-        print(f"  CSV metrics     → {results['csv_path']}")
+        return
+
+    if getattr(args, "command", None) == "retrain":
+        print("\n▓▓▓  MLOPS — Automated Retraining & Gated Promotion  ▓▓▓")
+        from pipeline.mlops.pipeline import RetrainingPipeline
+
+        retraining_pipeline = RetrainingPipeline(config=cfg)
+        result = retraining_pipeline.run(
+            epochs=getattr(args, "epochs", None),
+            force_promote=getattr(args, "force", False),
+        )
+        print(f"\nCandidate Version: v{result.candidate_version}")
+        print(f"Candidate Metrics: {result.candidate_metrics}")
+        if result.promoted:
+            print("Status: ✅ Promoted to Production!")
+        else:
+            print(f"Status: ❌ Rejected. Reason: {result.rejection_reason}")
+        return
+
+    if getattr(args, "command", None) == "rollback":
+        print("\n▓▓▓  MLOPS — Model Rollback  ▓▓▓")
+        from pipeline.mlops.registry import ModelRegistry
+
+        registry = ModelRegistry()
+        model_name = getattr(args, "model", "sasrec")
+        rolled_back = registry.rollback(model_name=model_name)
+        print(f"\n✅ Successfully rolled back {model_name} to v{rolled_back.version} (Production).")
         return
 
     movies = sequences = None

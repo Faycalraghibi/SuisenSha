@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import logging
 import random
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -275,8 +276,9 @@ def train_sasrec(
     return model
 
 
-def load_sasrec_model() -> tuple[SASRec, int]:
-    ckpt = torch.load(str(SEQ_MODEL_PATH), map_location="cpu", weights_only=True)
+def load_sasrec_model(weights_path: Path | str | None = None) -> tuple[SASRec, int]:
+    path = Path(weights_path) if weights_path else SEQ_MODEL_PATH
+    ckpt = torch.load(str(path), map_location="cpu", weights_only=True)
     model = SASRec(num_items=ckpt["num_items"])
     model.load_state_dict(ckpt["model_state"])
     model.eval()

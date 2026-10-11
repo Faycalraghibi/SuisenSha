@@ -4,6 +4,7 @@ import json
 import logging
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Query, Request
@@ -229,17 +230,32 @@ async def lifespan(app: FastAPI):
     get_movie_lookup()
 
     logger.info("Loading ML Artifacts into memory...")
+    from pipeline.mlops.registry import ModelRegistry
     from pipeline.models.embedding import load_artefacts
     from pipeline.models.sequential import load_sasrec_model
 
     app.state.item_index = load_artefacts()
-    app.state.sasrec_model, _ = load_sasrec_model()
+
+    registry = ModelRegistry()
+    prod_ver = registry.get_production_version("sasrec")
+    if prod_ver and Path(prod_ver.artifact_path).exists():
+        logger.info(
+            "Loading Production SASRec model from registry (v%d, path: %s)",
+            prod_ver.version,
+            prod_ver.artifact_path,
+        )
+        app.state.sasrec_model, _ = load_sasrec_model(weights_path=prod_ver.artifact_path)
+        app.state.sasrec_version = prod_ver.version
+    else:
+        app.state.sasrec_model, _ = load_sasrec_model()
+        app.state.sasrec_version = "default"
 
     logger.info("Application startup complete.")
     yield
     logger.info("Application shutting down. Releasing ML models.")
     app.state.item_index = None
     app.state.sasrec_model = None
+    app.state.sasrec_version = None
 
 
 app = FastAPI(

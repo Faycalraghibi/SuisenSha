@@ -41,6 +41,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Provisioned Grafana dashboard configuration (`recommender_overview.json`) and Docker compose monitoring services (Redis, Prometheus, Grafana).
 - Locust load test scenarios (`tests/load/locustfile.py`) measuring p95 serving latency under concurrent traffic.
 - Serving cost benchmark report (`reports/cost_benchmark.md`) demonstrating 28% savings vs. AWS Personalize and 94% vs. GCP Vertex AI Retail.
+- File-backed and MLflow-compatible Model Registry (`ModelRegistry`) tracking versioned model artifacts, staging/production stages, and promotion history.
+- Automated retraining orchestration (`RetrainingPipeline`) with gated validation checks preventing promotion of degraded models.
+- Statistical drift detection (`DriftDetector`, `calculate_psi`) using Kolmogorov-Smirnov two-sample tests and Population Stability Index (PSI) over interaction volumes and recommendation score distributions.
+- Instant single-command model rollback (`suisensha rollback` / `ModelRegistry.rollback`) restoring previous production models.
+- Dynamic production model resolution during FastAPI startup lifespan from the Model Registry.
+
 
 
 ### Changed
