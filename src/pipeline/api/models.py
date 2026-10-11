@@ -45,3 +45,24 @@ class RAGResponse(BaseModel):
         default_factory=list,
         description="Structured recommendations with one grounded explanation per item.",
     )
+
+
+class SimilarItemsResponse(BaseModel):
+    item_id: int
+    source_item: MovieItem
+    similar_items: list[RecommendationItem]
+
+
+class RankingParameter(BaseModel):
+    name: str
+    importance: str
+    description: str
+
+
+class TransparencyResponse(BaseModel):
+    title: str
+    regulation: str
+    main_parameters: list[RankingParameter]
+    models_summary: dict[str, str]
+    user_controls: list[str]
+    dsa_compliance: str
