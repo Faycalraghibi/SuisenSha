@@ -197,6 +197,7 @@ def build_item_index(
 ) -> ItemIndex:
     """Build ItemIndex using either exact flat inner-product or HNSW ANN index."""
     dim = embeddings.shape[1]
+    index: faiss.Index
     if index_type.lower() == "hnsw":
         index = build_hnsw_index(
             dim=dim,
@@ -208,6 +209,7 @@ def build_item_index(
         index = faiss.IndexFlatIP(dim)
 
     index.add(embeddings)
+
     logger.info(
         "FAISS %s index built — %d vectors, dim=%d",
         index_type.upper(),
