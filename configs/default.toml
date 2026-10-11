@@ -42,3 +42,8 @@ temporal_test_ratio = 0.1
 enabled = false
 experiment_name = "suisensha-benchmark"
 tracking_uri = "artifacts/mlruns"
+
+[benchmark]
+seeds = 5
+k_values = [5, 10]
+output_dir = "reports"

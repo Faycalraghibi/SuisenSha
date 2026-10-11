@@ -21,6 +21,37 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run the recommendation pipeline (MovieLens-100K).",
     )
+    subparsers = parser.add_subparsers(dest="command")
+
+    # benchmark subcommand
+    bench_parser = subparsers.add_parser("benchmark", help="Run multi-seed model benchmark.")
+    bench_parser.add_argument(
+        "--seeds",
+        type=int,
+        default=None,
+        help="Number of random seeds (default: 5).",
+    )
+    bench_parser.add_argument(
+        "--output-dir",
+        type=str,
+        default=None,
+        help="Directory to write benchmark reports (default: reports).",
+    )
+    bench_parser.add_argument(
+        "--config",
+        type=str,
+        default=None,
+        help="Path to custom TOML configuration file.",
+    )
+    bench_parser.add_argument(
+        "--set",
+        dest="overrides",
+        action="append",
+        default=[],
+        help="Override a config setting (e.g. --set sasrec.epochs=40). Can be repeated.",
+    )
+
+    # Legacy/direct phase flags
     parser.add_argument(
         "--phase",
         type=int,
@@ -62,6 +93,18 @@ def main(argv: list[str] | None = None) -> None:
         if isinstance(stream, io.TextIOWrapper):
             stream.reconfigure(encoding="utf-8", errors="replace")
     print(_BANNER)
+
+    if getattr(args, "command", None) == "benchmark":
+        print("\n▓▓▓  BENCHMARK SUITE — Multi-Seed Model Evaluation  ▓▓▓")
+        from pipeline.benchmark import run_benchmark
+
+        seeds = getattr(args, "seeds", None) or cfg.benchmark.seeds
+        out_dir = getattr(args, "output_dir", None) or cfg.benchmark.output_dir
+        results = run_benchmark(seeds=seeds, output_dir=out_dir)
+        print(f"\n✅ Benchmark complete across {seeds} seeds.")
+        print(f"  Markdown report → {results['md_path']}")
+        print(f"  CSV metrics     → {results['csv_path']}")
+        return
 
     movies = sequences = None
 

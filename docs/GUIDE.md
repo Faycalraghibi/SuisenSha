@@ -29,13 +29,12 @@
 
 ## Results
 
-| Pipeline | HitRate@5 | HitRate@10 | NDCG@5 | NDCG@10 |
-|----------|-----------|------------|--------|---------|
-| Embedding + FAISS | 0.0107 | 0.0160 | 0.0068 | 0.0085 |
-| **SASRec (Transformer)** | **0.0480** | **0.0885** | **0.0278** | **0.0406** |
+Comprehensive multi-seed benchmark results across all baselines and sequential models, including beyond-accuracy metrics (coverage, diversity, novelty, Gini index) and sliced breakdowns, are documented in [`reports/benchmark.md`](../reports/benchmark.md).
 
-> SASRec outperforms the embedding baseline by **~5.5×** on HitRate@10.
-> RAG reuses the embedding retriever, so its ranking metrics equal the embedding row and are not listed separately.
+Run the benchmark suite with:
+```bash
+suisensha benchmark --seeds 5
+```
 
 ---
 

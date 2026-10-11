@@ -15,6 +15,7 @@ DEFAULT_CONFIG_PATH: Path = CONFIGS_DIR / "default.toml"
 DATA_DIR: Path = _PROJECT_ROOT / "data"
 ARTIFACTS_DIR: Path = _PROJECT_ROOT / "artifacts"
 OUTPUTS_DIR: Path = _PROJECT_ROOT / "outputs"
+REPORTS_DIR: Path = _PROJECT_ROOT / "reports"
 
 MOVIELENS_URL = "https://files.grouplens.org/datasets/movielens/ml-100k.zip"
 MOVIELENS_ZIP: Path = DATA_DIR / "ml-100k.zip"
@@ -87,6 +88,13 @@ class TrackingConfig:
 
 
 @dataclass(frozen=True)
+class BenchmarkConfig:
+    seeds: int = 5
+    k_values: tuple[int, ...] = (5, 10)
+    output_dir: str = "reports"
+
+
+@dataclass(frozen=True)
 class PipelineConfig:
     seed: int = 42
     embedding: EmbeddingConfig = field(default_factory=EmbeddingConfig)
@@ -95,6 +103,7 @@ class PipelineConfig:
     eval: EvalConfig = field(default_factory=EvalConfig)
     split: SplitConfig = field(default_factory=SplitConfig)
     tracking: TrackingConfig = field(default_factory=TrackingConfig)
+    benchmark: BenchmarkConfig = field(default_factory=BenchmarkConfig)
 
 
 def _cast_val(raw_val: str, target_type: type) -> Any:
@@ -198,6 +207,18 @@ def load_config(
         tracking_uri=str(track_raw.get("tracking_uri", TrackingConfig.tracking_uri)),
     )
 
+    bench_raw = raw_dict.get("benchmark", {})
+    bench_k = bench_raw.get("k_values", BenchmarkConfig.k_values)
+    if isinstance(bench_k, list):
+        bench_k = tuple(int(x) for x in bench_k)
+    elif isinstance(bench_k, str):
+        bench_k = tuple(int(x.strip()) for x in bench_k.strip("[]()").split(",") if x.strip())
+    benchmark = BenchmarkConfig(
+        seeds=int(bench_raw.get("seeds", BenchmarkConfig.seeds)),
+        k_values=bench_k,
+        output_dir=str(bench_raw.get("output_dir", BenchmarkConfig.output_dir)),
+    )
+
     return PipelineConfig(
         seed=seed,
         embedding=emb,
@@ -206,6 +227,7 @@ def load_config(
         eval=ev,
         split=split,
         tracking=tracking,
+        benchmark=benchmark,
     )
 
 
@@ -218,10 +240,20 @@ rag_cfg: RAGConfig = _default_cfg.rag
 eval_cfg: EvalConfig = _default_cfg.eval
 split_cfg: SplitConfig = _default_cfg.split
 tracking_cfg: TrackingConfig = _default_cfg.tracking
+benchmark_cfg: BenchmarkConfig = _default_cfg.benchmark
 
 
 def set_active_config(cfg: PipelineConfig) -> None:
-    global pipeline_cfg, embedding_cfg, sasrec_cfg, rag_cfg, eval_cfg, split_cfg, tracking_cfg, SEED
+    global \
+        pipeline_cfg, \
+        embedding_cfg, \
+        sasrec_cfg, \
+        rag_cfg, \
+        eval_cfg, \
+        split_cfg, \
+        tracking_cfg, \
+        benchmark_cfg, \
+        SEED
     pipeline_cfg = cfg
     embedding_cfg = cfg.embedding
     sasrec_cfg = cfg.sasrec
@@ -229,9 +261,10 @@ def set_active_config(cfg: PipelineConfig) -> None:
     eval_cfg = cfg.eval
     split_cfg = cfg.split
     tracking_cfg = cfg.tracking
+    benchmark_cfg = cfg.benchmark
     SEED = cfg.seed
 
 
 def ensure_dirs() -> None:
-    for d in (DATA_DIR, ARTIFACTS_DIR, OUTPUTS_DIR):
+    for d in (DATA_DIR, ARTIFACTS_DIR, OUTPUTS_DIR, REPORTS_DIR):
         d.mkdir(parents=True, exist_ok=True)

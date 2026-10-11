@@ -174,11 +174,12 @@ def train_sasrec(
     sequences: dict[int, list[int]],
     val_history: dict[int, list[int]] | None = None,
     val_targets: dict[int, int] | None = None,
+    seed: int = SEED,
 ) -> SASRec:
     ensure_dirs()
-    random.seed(SEED)
-    np.random.seed(SEED)
-    torch.manual_seed(SEED)
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
 
     # If validation split is not explicitly passed, partition train and val
     if val_history is None or val_targets is None:

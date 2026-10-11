@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import logging
 import math
-from collections.abc import Callable
+from collections import Counter
+from collections.abc import Callable, Mapping
+from typing import Any
 
 import matplotlib
 import numpy as np
@@ -27,16 +29,302 @@ def ndcg_at_k(recommended: list[int], target: int, k: int = 10) -> float:
     return 0.0
 
 
-def precision_at_k(recommended: list[int], relevant: set[int], k: int = 10) -> float:
-    if k == 0:
+def precision_at_k(
+    recommended: list[int],
+    relevant: set[int] | list[int] | int,
+    k: int = 10,
+) -> float:
+    if k <= 0:
         return 0.0
-    return sum(1 for item in recommended[:k] if item in relevant) / k
+    rel_set = {relevant} if isinstance(relevant, int) else set(relevant)
+    return sum(1 for item in recommended[:k] if item in rel_set) / k
 
 
-def recall_at_k(recommended: list[int], relevant: set[int], k: int = 10) -> float:
-    if not relevant:
+def recall_at_k(
+    recommended: list[int],
+    relevant: set[int] | list[int] | int,
+    k: int = 10,
+) -> float:
+    rel_set = {relevant} if isinstance(relevant, int) else set(relevant)
+    if not rel_set:
         return 0.0
-    return sum(1 for item in recommended[:k] if item in relevant) / len(relevant)
+    return sum(1 for item in recommended[:k] if item in rel_set) / len(rel_set)
+
+
+def mrr_at_k(
+    recommended: list[int],
+    target: int | set[int] | list[int],
+    k: int = 10,
+) -> float:
+    rel_set = {target} if isinstance(target, int) else set(target)
+    for i, item in enumerate(recommended[:k]):
+        if item in rel_set:
+            return 1.0 / (i + 1)
+    return 0.0
+
+
+def catalog_coverage_at_k(
+    all_recommendations: list[list[int]] | dict[Any, list[int]],
+    num_items: int,
+    k: int = 10,
+) -> float:
+    if num_items <= 0:
+        return 0.0
+    unique_items: set[int] = set()
+    recs_iter = (
+        all_recommendations.values()
+        if isinstance(all_recommendations, dict)
+        else all_recommendations
+    )
+    for recs in recs_iter:
+        unique_items.update(recs[:k])
+    return len(unique_items) / num_items
+
+
+def intra_list_diversity_at_k(
+    recommended: list[int],
+    item_features: Mapping[int, Any],
+    k: int = 10,
+) -> float:
+    recs = recommended[:k]
+    m = len(recs)
+    if m < 2:
+        return 0.0
+
+    total_dist = 0.0
+    pairs = 0
+    for i in range(m):
+        for j in range(i + 1, m):
+            f_i = item_features.get(recs[i])
+            f_j = item_features.get(recs[j])
+            pairs += 1
+
+            if f_i is None or f_j is None:
+                total_dist += 1.0
+                continue
+
+            if isinstance(f_i, np.ndarray) and isinstance(f_j, np.ndarray):
+                denom = (np.linalg.norm(f_i) * np.linalg.norm(f_j)) + 1e-9
+                cosine = float(np.dot(f_i, f_j) / denom)
+                dist = max(0.0, min(2.0, 1.0 - cosine))
+            else:
+                s_i = set(f_i)
+                s_j = set(f_j)
+                union = s_i | s_j
+                if not union:
+                    dist = 1.0
+                else:
+                    dist = 1.0 - (len(s_i & s_j) / len(union))
+            total_dist += dist
+
+    return total_dist / pairs if pairs > 0 else 0.0
+
+
+def mean_intra_list_diversity_at_k(
+    all_recommendations: list[list[int]] | dict[Any, list[int]],
+    item_features: Mapping[int, Any],
+    k: int = 10,
+) -> float:
+    recs_iter = (
+        all_recommendations.values()
+        if isinstance(all_recommendations, dict)
+        else all_recommendations
+    )
+    scores = [intra_list_diversity_at_k(recs, item_features, k=k) for recs in recs_iter]
+    return float(np.mean(scores)) if scores else 0.0
+
+
+def novelty_at_k(
+    recommended: list[int],
+    item_popularity: dict[int, int],
+    total_users: int,
+    k: int = 10,
+) -> float:
+    recs = recommended[:k]
+    if not recs or total_users <= 0:
+        return 0.0
+
+    self_info = []
+    for item in recs:
+        pop = max(item_popularity.get(item, 0), 1)
+        p = min(pop / total_users, 1.0)
+        self_info.append(-math.log2(p))
+    return float(np.mean(self_info))
+
+
+def mean_novelty_at_k(
+    all_recommendations: list[list[int]] | dict[Any, list[int]],
+    item_popularity: dict[int, int],
+    total_users: int,
+    k: int = 10,
+) -> float:
+    recs_iter = (
+        all_recommendations.values()
+        if isinstance(all_recommendations, dict)
+        else all_recommendations
+    )
+    scores = [novelty_at_k(recs, item_popularity, total_users, k=k) for recs in recs_iter]
+    return float(np.mean(scores)) if scores else 0.0
+
+
+def average_popularity_at_k(
+    recommended: list[int],
+    item_popularity: dict[int, int],
+    k: int = 10,
+) -> float:
+    recs = recommended[:k]
+    if not recs:
+        return 0.0
+    return float(np.mean([item_popularity.get(item, 0) for item in recs]))
+
+
+def mean_average_popularity_at_k(
+    all_recommendations: list[list[int]] | dict[Any, list[int]],
+    item_popularity: dict[int, int],
+    k: int = 10,
+) -> float:
+    recs_iter = (
+        all_recommendations.values()
+        if isinstance(all_recommendations, dict)
+        else all_recommendations
+    )
+    scores = [average_popularity_at_k(recs, item_popularity, k=k) for recs in recs_iter]
+    return float(np.mean(scores)) if scores else 0.0
+
+
+def gini_exposure(
+    all_recommendations: list[list[int]] | dict[Any, list[int]],
+    num_items: int,
+    k: int = 10,
+) -> float:
+    if num_items <= 1:
+        return 0.0
+
+    counts: dict[int, int] = Counter()
+    recs_iter = (
+        all_recommendations.values()
+        if isinstance(all_recommendations, dict)
+        else all_recommendations
+    )
+    for recs in recs_iter:
+        for item in recs[:k]:
+            if 1 <= item <= num_items:
+                counts[item] += 1
+
+    total_exposure = sum(counts.values())
+    if total_exposure == 0:
+        return 0.0
+
+    # Include all items in catalog (1..num_items)
+    frequencies = np.array([counts.get(i, 0) for i in range(1, num_items + 1)], dtype=float)
+    frequencies.sort()
+    n = len(frequencies)
+    indices = np.arange(1, n + 1)
+    gini = float(np.sum((2 * indices - n - 1) * frequencies) / (n * total_exposure))
+    return float(np.clip(gini, 0.0, 1.0))
+
+
+def compute_user_activity_quartiles(
+    interactions: dict[int, list[int]],
+) -> dict[str, set[int]]:
+    if not interactions:
+        return {"Q1": set(), "Q2": set(), "Q3": set(), "Q4": set()}
+
+    sorted_users = sorted(interactions.keys(), key=lambda u: len(interactions[u]))
+    n = len(sorted_users)
+    q1_cut = n // 4
+    q2_cut = n // 2
+    q3_cut = (3 * n) // 4
+
+    return {
+        "Q1": set(sorted_users[:q1_cut]),
+        "Q2": set(sorted_users[q1_cut:q2_cut]),
+        "Q3": set(sorted_users[q2_cut:q3_cut]),
+        "Q4": set(sorted_users[q3_cut:]),
+    }
+
+
+def compute_item_popularity_tiers(
+    item_popularity: dict[int, int],
+    num_items: int,
+) -> dict[str, set[int]]:
+    all_items = sorted(
+        range(1, num_items + 1),
+        key=lambda i: item_popularity.get(i, 0),
+        reverse=True,
+    )
+    n = len(all_items)
+    head_cut = max(1, int(n * 0.20))
+    torso_cut = max(head_cut + 1, int(n * 0.50))
+
+    return {
+        "Head": set(all_items[:head_cut]),
+        "Torso": set(all_items[head_cut:torso_cut]),
+        "Tail": set(all_items[torso_cut:]),
+    }
+
+
+def evaluate_by_user_activity(
+    all_recommendations: dict[int, list[int]],
+    targets: dict[int, int],
+    user_quartiles: dict[str, set[int]],
+    k_values: tuple[int, ...] = (5, 10),
+) -> dict[str, dict[str, float]]:
+    results: dict[str, dict[str, float]] = {}
+    for q_name, uids in user_quartiles.items():
+        q_results: dict[str, float] = {}
+        sub_users = [u for u in uids if u in targets and u in all_recommendations]
+        for k in k_values:
+            if not sub_users:
+                q_results[f"HitRate@{k}"] = 0.0
+                q_results[f"NDCG@{k}"] = 0.0
+                q_results[f"Recall@{k}"] = 0.0
+                q_results[f"MRR@{k}"] = 0.0
+            else:
+                hr = [hit_rate_at_k(all_recommendations[u], targets[u], k) for u in sub_users]
+                ndcg = [ndcg_at_k(all_recommendations[u], targets[u], k) for u in sub_users]
+                recall = [recall_at_k(all_recommendations[u], targets[u], k) for u in sub_users]
+                mrr = [mrr_at_k(all_recommendations[u], targets[u], k) for u in sub_users]
+                q_results[f"HitRate@{k}"] = float(np.mean(hr))
+                q_results[f"NDCG@{k}"] = float(np.mean(ndcg))
+                q_results[f"Recall@{k}"] = float(np.mean(recall))
+                q_results[f"MRR@{k}"] = float(np.mean(mrr))
+        results[q_name] = q_results
+    return results
+
+
+def evaluate_by_item_popularity_tiers(
+    all_recommendations: dict[int, list[int]],
+    targets: dict[int, int],
+    item_tiers: dict[str, set[int]],
+    k_values: tuple[int, ...] = (5, 10),
+) -> dict[str, dict[str, float]]:
+    results: dict[str, dict[str, float]] = {}
+    total_recs_at_10 = sum(len(recs[:10]) for recs in all_recommendations.values()) or 1
+
+    for tier_name, item_set in item_tiers.items():
+        tier_results: dict[str, float] = {}
+        sub_users = [
+            u for u, tgt in targets.items() if tgt in item_set and u in all_recommendations
+        ]
+
+        for k in k_values:
+            if not sub_users:
+                tier_results[f"HitRate@{k}"] = 0.0
+                tier_results[f"NDCG@{k}"] = 0.0
+            else:
+                hr = [hit_rate_at_k(all_recommendations[u], targets[u], k) for u in sub_users]
+                ndcg = [ndcg_at_k(all_recommendations[u], targets[u], k) for u in sub_users]
+                tier_results[f"HitRate@{k}"] = float(np.mean(hr))
+                tier_results[f"NDCG@{k}"] = float(np.mean(ndcg))
+
+        # Calculate exposure share in top 10 recommendations
+        rec_in_tier = sum(
+            sum(1 for it in recs[:10] if it in item_set) for recs in all_recommendations.values()
+        )
+        tier_results["exposure_share@10"] = float(rec_in_tier / total_recs_at_10)
+        results[tier_name] = tier_results
+    return results
 
 
 def evaluate_leave_one_out(
