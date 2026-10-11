@@ -70,8 +70,8 @@ def test_recommend_missing_user(client: TestClient, model: str):
 
 def test_recommend_rag_served_from_cache(client: TestClient, tmp_path: Path):
     with RecommendationCache(db_path=tmp_path / "cache.db") as cache:
-        cache.put(1, "cached rationale")
-    response = client.get("/recommend/rag/1")
+        cache.put(1, "cached rationale", candidate_ids=[40], lang="en")
+    response = client.get("/recommend/rag/1?recommender=embedding")
     assert response.status_code == 200
     assert response.json()["user_id"] == 1
     assert response.json()["rationale"] == "cached rationale"
