@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import time
+from typing import Any
 
 from tqdm import tqdm
 
@@ -94,3 +95,44 @@ def run_batch(
             time.perf_counter() - t0,
             cache.count(),
         )
+
+
+def precompute_batch_top_n(
+    user_histories: dict[int, list[int]],
+    recommender: Any,
+    lookup: dict[int, dict],
+    cache: Any,
+    model: str = "sasrec",
+    k: int = 10,
+    ttl_seconds: int = 86400,
+) -> int:
+    """Precompute top-N recommendations per user and persist to Redis/cache."""
+    count = 0
+    for user_id, history in user_histories.items():
+        if hasattr(recommender, "recommend"):
+            try:
+                cand_ids = recommender.recommend(history, top_k=k)
+            except TypeError:
+                cand_ids = recommender.recommend(history, k=k)
+        elif hasattr(recommender, "search"):
+            res = recommender.search(history, top_k=k)
+            cand_ids = [iid for iid, _ in res]
+        else:
+            continue
+
+        items = []
+        for iid in cand_ids:
+            info = lookup.get(iid, {})
+            items.append(
+                {
+                    "item_id": iid,
+                    "title": info.get("title", f"Unknown {iid}"),
+                    "genres": info.get("genres", "Unknown"),
+                    "score": 1.0,
+                }
+            )
+
+        if hasattr(cache, "set_top_n"):
+            cache.set_top_n(user_id=user_id, items=items, model=model, ttl_seconds=ttl_seconds)
+            count += 1
+    return count

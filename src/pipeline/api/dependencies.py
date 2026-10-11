@@ -109,3 +109,10 @@ def get_event_store() -> Any:
     from pipeline.data.events import EventStore
 
     return EventStore()
+
+
+@lru_cache(maxsize=1)
+def get_redis_cache() -> Any:
+    from pipeline.cache import RedisCache
+
+    return RedisCache()
