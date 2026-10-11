@@ -30,6 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Maximal Marginal Relevance (MMR) re-ranking with tunable `diversity` parameter and calibrated popularity dampening.
 - Hybrid recommendation endpoint `GET /v1/recommend/hybrid/{user_id}` and business rules endpoints `GET /v1/rules` & `POST /v1/rules`.
 - Accuracy vs. diversity trade-off evaluation in benchmark reports and CSV.
+- Batched event ingestion endpoint `POST /v1/events` with idempotency keys and validation for views, clicks, purchases, ratings, and feedback signals.
+- User feedback system supporting thumbs up/down and "not interested", with instantaneous exclusion from subsequent recommendations across all model endpoints.
+- Integration of newly ingested events into user interaction datasets and retraining pipelines (`load_interactions_with_events`).
 
 ### Changed
 - RAG cache strictly enforces matching user ID, candidate set, and language; wildcard and legacy-table fallbacks removed from lookups. Legacy table writes removed.

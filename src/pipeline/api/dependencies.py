@@ -102,3 +102,10 @@ def get_item_index(request: Request) -> ItemIndex | None:
 
 def get_sasrec_model(request: Request) -> SASRec | None:
     return getattr(request.app.state, "sasrec_model", None)
+
+
+@lru_cache(maxsize=1)
+def get_event_store() -> Any:
+    from pipeline.data.events import EventStore
+
+    return EventStore()

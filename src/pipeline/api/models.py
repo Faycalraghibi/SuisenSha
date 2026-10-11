@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from datetime import datetime
+from typing import Any
+
 from pydantic import BaseModel, Field
 
 
@@ -110,3 +113,32 @@ class ConflictResponse(BaseModel):
 class RulesListResponse(BaseModel):
     rules: list[BusinessRuleResponse]
     conflicts: list[ConflictResponse]
+
+
+class EventItem(BaseModel):
+    user_id: int = Field(gt=0, description="Positive user identifier")
+    item_id: int = Field(gt=0, description="Positive item identifier")
+    event_type: str = Field(
+        description=(
+            "Event type: view, click, purchase, rating, thumbs_up, thumbs_down, not_interested"
+        )
+    )
+    timestamp: datetime | None = Field(default=None, description="Optional UTC event timestamp")
+    rating: float | None = Field(
+        default=None, ge=0.5, le=5.0, description="Rating value (0.5 to 5.0) for rating events"
+    )
+    metadata: dict[str, Any] = Field(default_factory=dict, description="Custom event metadata")
+
+
+class EventBatchRequest(BaseModel):
+    events: list[EventItem] = Field(min_length=1, description="Batch of events to ingest")
+    idempotency_key: str | None = Field(
+        default=None, description="Optional payload idempotency key"
+    )
+
+
+class EventBatchResponse(BaseModel):
+    status: str = "success"
+    ingested_count: int
+    is_idempotent_replay: bool = False
+    idempotency_key: str | None = None
