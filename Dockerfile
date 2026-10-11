@@ -60,6 +60,7 @@ COPY pyproject.toml /app/
 
 # Install the app itself in editable mode without reinstalling deps, avoiding isolated build env remnants
 RUN pip install --no-cache-dir --no-deps --no-build-isolation -e . && \
+    find /usr/local -name "bom.cdx.json" -delete && \
     rm -rf /tmp/* /var/tmp/* /root/.cache
 
 # Prepare directories with non-root permissions
