@@ -20,6 +20,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Data platform contracts for `items` and `interactions` with Pandera schema validation and readable error messages.
 - Extensible data connectors for CSV, Parquet, SQL (PostgreSQL/SQLite), MovieLens (100K/1M), Amazon Reviews, and Steam.
 - Multi-dataset benchmark evaluation support with MovieLens-1M integration.
+- Hashed API key authentication (SHA-256) scoped per client with 401/403 status handling.
+- Sliding-window per-key rate limiting returning HTTP 429 with `Retry-After` header.
+- GDPR Art. 17 right-to-erasure endpoint `DELETE /v1/users/{user_id}` clearing interactions, cached explanations, and registry exclusion.
+- Audit logging table recording administrative and data erasure actions.
 
 ### Changed
 - RAG cache strictly enforces matching user ID, candidate set, and language; wildcard and legacy-table fallbacks removed from lookups. Legacy table writes removed.
