@@ -6,11 +6,12 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import Any
 
-from fastapi import APIRouter, Depends, FastAPI, HTTPException, Query, Request
+from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse
 
 from pipeline.api.dependencies import (
     get_cache,
+    get_event_store,
     get_item_index,
     get_movie_lookup,
     get_movies_df,
@@ -29,6 +30,8 @@ from pipeline.api.models import (
     ConflictResponse,
     ErasureResponse,
     ErrorResponse,
+    EventBatchRequest,
+    EventBatchResponse,
     ExplainedItem,
     HistoryResponse,
     MovieItem,
@@ -101,6 +104,15 @@ TRANSPARENCY_INFO: dict[str, Any] = {
             "description": (
                 "User-supplied genre preferences and excluded item IDs strictly "
                 "filter algorithmic recommendation candidates."
+            ),
+        },
+        {
+            "name": "User Feedback & Real-Time Exclusions",
+            "importance": "Interactive User Control",
+            "description": (
+                "Explicit negative feedback ('not interested') immediately removes items "
+                "from subsequent recommendations, while interaction signals (clicks, purchases, "
+                "ratings, thumbs up) are captured for model retraining."
             ),
         },
         {
@@ -349,12 +361,15 @@ def erase_user_data(
     sec_mgr: SecurityManager = Depends(get_security_manager),
     cache: RecommendationCache = Depends(get_cache),
     sequences: dict[int, list[int]] = Depends(get_sequences),
+    event_store=Depends(get_event_store),
 ) -> ErasureResponse:
     if user_id not in sequences and not cache.has(user_id) and not sec_mgr.is_user_erased(user_id):
         raise HTTPException(status_code=404, detail="User not found.")
 
     sequences.pop(user_id, None)
     erased_cache = cache.delete_user(user_id)
+    if hasattr(event_store, "erase_user_events"):
+        event_store.erase_user_events(user_id)
     sec_mgr.erase_user(user_id=user_id, client_id=str(auth.get("client_id", "unknown")))
 
     return ErasureResponse(
@@ -443,6 +458,87 @@ def create_rule(
     )
 
 
+@v1_router.post(
+    "/events",
+    response_model=EventBatchResponse,
+    tags=["Events & Feedback"],
+)
+def ingest_events(
+    batch: EventBatchRequest,
+    idempotency_key_header: str | None = Header(None, alias="Idempotency-Key"),
+    event_store=Depends(get_event_store),
+    auth: dict[str, Any] = Depends(get_api_key),
+) -> EventBatchResponse:
+    from pipeline.data.events import EventType, UserEvent
+
+    effective_key = idempotency_key_header or batch.idempotency_key
+    user_events: list[UserEvent] = []
+    for item in batch.events:
+        try:
+            etype = EventType(item.event_type.lower())
+        except ValueError:
+            valid_types = [e.value for e in EventType]
+            raise HTTPException(
+                status_code=422,
+                detail=f"Invalid event_type '{item.event_type}'. Must be one of {valid_types}.",
+            )
+        user_events.append(
+            UserEvent(
+                user_id=item.user_id,
+                item_id=item.item_id,
+                event_type=etype,
+                timestamp=item.timestamp or datetime.now(timezone.utc),
+                rating=item.rating,
+                metadata=item.metadata,
+            )
+        )
+
+    ingested, is_replay = event_store.record_batch(user_events, idempotency_key=effective_key)
+    return EventBatchResponse(
+        status="success",
+        ingested_count=ingested,
+        is_idempotent_replay=is_replay,
+        idempotency_key=effective_key,
+    )
+
+
+@v1_router.get(
+    "/recommend/popular",
+    response_model=RecommendationResponse,
+    tags=["Recommendations"],
+)
+def recommend_popular(
+    user_id: int | None = Query(default=None),
+    k: int = Query(default=TOP_K, ge=1, le=100),
+    exclude: str | None = Query(default=None),
+    genres: str | None = Query(default=None),
+    diversity: float = Query(default=0.0, ge=0.0, le=1.0),
+    lookup: dict[int, dict] = Depends(get_movie_lookup),
+    popular_items: list[int] = Depends(get_popular_items),
+    event_store=Depends(get_event_store),
+    rule_engine=Depends(get_rule_engine),
+    auth: dict[str, Any] | None = Depends(get_api_key),
+) -> RecommendationResponse:
+    exclude_set = parse_exclude_ids(exclude)
+    if user_id is not None and hasattr(event_store, "get_user_excluded_items"):
+        exclude_set |= event_store.get_user_excluded_items(user_id)
+    genre_filters = parse_genre_filter(genres)
+    items = _filter_and_build_recs(
+        popular_items,
+        lookup,
+        exclude_set,
+        genre_filters,
+        k=k,
+        diversity=diversity,
+        rule_engine=rule_engine,
+    )
+    return RecommendationResponse(
+        user_id=user_id or 0,
+        model_name="Popularity (Global Non-Profiling)",
+        recommendations=items,
+    )
+
+
 @v1_router.get(
     "/recommend/embedding/{user_id}",
     response_model=RecommendationResponse,
@@ -463,6 +559,7 @@ def recommend_embedding(
     popular_items: list[int] = Depends(get_popular_items),
     item_index=Depends(get_item_index),
     rule_engine=Depends(get_rule_engine),
+    event_store=Depends(get_event_store),
     auth: dict[str, Any] | None = Depends(get_api_key),
 ):
     if history is None:
@@ -471,6 +568,8 @@ def recommend_embedding(
         history = []
 
     exclude_set = parse_exclude_ids(exclude)
+    if hasattr(event_store, "get_user_excluded_items"):
+        exclude_set |= event_store.get_user_excluded_items(user_id)
     genre_filters = parse_genre_filter(genres)
     onboard_filters = parse_genre_filter(onboarding_genres)
     effective_genres = onboard_filters or genre_filters
@@ -555,6 +654,7 @@ def recommend_sasrec(
     model=Depends(get_sasrec_model),
     item_index=Depends(get_item_index),
     rule_engine=Depends(get_rule_engine),
+    event_store=Depends(get_event_store),
     auth: dict[str, Any] | None = Depends(get_api_key),
 ):
     if history is None:
@@ -563,6 +663,8 @@ def recommend_sasrec(
         history = []
 
     exclude_set = parse_exclude_ids(exclude)
+    if hasattr(event_store, "get_user_excluded_items"):
+        exclude_set |= event_store.get_user_excluded_items(user_id)
     genre_filters = parse_genre_filter(genres)
     onboard_filters = parse_genre_filter(onboarding_genres)
     effective_genres = onboard_filters or genre_filters
@@ -643,6 +745,7 @@ def recommend_hybrid(
     item_index=Depends(get_item_index),
     model=Depends(get_sasrec_model),
     rule_engine=Depends(get_rule_engine),
+    event_store=Depends(get_event_store),
     auth: dict[str, Any] | None = Depends(get_api_key),
 ):
     if history is None:
@@ -651,6 +754,8 @@ def recommend_hybrid(
         history = []
 
     exclude_set = parse_exclude_ids(exclude)
+    if hasattr(event_store, "get_user_excluded_items"):
+        exclude_set |= event_store.get_user_excluded_items(user_id)
     genre_filters = parse_genre_filter(genres)
     onboard_filters = parse_genre_filter(onboarding_genres)
     effective_genres = onboard_filters or genre_filters
@@ -754,6 +859,7 @@ def recommend_rag(
     sasrec_model=Depends(get_sasrec_model),
     cache: RecommendationCache = Depends(get_cache),
     rule_engine=Depends(get_rule_engine),
+    event_store=Depends(get_event_store),
     auth: dict[str, Any] | None = Depends(get_api_key),
 ):
     if history is None:
@@ -762,6 +868,8 @@ def recommend_rag(
         history = []
 
     exclude_set = parse_exclude_ids(exclude)
+    if hasattr(event_store, "get_user_excluded_items"):
+        exclude_set |= event_store.get_user_excluded_items(user_id)
     genre_filters = parse_genre_filter(genres)
     onboard_filters = parse_genre_filter(onboarding_genres)
     effective_genres = onboard_filters or genre_filters

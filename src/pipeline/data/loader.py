@@ -187,9 +187,27 @@ def build_movie_lookup(movies: pd.DataFrame) -> dict[int, dict]:
     return movies.set_index("item_id").to_dict("index")  # type: ignore[return-value]
 
 
-def run_phase1() -> tuple[pd.DataFrame, pd.DataFrame, dict[int, list[int]]]:
-    data_dir = download_movielens()
+def load_interactions_with_events(
+    data_dir: Path | None = None,
+    events_db_path: Path | str | None = None,
+) -> pd.DataFrame:
+    """Load base interactions and merge newly ingested events from EventStore for retraining."""
     ratings = load_ratings(data_dir)
+    from pipeline.data.events import EventStore
+
+    store = EventStore(db_path=events_db_path)
+    return store.merge_events_into_ratings(ratings)
+
+
+def run_phase1(
+    include_events: bool = False,
+    events_db_path: Path | str | None = None,
+) -> tuple[pd.DataFrame, pd.DataFrame, dict[int, list[int]]]:
+    data_dir = download_movielens()
+    if include_events:
+        ratings = load_interactions_with_events(data_dir, events_db_path=events_db_path)
+    else:
+        ratings = load_ratings(data_dir)
     movies = load_movies(data_dir)
     run_eda(ratings, movies)
     sequences = build_user_sequences(ratings)
