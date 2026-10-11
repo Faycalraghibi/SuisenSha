@@ -116,3 +116,10 @@ def get_redis_cache() -> Any:
     from pipeline.cache import RedisCache
 
     return RedisCache()
+
+
+@lru_cache(maxsize=1)
+def get_model_registry() -> Any:
+    from pipeline.mlops.registry import ModelRegistry
+
+    return ModelRegistry()
