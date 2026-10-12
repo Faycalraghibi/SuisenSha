@@ -8,7 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- GRU4Rec sequential model (`GRU4Rec`, `train_gru4rec`) utilizing Gated Recurrent Units for session-based next-item prediction.
+- BERT4Rec bidirectional transformer (`BERT4Rec`, `train_bert4rec`) utilizing Cloze masked item prediction.
+- LightGCN graph convolutional network (`LightGCN`, `train_lightgcn`) for collaborative filtering on normalized bipartite user-item graphs.
+- Two-Tower candidate retrieval model (`TwoTowerModel`, `train_two_tower`) with user and item towers, in-batch negative loss, and FAISS Inner Product indexing.
+- Two-Stage recommendation pipeline (`TwoStageRecommender`) combining sub-millisecond candidate retrieval with deep SASRec re-ranking and post-ranking rules.
+- Multi-model benchmark suite extensions supporting GRU4Rec, BERT4Rec, LightGCN, and Two-Tower evaluations.
+- API endpoints for advanced recommendation models (`/v1/recommend/gru4rec/{user_id}`, `/v1/recommend/bert4rec/{user_id}`, `/v1/recommend/lightgcn/{user_id}`, `/v1/recommend/two-tower/{user_id}`).
 - Multi-tenancy architecture with tenant ID isolation across database tables, Redis cache keys (`rec:{tenant_id}:{model}:{user_id}`), business rules, sessions, experiments, and model registries.
+
 - Per-tenant monthly request quota tracking and enforcement with administrative reset capabilities.
 - Per-tenant API key authentication and header enforcement with admin tenant switching.
 - Embeddable vanilla JavaScript recommendation carousel widget (`widget.js`, `widget.css`) with DSA explainability modal, interactive feedback, and demo page (`/widget/demo`).

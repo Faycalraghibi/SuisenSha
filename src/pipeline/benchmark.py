@@ -59,9 +59,13 @@ from pipeline.models.baselines import (
     PopularityRecommender,
     RandomRecommender,
 )
+from pipeline.models.bert4rec import train_bert4rec
 from pipeline.models.explanations import generate_template_explanation
+from pipeline.models.gru4rec import train_gru4rec
+from pipeline.models.lightgcn import train_lightgcn
 from pipeline.models.llm import FakeLLMBackend, LLMBackend
 from pipeline.models.sequential import train_sasrec
+from pipeline.models.two_tower import train_two_tower
 from pipeline.ranking.diversity import maximal_marginal_relevance
 
 logger = logging.getLogger(__name__)
@@ -219,6 +223,30 @@ def run_benchmark(
                     splits.train_sequences,
                     val_history=splits.val_history,
                     val_targets=splits.val_targets,
+                    seed=seed,
+                )
+            elif model_name == "GRU4Rec":
+                model = train_gru4rec(
+                    splits.train_sequences,
+                    epochs=2,
+                    seed=seed,
+                )
+            elif model_name == "BERT4Rec":
+                model = train_bert4rec(
+                    splits.train_sequences,
+                    epochs=2,
+                    seed=seed,
+                )
+            elif model_name == "LightGCN":
+                model = train_lightgcn(
+                    splits.train_sequences,
+                    epochs=2,
+                    seed=seed,
+                )
+            elif model_name == "TwoTower":
+                model = train_two_tower(
+                    splits.train_sequences,
+                    epochs=2,
                     seed=seed,
                 )
             else:

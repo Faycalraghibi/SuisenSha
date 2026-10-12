@@ -41,8 +41,14 @@ SuisenSha is architected around a layered, decoupled service topology optimized 
 2. **Recommendation Engines (`src/pipeline/models`)**:
    - `PopularityModel`: Fast baseline with segment support.
    - `EmbeddingModel`: Dense vector index powered by FAISS for sub-millisecond approximate nearest neighbor search.
-   - `SASRecRecommender`: Transformer-based self-attention sequential encoder for session next-item prediction.
+   - `SASRec`: Transformer-based self-attention sequential encoder for session next-item prediction.
+   - `GRU4Rec`: Gated Recurrent Unit neural network for session-based sequential recommendation.
+   - `BERT4Rec`: Bidirectional Transformer trained with Cloze masked item prediction.
+   - `LightGCN`: Graph Convolutional Network with linear neighborhood aggregation on bipartite user-item graphs.
+   - `TwoTowerModel`: Dual user and item embedding towers with in-batch negatives and FAISS indexing.
+   - `TwoStageRecommender`: Sub-millisecond candidate retrieval followed by deep scoring re-ranking.
    - `HybridModel`: Weighted rank combination blending candidate pools with min-max score normalization.
+
 3. **Business Rules Engine (`src/pipeline/ranking/rules.py`)**:
    Applies configurable promotion, pinning, category filtering, and diversity re-ranking after model scoring.
 4. **Caching & Invalidation (`src/pipeline/cache.py`)**:

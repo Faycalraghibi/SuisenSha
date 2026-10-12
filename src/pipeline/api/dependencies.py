@@ -175,3 +175,19 @@ def get_session_manager() -> Any:
     from pipeline.sessions.manager import SessionManager
 
     return SessionManager()
+
+
+def get_gru4rec_model(request: Request) -> Any | None:
+    return getattr(request.app.state, "gru4rec_model", None)
+
+
+def get_bert4rec_model(request: Request) -> Any | None:
+    return getattr(request.app.state, "bert4rec_model", None)
+
+
+def get_lightgcn_model(request: Request) -> Any | None:
+    return getattr(request.app.state, "lightgcn_model", None)
+
+
+def get_two_tower_model(request: Request) -> Any | None:
+    return getattr(request.app.state, "two_tower_model", None)
