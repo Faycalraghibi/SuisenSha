@@ -18,7 +18,12 @@ All protected endpoints require an API key passed via one of:
 | `/v1/recommend/popular` | `GET` | Retrieve global or segment-specific top-rated items |
 | `/v1/recommend/embedding` | `GET` | Dense vector nearest-neighbor recommendations for a user |
 | `/v1/recommend/sasrec` | `GET` | Transformer-based sequential recommendations |
+| `/v1/recommend/gru4rec/{user_id}` | `GET` | Gated Recurrent Unit sequential recommendations |
+| `/v1/recommend/bert4rec/{user_id}` | `GET` | Bidirectional Transformer Cloze sequential recommendations |
+| `/v1/recommend/lightgcn/{user_id}` | `GET` | Graph Convolutional collaborative filtering recommendations |
+| `/v1/recommend/two-tower/{user_id}` | `GET` | Sub-millisecond Two-Tower candidate retrieval |
 | `/v1/recommend/hybrid` | `GET` | Blended ensemble ranking combining multiple models |
+
 
 #### Common Query Parameters
 - `user_id` (string): Target user identifier.

@@ -12,10 +12,13 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from pipeline.api.dependencies import (
+    get_bert4rec_model,
     get_cache,
     get_event_store,
     get_experiment_manager,
+    get_gru4rec_model,
     get_item_index,
+    get_lightgcn_model,
     get_movie_lookup,
     get_movies_df,
     get_popular_items,
@@ -24,6 +27,7 @@ from pipeline.api.dependencies import (
     get_sasrec_model,
     get_sequences,
     get_session_manager,
+    get_two_tower_model,
     get_user_history,
     get_user_history_or_cold,
     parse_exclude_ids,
@@ -1142,6 +1146,286 @@ def recommend_rag(
     )
     cache.put(user_id, to_cache, candidate_ids=final_cand_ids, lang=lang)
     return RAGResponse(user_id=user_id, rationale=rationale, recommendations=items)
+
+
+@v1_router.get(
+    "/recommend/gru4rec/{user_id}",
+    response_model=RecommendationResponse,
+    responses={404: {"model": ErrorResponse}},
+    tags=["Recommendations"],
+)
+def recommend_gru4rec(
+    user_id: int,
+    k: int = Query(default=TOP_K, ge=1, le=100),
+    exclude: str | None = Query(default=None),
+    genres: str | None = Query(default=None),
+    diversity: float = Query(default=0.0, ge=0.0, le=1.0),
+    cold_start: bool = Query(default=False),
+    personalised: bool = Query(default=True),
+    history: list[int] | None = Depends(get_user_history_or_cold),
+    lookup: dict[int, dict] = Depends(get_movie_lookup),
+    popular_items: list[int] = Depends(get_popular_items),
+    model=Depends(get_gru4rec_model),
+    rule_engine=Depends(get_rule_engine),
+    event_store=Depends(get_event_store),
+    auth: dict[str, Any] | None = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
+):
+    if history is None:
+        if not cold_start:
+            raise HTTPException(status_code=404, detail="User not found.")
+        history = []
+
+    exclude_set = parse_exclude_ids(exclude)
+    if hasattr(event_store, "get_user_excluded_items"):
+        exclude_set |= event_store.get_user_excluded_items(user_id, tenant_id=tenant_id)
+    genre_filters = parse_genre_filter(genres)
+
+    if not personalised or len(history) < 2 or model is None:
+        items = _filter_and_build_recs(
+            popular_items,
+            lookup,
+            exclude_set,
+            genre_filters,
+            k=k,
+            diversity=diversity,
+            rule_engine=rule_engine,
+            tenant_id=tenant_id,
+        )
+        return RecommendationResponse(
+            user_id=user_id,
+            model_name="Popularity (Fallback / Non-Personalised)",
+            recommendations=items,
+        )
+
+    exclude_set |= set(history)
+    cand_ids = model.recommend(history, k=max(k * 3, 30))
+    items = _filter_and_build_recs(
+        cand_ids,
+        lookup,
+        exclude_set,
+        genre_filters,
+        k=k,
+        diversity=diversity,
+        rule_engine=rule_engine,
+        tenant_id=tenant_id,
+    )
+    return RecommendationResponse(
+        user_id=user_id,
+        model_name="GRU4Rec",
+        recommendations=items,
+    )
+
+
+@v1_router.get(
+    "/recommend/bert4rec/{user_id}",
+    response_model=RecommendationResponse,
+    responses={404: {"model": ErrorResponse}},
+    tags=["Recommendations"],
+)
+def recommend_bert4rec(
+    user_id: int,
+    k: int = Query(default=TOP_K, ge=1, le=100),
+    exclude: str | None = Query(default=None),
+    genres: str | None = Query(default=None),
+    diversity: float = Query(default=0.0, ge=0.0, le=1.0),
+    cold_start: bool = Query(default=False),
+    personalised: bool = Query(default=True),
+    history: list[int] | None = Depends(get_user_history_or_cold),
+    lookup: dict[int, dict] = Depends(get_movie_lookup),
+    popular_items: list[int] = Depends(get_popular_items),
+    model=Depends(get_bert4rec_model),
+    rule_engine=Depends(get_rule_engine),
+    event_store=Depends(get_event_store),
+    auth: dict[str, Any] | None = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
+):
+    if history is None:
+        if not cold_start:
+            raise HTTPException(status_code=404, detail="User not found.")
+        history = []
+
+    exclude_set = parse_exclude_ids(exclude)
+    if hasattr(event_store, "get_user_excluded_items"):
+        exclude_set |= event_store.get_user_excluded_items(user_id, tenant_id=tenant_id)
+    genre_filters = parse_genre_filter(genres)
+
+    if not personalised or len(history) < 2 or model is None:
+        items = _filter_and_build_recs(
+            popular_items,
+            lookup,
+            exclude_set,
+            genre_filters,
+            k=k,
+            diversity=diversity,
+            rule_engine=rule_engine,
+            tenant_id=tenant_id,
+        )
+        return RecommendationResponse(
+            user_id=user_id,
+            model_name="Popularity (Fallback / Non-Personalised)",
+            recommendations=items,
+        )
+
+    exclude_set |= set(history)
+    cand_ids = model.recommend(history, k=max(k * 3, 30))
+    items = _filter_and_build_recs(
+        cand_ids,
+        lookup,
+        exclude_set,
+        genre_filters,
+        k=k,
+        diversity=diversity,
+        rule_engine=rule_engine,
+        tenant_id=tenant_id,
+    )
+    return RecommendationResponse(
+        user_id=user_id,
+        model_name="BERT4Rec",
+        recommendations=items,
+    )
+
+
+@v1_router.get(
+    "/recommend/lightgcn/{user_id}",
+    response_model=RecommendationResponse,
+    responses={404: {"model": ErrorResponse}},
+    tags=["Recommendations"],
+)
+def recommend_lightgcn(
+    user_id: int,
+    k: int = Query(default=TOP_K, ge=1, le=100),
+    exclude: str | None = Query(default=None),
+    genres: str | None = Query(default=None),
+    diversity: float = Query(default=0.0, ge=0.0, le=1.0),
+    cold_start: bool = Query(default=False),
+    personalised: bool = Query(default=True),
+    history: list[int] | None = Depends(get_user_history_or_cold),
+    lookup: dict[int, dict] = Depends(get_movie_lookup),
+    popular_items: list[int] = Depends(get_popular_items),
+    model=Depends(get_lightgcn_model),
+    rule_engine=Depends(get_rule_engine),
+    event_store=Depends(get_event_store),
+    auth: dict[str, Any] | None = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
+):
+    if history is None:
+        if not cold_start:
+            raise HTTPException(status_code=404, detail="User not found.")
+        history = []
+
+    exclude_set = parse_exclude_ids(exclude)
+    if hasattr(event_store, "get_user_excluded_items"):
+        exclude_set |= event_store.get_user_excluded_items(user_id, tenant_id=tenant_id)
+    genre_filters = parse_genre_filter(genres)
+
+    if not personalised or model is None:
+        items = _filter_and_build_recs(
+            popular_items,
+            lookup,
+            exclude_set,
+            genre_filters,
+            k=k,
+            diversity=diversity,
+            rule_engine=rule_engine,
+            tenant_id=tenant_id,
+        )
+        return RecommendationResponse(
+            user_id=user_id,
+            model_name="Popularity (Fallback / Non-Personalised)",
+            recommendations=items,
+        )
+
+    exclude_set |= set(history)
+    if hasattr(model, "recommend_for_user") and user_id <= getattr(model, "num_users", 0):
+        cand_ids = model.recommend_for_user(user_id, k=max(k * 3, 30), exclude=exclude_set)
+    else:
+        cand_ids = model.recommend(history, k=max(k * 3, 30))
+
+    items = _filter_and_build_recs(
+        cand_ids,
+        lookup,
+        exclude_set,
+        genre_filters,
+        k=k,
+        diversity=diversity,
+        rule_engine=rule_engine,
+        tenant_id=tenant_id,
+    )
+    return RecommendationResponse(
+        user_id=user_id,
+        model_name="LightGCN",
+        recommendations=items,
+    )
+
+
+@v1_router.get(
+    "/recommend/two-tower/{user_id}",
+    response_model=RecommendationResponse,
+    responses={404: {"model": ErrorResponse}},
+    tags=["Recommendations"],
+)
+def recommend_two_tower(
+    user_id: int,
+    k: int = Query(default=TOP_K, ge=1, le=100),
+    exclude: str | None = Query(default=None),
+    genres: str | None = Query(default=None),
+    diversity: float = Query(default=0.0, ge=0.0, le=1.0),
+    cold_start: bool = Query(default=False),
+    personalised: bool = Query(default=True),
+    history: list[int] | None = Depends(get_user_history_or_cold),
+    lookup: dict[int, dict] = Depends(get_movie_lookup),
+    popular_items: list[int] = Depends(get_popular_items),
+    model=Depends(get_two_tower_model),
+    rule_engine=Depends(get_rule_engine),
+    event_store=Depends(get_event_store),
+    auth: dict[str, Any] | None = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
+):
+    if history is None:
+        if not cold_start:
+            raise HTTPException(status_code=404, detail="User not found.")
+        history = []
+
+    exclude_set = parse_exclude_ids(exclude)
+    if hasattr(event_store, "get_user_excluded_items"):
+        exclude_set |= event_store.get_user_excluded_items(user_id, tenant_id=tenant_id)
+    genre_filters = parse_genre_filter(genres)
+
+    if not personalised or len(history) < 1 or model is None:
+        items = _filter_and_build_recs(
+            popular_items,
+            lookup,
+            exclude_set,
+            genre_filters,
+            k=k,
+            diversity=diversity,
+            rule_engine=rule_engine,
+            tenant_id=tenant_id,
+        )
+        return RecommendationResponse(
+            user_id=user_id,
+            model_name="Popularity (Fallback / Non-Personalised)",
+            recommendations=items,
+        )
+
+    exclude_set |= set(history)
+    cand_ids = model.recommend(history, k=max(k * 3, 30))
+    items = _filter_and_build_recs(
+        cand_ids,
+        lookup,
+        exclude_set,
+        genre_filters,
+        k=k,
+        diversity=diversity,
+        rule_engine=rule_engine,
+        tenant_id=tenant_id,
+    )
+    return RecommendationResponse(
+        user_id=user_id,
+        model_name="Two-Tower Retrieval",
+        recommendations=items,
+    )
 
 
 @v1_router.get(
