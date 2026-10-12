@@ -1,0 +1,17 @@
+apiVersion: v2
+name: suisensha
+description: Production-grade Helm chart for SuisenSha real-time recommendation engine
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - recsys
+  - machine-learning
+  - recommendations
+  - fastapi
+  - streamlit
+  - redis
+home: https://github.com/SuisenSha/SuisenSha
+maintainers:
+  - name: SuisenSha Contributors
+    email: maintainers@suisensha.example.com

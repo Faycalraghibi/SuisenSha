@@ -31,6 +31,7 @@ class UserEvent(BaseModel):
     session_id: str | None = Field(
         default=None, description="Optional anonymous session identifier"
     )
+    tenant_id: str = Field(default="default", description="Tenant isolation identifier")
     item_id: int = Field(gt=0, description="Positive item identifier")
     event_type: EventType = Field(description="Interaction or feedback type")
     timestamp: datetime = Field(
@@ -87,6 +88,7 @@ class EventStore:
                     event_id TEXT UNIQUE NOT NULL,
                     user_id INTEGER,
                     session_id TEXT,
+                    tenant_id TEXT DEFAULT 'default',
                     item_id INTEGER NOT NULL,
                     event_type TEXT NOT NULL,
                     timestamp TEXT NOT NULL,
@@ -99,8 +101,13 @@ class EventStore:
                 conn.execute("ALTER TABLE events ADD COLUMN session_id TEXT")
             except sqlite3.OperationalError:
                 pass
+            try:
+                conn.execute("ALTER TABLE events ADD COLUMN tenant_id TEXT DEFAULT 'default'")
+            except sqlite3.OperationalError:
+                pass
             conn.execute("CREATE INDEX IF NOT EXISTS idx_events_user ON events(user_id)")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_events_session ON events(session_id)")
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_events_tenant ON events(tenant_id)")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_events_type ON events(event_type)")
             conn.execute(
                 """
@@ -117,14 +124,25 @@ class EventStore:
                 CREATE TABLE IF NOT EXISTS user_exclusions (
                     user_id INTEGER NOT NULL,
                     item_id INTEGER NOT NULL,
+                    tenant_id TEXT DEFAULT 'default',
                     reason TEXT NOT NULL,
                     created_at TEXT NOT NULL,
-                    PRIMARY KEY (user_id, item_id)
+                    PRIMARY KEY (user_id, item_id, tenant_id)
                 )
                 """
             )
+            try:
+                conn.execute(
+                    "ALTER TABLE user_exclusions ADD COLUMN tenant_id TEXT DEFAULT 'default'"
+                )
+            except sqlite3.OperationalError:
+                pass
             conn.execute(
                 "CREATE INDEX IF NOT EXISTS idx_user_exclusions_user ON user_exclusions(user_id)"
+            )
+            conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_user_exclusions_tenant "
+                "ON user_exclusions(tenant_id)"
             )
             conn.commit()
 
@@ -132,6 +150,7 @@ class EventStore:
         self,
         events: list[UserEvent],
         idempotency_key: str | None = None,
+        tenant_id: str = "default",
     ) -> tuple[int, bool]:
         """Record a batch of events with optional idempotency checking.
 
@@ -156,18 +175,20 @@ class EventStore:
                 event_ids.append(eid)
                 ts_str = ev.timestamp.isoformat()
                 meta_str = json.dumps(ev.metadata)
+                effective_tenant = ev.tenant_id if ev.tenant_id != "default" else tenant_id
 
                 conn.execute(
                     """
                     INSERT OR REPLACE INTO events
-                    (event_id, user_id, session_id, item_id,
+                    (event_id, user_id, session_id, tenant_id, item_id,
                      event_type, timestamp, rating, metadata)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         eid,
                         ev.user_id,
                         ev.session_id,
+                        effective_tenant,
                         ev.item_id,
                         ev.event_type.value,
                         ts_str,
@@ -180,10 +201,10 @@ class EventStore:
                     conn.execute(
                         """
                         INSERT OR REPLACE INTO user_exclusions
-                        (user_id, item_id, reason, created_at)
-                        VALUES (?, ?, ?, ?)
+                        (user_id, item_id, tenant_id, reason, created_at)
+                        VALUES (?, ?, ?, ?, ?)
                         """,
-                        (ev.user_id, ev.item_id, "not_interested", ts_str),
+                        (ev.user_id, ev.item_id, effective_tenant, "not_interested", ts_str),
                     )
 
             if idempotency_key:
@@ -204,12 +225,12 @@ class EventStore:
 
         return len(events), False
 
-    def get_user_excluded_items(self, user_id: int) -> set[int]:
-        """Get set of item IDs immediately excluded for this user."""
+    def get_user_excluded_items(self, user_id: int, tenant_id: str = "default") -> set[int]:
+        """Get set of item IDs immediately excluded for this user in tenant."""
         with self._get_connection() as conn:
             cur = conn.execute(
-                "SELECT item_id FROM user_exclusions WHERE user_id = ?",
-                (user_id,),
+                "SELECT item_id FROM user_exclusions WHERE user_id = ? AND tenant_id = ?",
+                (user_id, tenant_id),
             )
             return {int(row["item_id"]) for row in cur.fetchall()}
 
@@ -217,12 +238,14 @@ class EventStore:
         self,
         user_id: int,
         event_types: list[EventType] | None = None,
+        tenant_id: str = "default",
     ) -> list[UserEvent]:
         query = (
-            "SELECT event_id, user_id, session_id, item_id, "
-            "event_type, timestamp, rating, metadata FROM events WHERE user_id = ?"
+            "SELECT event_id, user_id, session_id, tenant_id, item_id, "
+            "event_type, timestamp, rating, metadata FROM events "
+            "WHERE user_id = ? AND tenant_id = ?"
         )
-        params: list[Any] = [user_id]
+        params: list[Any] = [user_id, tenant_id]
         if event_types:
             placeholders = ",".join("?" for _ in event_types)
             query += f" AND event_type IN ({placeholders})"
@@ -240,6 +263,7 @@ class EventStore:
                         event_id=row["event_id"],
                         user_id=row["user_id"],
                         session_id=row["session_id"],
+                        tenant_id=row["tenant_id"] if "tenant_id" in row.keys() else "default",
                         item_id=row["item_id"],
                         event_type=EventType(row["event_type"]),
                         timestamp=ts,
@@ -253,12 +277,14 @@ class EventStore:
         self,
         session_id: str,
         event_types: list[EventType] | None = None,
+        tenant_id: str = "default",
     ) -> list[UserEvent]:
         query = (
-            "SELECT event_id, user_id, session_id, item_id, "
-            "event_type, timestamp, rating, metadata FROM events WHERE session_id = ?"
+            "SELECT event_id, user_id, session_id, tenant_id, item_id, "
+            "event_type, timestamp, rating, metadata FROM events "
+            "WHERE session_id = ? AND tenant_id = ?"
         )
-        params: list[Any] = [session_id]
+        params: list[Any] = [session_id, tenant_id]
         if event_types:
             placeholders = ",".join("?" for _ in event_types)
             query += f" AND event_type IN ({placeholders})"
@@ -276,6 +302,7 @@ class EventStore:
                         event_id=row["event_id"],
                         user_id=row["user_id"],
                         session_id=row["session_id"],
+                        tenant_id=row["tenant_id"] if "tenant_id" in row.keys() else "default",
                         item_id=row["item_id"],
                         event_type=EventType(row["event_type"]),
                         timestamp=ts,
@@ -290,13 +317,28 @@ class EventStore:
             cur = conn.execute("SELECT COUNT(*) FROM events")
             return int(cur.fetchone()[0])
 
-    def erase_user_events(self, user_id: int) -> int:
+    def erase_user_events(self, user_id: int, tenant_id: str | None = None) -> int:
         """Permanently erase all events and exclusions for a user (GDPR Art. 17)."""
         with self._get_connection() as conn:
-            cur = conn.execute("SELECT COUNT(*) FROM events WHERE user_id = ?", (user_id,))
-            count = int(cur.fetchone()[0])
-            conn.execute("DELETE FROM events WHERE user_id = ?", (user_id,))
-            conn.execute("DELETE FROM user_exclusions WHERE user_id = ?", (user_id,))
+            if tenant_id:
+                cur = conn.execute(
+                    "SELECT COUNT(*) FROM events WHERE user_id = ? AND tenant_id = ?",
+                    (user_id, tenant_id),
+                )
+                count = int(cur.fetchone()[0])
+                conn.execute(
+                    "DELETE FROM events WHERE user_id = ? AND tenant_id = ?",
+                    (user_id, tenant_id),
+                )
+                conn.execute(
+                    "DELETE FROM user_exclusions WHERE user_id = ? AND tenant_id = ?",
+                    (user_id, tenant_id),
+                )
+            else:
+                cur = conn.execute("SELECT COUNT(*) FROM events WHERE user_id = ?", (user_id,))
+                count = int(cur.fetchone()[0])
+                conn.execute("DELETE FROM events WHERE user_id = ?", (user_id,))
+                conn.execute("DELETE FROM user_exclusions WHERE user_id = ?", (user_id,))
             conn.commit()
             return count
 

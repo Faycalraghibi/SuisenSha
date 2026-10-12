@@ -89,6 +89,7 @@ class BusinessRuleCreate(BaseModel):
     start_date: str | None = Field(default=None)
     end_date: str | None = Field(default=None)
     priority: int = Field(default=0)
+    tenant_id: str = Field(default="default")
 
 
 class BusinessRuleResponse(BaseModel):
@@ -102,6 +103,7 @@ class BusinessRuleResponse(BaseModel):
     end_date: str | None
     priority: int
     is_active: bool
+    tenant_id: str = "default"
 
 
 class ConflictResponse(BaseModel):
@@ -122,6 +124,7 @@ class EventItem(BaseModel):
     session_id: str | None = Field(
         default=None, description="Optional anonymous session identifier"
     )
+    tenant_id: str = Field(default="default", description="Tenant isolation identifier")
     item_id: int = Field(gt=0, description="Positive item identifier")
     event_type: str = Field(
         description=(
@@ -169,6 +172,7 @@ class ExperimentCreate(BaseModel):
     name: str
     variants: list[VariantModel] = Field(min_length=2)
     description: str = ""
+    tenant_id: str = "default"
 
 
 class ExperimentResponse(BaseModel):
@@ -178,6 +182,7 @@ class ExperimentResponse(BaseModel):
     status: str
     created_at: str
     description: str = ""
+    tenant_id: str = "default"
 
 
 class VariantMetricsModel(BaseModel):
@@ -217,6 +222,7 @@ class SessionEventRequest(BaseModel):
 class SessionResponse(BaseModel):
     session_id: str
     item_ids: list[int]
+    tenant_id: str = "default"
     created_at: str
     updated_at: str
     event_count: int

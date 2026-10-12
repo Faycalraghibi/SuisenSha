@@ -9,6 +9,7 @@ from typing import Any
 
 from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Query, Request
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 from pipeline.api.dependencies import (
     get_cache,
@@ -59,6 +60,7 @@ from pipeline.api.models import (
 from pipeline.api.security import (
     SecurityManager,
     get_api_key,
+    get_current_tenant,
     get_security_manager,
 )
 from pipeline.cache import RecommendationCache
@@ -277,10 +279,32 @@ app = FastAPI(
 )
 app.add_middleware(TracingAndMetricsMiddleware)
 
+# Mount embeddable static widget assets
+_static_dir = Path(__file__).resolve().parent.parent / "static"
+if _static_dir.exists():
+    app.mount("/static", StaticFiles(directory=str(_static_dir)), name="static")
+
+
+@app.get("/health", tags=["Observability"])
+def health_check():
+    return {
+        "status": "healthy",
+        "service": "suisensha",
+        "version": "1.0.0",
+    }
+
 
 @app.get("/metrics", tags=["Observability"])
 def prometheus_metrics():
     return get_metrics_response()
+
+
+@app.get("/widget/demo", response_class=HTMLResponse, tags=["Widget"])
+def widget_demo_page():
+    demo_file = _static_dir / "widget_demo.html"
+    if demo_file.exists():
+        return HTMLResponse(content=demo_file.read_text(encoding="utf-8"))
+    return HTMLResponse(content="<h1>Widget Demo</h1><p>Demo file not found.</p>")
 
 
 v1_router = APIRouter(prefix="/v1")
@@ -305,6 +329,7 @@ def _filter_and_build_recs(
     diversity: float = 0.0,
     item_features: Any | None = None,
     rule_engine: Any | None = None,
+    tenant_id: str | None = None,
 ) -> list[RecommendationItem]:
     filtered_cands: list[int] = []
     for iid in candidate_ids:
@@ -353,7 +378,7 @@ def _filter_and_build_recs(
         items.append(RecommendationItem(**_movie_fields(iid, lookup), score=score))
 
     if rule_engine is not None and hasattr(rule_engine, "apply"):
-        items = rule_engine.apply(items, item_lookup=lookup, top_k=k)
+        items = rule_engine.apply(items, item_lookup=lookup, top_k=k, tenant_id=tenant_id)
 
     return items[:k]
 
@@ -398,6 +423,8 @@ def erase_user_data(
     cache: RecommendationCache = Depends(get_cache),
     sequences: dict[int, list[int]] = Depends(get_sequences),
     event_store=Depends(get_event_store),
+    redis_cache=Depends(get_redis_cache),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> ErasureResponse:
     if user_id not in sequences and not cache.has(user_id) and not sec_mgr.is_user_erased(user_id):
         raise HTTPException(status_code=404, detail="User not found.")
@@ -405,7 +432,9 @@ def erase_user_data(
     sequences.pop(user_id, None)
     erased_cache = cache.delete_user(user_id)
     if hasattr(event_store, "erase_user_events"):
-        event_store.erase_user_events(user_id)
+        event_store.erase_user_events(user_id, tenant_id=tenant_id)
+    if hasattr(redis_cache, "delete_user"):
+        redis_cache.delete_user(user_id, tenant_id=tenant_id)
     sec_mgr.erase_user(user_id=user_id, client_id=str(auth.get("client_id", "unknown")))
 
     return ErasureResponse(
@@ -427,9 +456,9 @@ def erase_user_data(
 )
 def list_rules(
     rule_engine=Depends(get_rule_engine),
-    auth: dict[str, Any] = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ):
-    active_ids = {r.rule_id for r in rule_engine.get_active_rules()}
+    active_ids = {r.rule_id for r in rule_engine.get_active_rules(tenant_id=tenant_id)}
     rule_resps = [
         BusinessRuleResponse(
             rule_id=r.rule_id,
@@ -442,8 +471,10 @@ def list_rules(
             end_date=str(r.end_date) if r.end_date else None,
             priority=r.priority,
             is_active=(r.rule_id in active_ids),
+            tenant_id=r.tenant_id,
         )
         for r in rule_engine.rules
+        if r.tenant_id == tenant_id
     ]
     conflicts = [
         ConflictResponse(
@@ -451,7 +482,7 @@ def list_rules(
             conflict_type=c.conflict_type,
             description=c.description,
         )
-        for c in rule_engine.detect_conflicts()
+        for c in rule_engine.detect_conflicts(tenant_id=tenant_id)
     ]
     return RulesListResponse(rules=rule_resps, conflicts=conflicts)
 
@@ -464,10 +495,11 @@ def list_rules(
 def create_rule(
     body: BusinessRuleCreate,
     rule_engine=Depends(get_rule_engine),
-    auth: dict[str, Any] = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ):
     from pipeline.ranking.rules import BusinessRule, RuleType
 
+    effective_tenant = body.tenant_id if body.tenant_id != "default" else tenant_id
     rule = BusinessRule(
         rule_id=body.rule_id,
         rule_type=RuleType(body.rule_type.lower()),
@@ -478,6 +510,7 @@ def create_rule(
         start_date=body.start_date,
         end_date=body.end_date,
         priority=body.priority,
+        tenant_id=effective_tenant,
     )
     rule_engine.add_rule(rule)
     return BusinessRuleResponse(
@@ -491,7 +524,23 @@ def create_rule(
         end_date=str(rule.end_date) if rule.end_date else None,
         priority=rule.priority,
         is_active=rule_engine.is_rule_active(rule),
+        tenant_id=rule.tenant_id,
     )
+
+
+@v1_router.delete(
+    "/rules/{rule_id}",
+    tags=["Business Rules"],
+)
+def delete_rule(
+    rule_id: str,
+    rule_engine=Depends(get_rule_engine),
+    tenant_id: str = Depends(get_current_tenant),
+):
+    removed = rule_engine.remove_rule(rule_id, tenant_id=tenant_id)
+    if not removed:
+        raise HTTPException(status_code=404, detail=f"Rule '{rule_id}' not found.")
+    return {"status": "deleted", "rule_id": rule_id}
 
 
 @v1_router.post(
@@ -506,6 +555,7 @@ def ingest_events(
     redis_cache=Depends(get_redis_cache),
     session_manager=Depends(get_session_manager),
     auth: dict[str, Any] = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> EventBatchResponse:
     from pipeline.data.events import EventType, UserEvent
 
@@ -520,10 +570,12 @@ def ingest_events(
                 status_code=422,
                 detail=f"Invalid event_type '{item.event_type}'. Must be one of {valid_types}.",
             )
+        effective_tenant = item.tenant_id if item.tenant_id != "default" else tenant_id
         user_events.append(
             UserEvent(
                 user_id=item.user_id,
                 session_id=item.session_id,
+                tenant_id=effective_tenant,
                 item_id=item.item_id,
                 event_type=etype,
                 timestamp=item.timestamp or datetime.now(timezone.utc),
@@ -538,15 +590,20 @@ def ingest_events(
                 event_type=etype.value,
                 metadata=item.metadata,
                 timestamp=item.timestamp,
+                tenant_id=effective_tenant,
             )
 
-    ingested, is_replay = event_store.record_batch(user_events, idempotency_key=effective_key)
+    ingested, is_replay = event_store.record_batch(
+        user_events,
+        idempotency_key=effective_key,
+        tenant_id=tenant_id,
+    )
 
     # Invalidate cached recommendations for affected users immediately
     if hasattr(redis_cache, "delete_user"):
         for ev in user_events:
             if ev.user_id:
-                redis_cache.delete_user(ev.user_id)
+                redis_cache.delete_user(ev.user_id, tenant_id=tenant_id)
 
     return EventBatchResponse(
         status="success",
@@ -572,10 +629,11 @@ def recommend_popular(
     event_store=Depends(get_event_store),
     rule_engine=Depends(get_rule_engine),
     auth: dict[str, Any] | None = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> RecommendationResponse:
     exclude_set = parse_exclude_ids(exclude)
     if user_id is not None and hasattr(event_store, "get_user_excluded_items"):
-        exclude_set |= event_store.get_user_excluded_items(user_id)
+        exclude_set |= event_store.get_user_excluded_items(user_id, tenant_id=tenant_id)
     genre_filters = parse_genre_filter(genres)
     items = _filter_and_build_recs(
         popular_items,
@@ -585,6 +643,7 @@ def recommend_popular(
         k=k,
         diversity=diversity,
         rule_engine=rule_engine,
+        tenant_id=tenant_id,
     )
     return RecommendationResponse(
         user_id=user_id or 0,
@@ -616,6 +675,7 @@ def recommend_embedding(
     event_store=Depends(get_event_store),
     redis_cache=Depends(get_redis_cache),
     auth: dict[str, Any] | None = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ):
     if history is None:
         if not cold_start and not onboarding_genres:
@@ -624,7 +684,7 @@ def recommend_embedding(
 
     exclude_set = parse_exclude_ids(exclude)
     if hasattr(event_store, "get_user_excluded_items"):
-        exclude_set |= event_store.get_user_excluded_items(user_id)
+        exclude_set |= event_store.get_user_excluded_items(user_id, tenant_id=tenant_id)
     genre_filters = parse_genre_filter(genres)
     onboard_filters = parse_genre_filter(onboarding_genres)
     effective_genres = onboard_filters or genre_filters
@@ -638,6 +698,7 @@ def recommend_embedding(
             k=k,
             diversity=diversity,
             rule_engine=rule_engine,
+            tenant_id=tenant_id,
         )
         model_name = (
             "Popularity (Cold Start Onboarding)"
@@ -651,7 +712,7 @@ def recommend_embedding(
         return RecommendationResponse(user_id=user_id, model_name=model_name, recommendations=items)
 
     if hasattr(redis_cache, "get_top_n") and not exclude and not genres and not onboarding_genres:
-        cached_recs = redis_cache.get_top_n(user_id=user_id, model="embedding")
+        cached_recs = redis_cache.get_top_n(user_id=user_id, model="embedding", tenant_id=tenant_id)
         if cached_recs is not None:
             filtered_cached = [it for it in cached_recs if it.get("item_id") not in exclude_set]
             if len(filtered_cached) >= k:
@@ -697,6 +758,7 @@ def recommend_embedding(
         diversity=diversity,
         item_features=item_feats,
         rule_engine=rule_engine,
+        tenant_id=tenant_id,
     )
     return RecommendationResponse(
         user_id=user_id, model_name="Embedding + FAISS", recommendations=items
@@ -727,6 +789,7 @@ def recommend_sasrec(
     event_store=Depends(get_event_store),
     redis_cache=Depends(get_redis_cache),
     auth: dict[str, Any] | None = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ):
     if history is None:
         if not cold_start and not onboarding_genres:
@@ -735,7 +798,7 @@ def recommend_sasrec(
 
     exclude_set = parse_exclude_ids(exclude)
     if hasattr(event_store, "get_user_excluded_items"):
-        exclude_set |= event_store.get_user_excluded_items(user_id)
+        exclude_set |= event_store.get_user_excluded_items(user_id, tenant_id=tenant_id)
     genre_filters = parse_genre_filter(genres)
     onboard_filters = parse_genre_filter(onboarding_genres)
     effective_genres = onboard_filters or genre_filters
@@ -749,6 +812,7 @@ def recommend_sasrec(
             k=k,
             diversity=diversity,
             rule_engine=rule_engine,
+            tenant_id=tenant_id,
         )
         model_name = (
             "Popularity (Cold Start Onboarding)"
@@ -762,7 +826,7 @@ def recommend_sasrec(
         return RecommendationResponse(user_id=user_id, model_name=model_name, recommendations=items)
 
     if hasattr(redis_cache, "get_top_n") and not exclude and not genres and not onboarding_genres:
-        cached_recs = redis_cache.get_top_n(user_id=user_id, model="sasrec")
+        cached_recs = redis_cache.get_top_n(user_id=user_id, model="sasrec", tenant_id=tenant_id)
         if cached_recs is not None:
             filtered_cached = [it for it in cached_recs if it.get("item_id") not in exclude_set]
             if len(filtered_cached) >= k:
@@ -803,6 +867,7 @@ def recommend_sasrec(
         diversity=diversity,
         item_features=item_feats,
         rule_engine=rule_engine,
+        tenant_id=tenant_id,
     )
     return RecommendationResponse(
         user_id=user_id, model_name="SASRec (Transformer)", recommendations=items
@@ -833,6 +898,7 @@ def recommend_hybrid(
     rule_engine=Depends(get_rule_engine),
     event_store=Depends(get_event_store),
     auth: dict[str, Any] | None = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ):
     if history is None:
         if not cold_start and not onboarding_genres:
@@ -841,7 +907,7 @@ def recommend_hybrid(
 
     exclude_set = parse_exclude_ids(exclude)
     if hasattr(event_store, "get_user_excluded_items"):
-        exclude_set |= event_store.get_user_excluded_items(user_id)
+        exclude_set |= event_store.get_user_excluded_items(user_id, tenant_id=tenant_id)
     genre_filters = parse_genre_filter(genres)
     onboard_filters = parse_genre_filter(onboarding_genres)
     effective_genres = onboard_filters or genre_filters
@@ -855,6 +921,7 @@ def recommend_hybrid(
             k=k,
             diversity=diversity,
             rule_engine=rule_engine,
+            tenant_id=tenant_id,
         )
         return RecommendationResponse(
             user_id=user_id,
@@ -913,6 +980,7 @@ def recommend_hybrid(
         diversity=diversity,
         item_features=item_feats,
         rule_engine=rule_engine,
+        tenant_id=tenant_id,
     )
     return RecommendationResponse(
         user_id=user_id,
@@ -1306,9 +1374,10 @@ def legacy_transparency(
 def list_experiments(
     exp_mgr=Depends(get_experiment_manager),
     auth: dict[str, Any] = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> list[ExperimentResponse]:
-    """List all online A/B experiments."""
-    experiments = exp_mgr.list_experiments()
+    """List all online A/B experiments for current tenant."""
+    experiments = exp_mgr.list_experiments(tenant_id=tenant_id)
     return [
         ExperimentResponse(
             id=e.id,
@@ -1323,6 +1392,7 @@ def list_experiments(
                 for v in e.variants
             ],
             status=e.status,
+            tenant_id=e.tenant_id,
             created_at=e.created_at,
             description=e.description,
         )
@@ -1337,10 +1407,12 @@ def create_experiment(
     req: ExperimentCreate,
     exp_mgr=Depends(get_experiment_manager),
     auth: dict[str, Any] = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> ExperimentResponse:
-    """Create a new A/B experiment."""
+    """Create a new A/B experiment for current tenant."""
     from pipeline.experiments.manager import Variant
 
+    effective_tenant = req.tenant_id if req.tenant_id != "default" else tenant_id
     variants = [
         Variant(
             name=v.name,
@@ -1356,6 +1428,7 @@ def create_experiment(
             name=req.name,
             variants=variants,
             description=req.description,
+            tenant_id=effective_tenant,
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -1373,6 +1446,7 @@ def create_experiment(
             for v in exp.variants
         ],
         status=exp.status,
+        tenant_id=exp.tenant_id,
         created_at=exp.created_at,
         description=exp.description,
     )
@@ -1387,11 +1461,15 @@ def get_experiment_uplift(
     ),
     exp_mgr=Depends(get_experiment_manager),
     auth: dict[str, Any] = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> UpliftResponse:
     """Compute live conversion uplift and statistical confidence intervals for an experiment."""
     try:
         rep = exp_mgr.get_uplift_report(
-            exp_id=exp_id, control_name=control, treatment_name=treatment
+            exp_id=exp_id,
+            control_name=control,
+            treatment_name=treatment,
+            tenant_id=tenant_id,
         )
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
@@ -1417,6 +1495,31 @@ def get_experiment_uplift(
         p_value=rep.p_value,
         is_significant=rep.is_significant,
         confidence_level=rep.confidence_level,
+    )
+
+
+@v1_router.post(
+    "/experiments/{exp_id}/assignment",
+    response_model=VariantModel,
+    tags=["Experiments"],
+)
+def get_experiment_assignment(
+    exp_id: str,
+    user_id: int = Query(..., description="User ID to assign to variant"),
+    exp_mgr=Depends(get_experiment_manager),
+    auth: dict[str, Any] = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
+) -> VariantModel:
+    """Deterministically assign a user to an experiment variant."""
+    try:
+        variant = exp_mgr.assign_variant(exp_id=exp_id, user_id=user_id, tenant_id=tenant_id)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    return VariantModel(
+        name=variant.name,
+        weight=variant.weight,
+        model_type=variant.model_type,
+        params=variant.params,
     )
 
 
@@ -1462,6 +1565,7 @@ def record_session_event(
     event: SessionEventRequest,
     session_manager=Depends(get_session_manager),
     auth: dict[str, Any] = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> SessionResponse:
     """Record an interaction event into an anonymous session sequence."""
     sess = session_manager.record_event(
@@ -1470,6 +1574,7 @@ def record_session_event(
         event_type=event.event_type,
         metadata=event.metadata,
         timestamp=event.timestamp,
+        tenant_id=tenant_id,
     )
     return SessionResponse(**sess.to_dict())
 
@@ -1483,9 +1588,10 @@ def get_session_info(
     session_id: str,
     session_manager=Depends(get_session_manager),
     auth: dict[str, Any] = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> SessionResponse:
     """Retrieve current state and items for an anonymous session."""
-    sess = session_manager.get_session(session_id)
+    sess = session_manager.get_session(session_id, tenant_id=tenant_id)
     if sess is None:
         raise HTTPException(status_code=404, detail=f"Session '{session_id}' not found.")
     return SessionResponse(**sess.to_dict())
@@ -1499,9 +1605,10 @@ def delete_session(
     session_id: str,
     session_manager=Depends(get_session_manager),
     auth: dict[str, Any] = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> dict[str, Any]:
     """Clear all interactions and state for an anonymous session."""
-    cleared = session_manager.clear_session(session_id)
+    cleared = session_manager.clear_session(session_id, tenant_id=tenant_id)
     return {"status": "cleared", "session_id": session_id, "found": cleared}
 
 
@@ -1526,6 +1633,7 @@ def recommend_session(
     item_index=Depends(get_item_index),
     rule_engine=Depends(get_rule_engine),
     auth: dict[str, Any] | None = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> RecommendationResponse:
     """Generate real-time next-item recommendations from anonymous session items."""
     exclude_set = parse_exclude_ids(exclude)
@@ -1538,7 +1646,7 @@ def recommend_session(
             if x.isdigit():
                 seq_items.append(int(x))
     elif session_id:
-        seq_items = session_manager.get_session_items(session_id)
+        seq_items = session_manager.get_session_items(session_id, tenant_id=tenant_id)
 
     if not seq_items:
         items = _filter_and_build_recs(
@@ -1549,6 +1657,7 @@ def recommend_session(
             k=k,
             diversity=diversity,
             rule_engine=rule_engine,
+            tenant_id=tenant_id,
         )
         return RecommendationResponse(
             user_id=0,
@@ -1590,6 +1699,7 @@ def recommend_session(
         diversity=diversity,
         item_features=item_feats,
         rule_engine=rule_engine,
+        tenant_id=tenant_id,
     )
     return RecommendationResponse(
         user_id=0,
@@ -1612,6 +1722,7 @@ def recommend_session_post(
     item_index=Depends(get_item_index),
     rule_engine=Depends(get_rule_engine),
     auth: dict[str, Any] | None = Depends(get_api_key),
+    tenant_id: str = Depends(get_current_tenant),
 ) -> RecommendationResponse:
     """Generate real-time next-item recommendations via POST with session ID or item IDs."""
     exclude_set = parse_exclude_ids(req.exclude)
@@ -1621,7 +1732,7 @@ def recommend_session_post(
     if req.item_ids:
         seq_items = list(req.item_ids)
     elif req.session_id:
-        seq_items = session_manager.get_session_items(req.session_id)
+        seq_items = session_manager.get_session_items(req.session_id, tenant_id=tenant_id)
 
     if not seq_items:
         items = _filter_and_build_recs(
@@ -1632,6 +1743,7 @@ def recommend_session_post(
             k=req.k,
             diversity=req.diversity,
             rule_engine=rule_engine,
+            tenant_id=tenant_id,
         )
         return RecommendationResponse(
             user_id=0,
@@ -1673,6 +1785,7 @@ def recommend_session_post(
         diversity=req.diversity,
         item_features=item_feats,
         rule_engine=rule_engine,
+        tenant_id=tenant_id,
     )
     return RecommendationResponse(
         user_id=0,

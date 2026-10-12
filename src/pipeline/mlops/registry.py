@@ -24,6 +24,7 @@ class ModelVersion:
     artifact_path: str
     metrics: dict[str, float]
     stage: str = "staging"  # "production", "staging", "archived"
+    tenant_id: str = "default"
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     description: str = ""
     parameters: dict[str, Any] = field(default_factory=dict)
@@ -65,13 +66,14 @@ class ModelRegistry:
         metrics: dict[str, float],
         parameters: dict[str, Any] | None = None,
         description: str = "",
+        tenant_id: str = "default",
     ) -> ModelVersion:
         """Register a new candidate model version."""
         data = self._load_metadata()
         versions = data.get("versions", [])
         new_version_num = max([v["version"] for v in versions], default=0) + 1
 
-        dest_dir = self.models_dir / f"{model_name}_v{new_version_num}"
+        dest_dir = self.models_dir / f"{tenant_id}_{model_name}_v{new_version_num}"
         dest_dir.mkdir(parents=True, exist_ok=True)
         src_path = Path(artifact_path)
         dest_artifact = dest_dir / src_path.name
@@ -86,6 +88,7 @@ class ModelRegistry:
             artifact_path=str(dest_artifact),
             metrics=metrics,
             stage="staging",
+            tenant_id=tenant_id,
             description=description,
             parameters=parameters or {},
         )
@@ -93,48 +96,68 @@ class ModelRegistry:
         data["versions"] = versions
         self._save_metadata(data)
         logger.info(
-            "Registered model %s version %d with metrics %s",
+            "Registered model %s version %d with metrics %s (tenant=%s)",
             model_name,
             new_version_num,
             metrics,
+            tenant_id,
         )
         return mv
 
-    def get_latest_version(self, model_name: str) -> ModelVersion | None:
+    def get_latest_version(
+        self,
+        model_name: str,
+        tenant_id: str = "default",
+    ) -> ModelVersion | None:
         """Return the latest registered version of a model."""
         data = self._load_metadata()
-        matching = [v for v in data.get("versions", []) if v["model_name"] == model_name]
+        matching = [
+            v
+            for v in data.get("versions", [])
+            if v["model_name"] == model_name and v.get("tenant_id", "default") == tenant_id
+        ]
         if not matching:
             return None
         latest = max(matching, key=lambda v: v["version"])
         return ModelVersion(**latest)
 
-    def get_production_version(self, model_name: str) -> ModelVersion | None:
+    def get_production_version(
+        self,
+        model_name: str,
+        tenant_id: str = "default",
+    ) -> ModelVersion | None:
         """Return the current production version of a model."""
         data = self._load_metadata()
-        prod_ver = data.get("production_version")
-        if prod_ver is None:
-            # Fallback to searching stage == 'production'
-            for v in data.get("versions", []):
-                if v["model_name"] == model_name and v["stage"] == "production":
-                    return ModelVersion(**v)
-            return None
         for v in data.get("versions", []):
-            if v["version"] == prod_ver and v["model_name"] == model_name:
+            if (
+                v["model_name"] == model_name
+                and v.get("tenant_id", "default") == tenant_id
+                and v.get("stage") == "production"
+            ):
                 return ModelVersion(**v)
         return None
 
-    def list_versions(self, model_name: str | None = None) -> list[ModelVersion]:
+    def list_versions(
+        self,
+        model_name: str | None = None,
+        tenant_id: str | None = None,
+    ) -> list[ModelVersion]:
         """List registered model versions."""
         data = self._load_metadata()
         versions = [
             ModelVersion(**v)
             for v in data.get("versions", [])
-            if model_name is None or v["model_name"] == model_name
+            if (model_name is None or v["model_name"] == model_name)
+            and (tenant_id is None or v.get("tenant_id", "default") == tenant_id)
         ]
         return sorted(versions, key=lambda v: v.version)
 
-    def promote_to_production(self, version: int, model_name: str = "sasrec") -> ModelVersion:
+    def promote_to_production(
+        self,
+        version: int,
+        model_name: str = "sasrec",
+        tenant_id: str = "default",
+    ) -> ModelVersion:
         """Promote a model version to production and demote earlier production versions."""
         data = self._load_metadata()
 
@@ -143,7 +166,7 @@ class ModelRegistry:
 
         prev_prod = data.get("production_version")
         for v in data.get("versions", []):
-            if v["model_name"] == model_name:
+            if v["model_name"] == model_name and v.get("tenant_id", "default") == tenant_id:
                 if v["version"] == version:
                     v["stage"] = "production"
                     target_mv = ModelVersion(**v)
@@ -152,19 +175,28 @@ class ModelRegistry:
                     v["stage"] = "archived"
 
         if not found or target_mv is None:
-            raise ValueError(f"Model version {version} for '{model_name}' not found.")
+            raise ValueError(
+                f"Model version {version} for '{model_name}' (tenant '{tenant_id}') not found."
+            )
 
         data["production_version"] = version
         history = data.setdefault("history", [])
         history.append(
             {
                 "action": "promote",
+                "tenant_id": tenant_id,
                 "from_version": prev_prod,
                 "to_version": version,
                 "timestamp": datetime.now(timezone.utc).isoformat(),
             }
         )
         self._save_metadata(data)
+        logger.info(
+            "Promoted model %s version %d to production (tenant=%s)",
+            model_name,
+            version,
+            tenant_id,
+        )
 
         # Mirror production artifact to active default SEQ_MODEL_PATH if applicable
         if (

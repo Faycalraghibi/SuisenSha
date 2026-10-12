@@ -1,0 +1,106 @@
+# Default values for suisensha chart.
+
+global:
+  environment: production
+
+api:
+  replicaCount: 2
+  image:
+    repository: suisensha/api
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 8000
+    targetPort: 8000
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 500m
+      memory: 1Gi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 75
+    targetMemoryUtilizationPercentage: 80
+  env:
+    ENVIRONMENT: production
+    LOG_LEVEL: INFO
+    RECOMMENDATION_MAX_N: "100"
+    CACHE_EXPIRATION_SECONDS: "300"
+    RATE_LIMIT_PER_MINUTE: "60"
+    DEFAULT_MONTHLY_QUOTA: "100000"
+    SECURITY_SECRET_KEY: "change-me-in-production"
+  livenessProbe:
+    httpGet:
+      path: /health
+      port: 8000
+    initialDelaySeconds: 15
+    periodSeconds: 10
+  readinessProbe:
+    httpGet:
+      path: /health
+      port: 8000
+    initialDelaySeconds: 10
+    periodSeconds: 5
+
+ui:
+  replicaCount: 1
+  image:
+    repository: suisensha/ui
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 8501
+    targetPort: 8501
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 512Mi
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+  env:
+    API_URL: "http://suisensha-api:8000"
+
+redis:
+  enabled: true
+  image:
+    repository: redis
+    pullPolicy: IfNotPresent
+    tag: "7.2-alpine"
+  service:
+    type: ClusterIP
+    port: 6379
+    targetPort: 6379
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  persistence:
+    enabled: false
+    size: 5Gi
+
+ingress:
+  enabled: false
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: suisensha.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+          service: api
+  tls: []

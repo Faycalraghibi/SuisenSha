@@ -48,11 +48,29 @@ class SecurityManager:
                     key_id      TEXT PRIMARY KEY,
                     key_hash    TEXT UNIQUE NOT NULL,
                     client_id   TEXT NOT NULL,
+                    tenant_id   TEXT NOT NULL DEFAULT 'default',
                     tier        TEXT NOT NULL,
                     rate_limit  INTEGER NOT NULL,
                     scopes      TEXT NOT NULL,
                     is_active   INTEGER NOT NULL,
                     created_at  TEXT NOT NULL
+                );
+                """
+            )
+            try:
+                self._conn.execute(
+                    "ALTER TABLE api_keys ADD COLUMN tenant_id TEXT NOT NULL DEFAULT 'default'"
+                )
+            except sqlite3.OperationalError:
+                pass
+
+            self._conn.execute(
+                """
+                CREATE TABLE IF NOT EXISTS tenant_usage (
+                    tenant_id     TEXT PRIMARY KEY,
+                    request_count INTEGER NOT NULL DEFAULT 0,
+                    quota_limit   INTEGER NOT NULL DEFAULT 10000,
+                    updated_at    TEXT NOT NULL
                 );
                 """
             )
@@ -85,6 +103,7 @@ class SecurityManager:
         tier: str = "standard",
         rate_limit: int = 60,
         scopes: list[str] | None = None,
+        tenant_id: str = "default",
     ) -> tuple[str, str]:
         """Generate and store a new API key.
 
@@ -101,18 +120,19 @@ class SecurityManager:
             self._conn.execute(
                 """
                 INSERT INTO api_keys (
-                    key_id, key_hash, client_id, tier, rate_limit, scopes, is_active, created_at
+                    key_id, key_hash, client_id, tenant_id, tier, rate_limit,
+                    scopes, is_active, created_at
                 )
-                VALUES (?, ?, ?, ?, ?, ?, 1, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)
                 """,
-                (key_id, k_hash, client_id, tier, rate_limit, scopes_str, now),
+                (key_id, k_hash, client_id, tenant_id, tier, rate_limit, scopes_str, now),
             )
         self.log_audit(
             client_id=client_id,
             action="create_key",
             resource_id=key_id,
             status="success",
-            details=f"tier={tier}, limit={rate_limit}",
+            details=f"tier={tier}, limit={rate_limit}, tenant={tenant_id}",
         )
         return plain_key, key_id
 
@@ -122,15 +142,91 @@ class SecurityManager:
         ).fetchone()
         if not row:
             return None
+        keys = row.keys()
+        tenant = row["tenant_id"] if "tenant_id" in keys and row["tenant_id"] else "default"
         return {
             "key_id": row["key_id"],
             "client_id": row["client_id"],
+            "tenant_id": tenant,
             "tier": row["tier"],
             "rate_limit": row["rate_limit"],
             "scopes": [s.strip() for s in row["scopes"].split(",") if s.strip()],
             "is_active": bool(row["is_active"]),
             "created_at": row["created_at"],
         }
+
+    def check_tenant_quota(self, tenant_id: str, limit: int = 10000) -> bool:
+        """Check and increment monthly request quota per tenant.
+
+        Returns:
+            True if request is allowed within quota, False otherwise.
+        """
+        now = datetime.now(timezone.utc).isoformat()
+        with self._conn:
+            row = self._conn.execute(
+                "SELECT request_count, quota_limit FROM tenant_usage WHERE tenant_id = ?",
+                (tenant_id,),
+            ).fetchone()
+            if not row:
+                self._conn.execute(
+                    "INSERT INTO tenant_usage (tenant_id, request_count, quota_limit, updated_at) "
+                    "VALUES (?, 1, ?, ?)",
+                    (tenant_id, limit, now),
+                )
+                return True
+            count = row["request_count"]
+            quota = row["quota_limit"] if row["quota_limit"] is not None else limit
+            if count >= quota:
+                return False
+            self._conn.execute(
+                "UPDATE tenant_usage SET request_count = request_count + 1, updated_at = ? "
+                "WHERE tenant_id = ?",
+                (now, tenant_id),
+            )
+            return True
+
+    def set_tenant_quota(self, tenant_id: str, limit: int) -> None:
+        """Update or initialize quota limit for a tenant."""
+        now = datetime.now(timezone.utc).isoformat()
+        with self._conn:
+            row = self._conn.execute(
+                "SELECT 1 FROM tenant_usage WHERE tenant_id = ?", (tenant_id,)
+            ).fetchone()
+            if row:
+                self._conn.execute(
+                    "UPDATE tenant_usage SET quota_limit = ?, updated_at = ? WHERE tenant_id = ?",
+                    (limit, now, tenant_id),
+                )
+            else:
+                self._conn.execute(
+                    "INSERT INTO tenant_usage (tenant_id, request_count, quota_limit, updated_at) "
+                    "VALUES (?, 0, ?, ?)",
+                    (tenant_id, limit, now),
+                )
+
+    def get_tenant_usage(self, tenant_id: str) -> dict[str, Any]:
+        """Return current usage and quota for a tenant."""
+        row = self._conn.execute(
+            "SELECT request_count, quota_limit, updated_at FROM tenant_usage WHERE tenant_id = ?",
+            (tenant_id,),
+        ).fetchone()
+        if not row:
+            return {"tenant_id": tenant_id, "request_count": 0, "quota_limit": 10000}
+        return {
+            "tenant_id": tenant_id,
+            "request_count": row["request_count"],
+            "quota_limit": row["quota_limit"],
+            "updated_at": row["updated_at"],
+        }
+
+    def reset_tenant_usage(self, tenant_id: str) -> None:
+        """Reset request counter for a tenant."""
+        now = datetime.now(timezone.utc).isoformat()
+        with self._conn:
+            self._conn.execute(
+                "UPDATE tenant_usage SET request_count = 0, updated_at = ? WHERE tenant_id = ?",
+                (now, tenant_id),
+            )
 
     def revoke_key(self, key_id: str, admin_client: str = "system") -> bool:
         with self._conn:
@@ -289,22 +385,66 @@ def get_api_key(
     return key_info
 
 
+def get_current_tenant(
+    request: Request,
+    auth: dict[str, Any] = Depends(get_api_key),
+    x_tenant_id: str | None = Header(None, alias="X-Tenant-ID"),
+    sec_mgr: SecurityManager = Depends(get_security_manager),
+) -> str:
+    """Resolve and enforce active tenant from authenticated API key and optional header."""
+    key_tenant = auth.get("tenant_id", "default")
+    tier = auth.get("tier", "standard")
+    scopes = auth.get("scopes", [])
+
+    if x_tenant_id:
+        if "admin" in scopes or tier == "admin":
+            tenant = x_tenant_id
+        elif x_tenant_id != key_tenant:
+            raise HTTPException(status_code=403, detail="Cannot access different tenant.")
+        else:
+            tenant = key_tenant
+    else:
+        tenant = key_tenant
+
+    if not sec_mgr.check_tenant_quota(tenant):
+        raise HTTPException(
+            status_code=429,
+            detail="Tenant monthly quota exceeded.",
+            headers={"Retry-After": "60"},
+        )
+
+    return tenant
+
+
 def create_api_key(
     client_id: str,
     tier: str = "standard",
     rate_limit: int = 60,
     scopes: list[str] | None = None,
+    tenant_id: str = "default",
     sec_mgr: SecurityManager | None = None,
 ) -> tuple[str, str]:
     """Generate and store an API key, returning (plain_key, key_id)."""
     mgr = sec_mgr or get_security_manager()
-    return mgr.create_key(client_id=client_id, tier=tier, rate_limit=rate_limit, scopes=scopes)
+    return mgr.create_key(
+        client_id=client_id,
+        tier=tier,
+        rate_limit=rate_limit,
+        scopes=scopes,
+        tenant_id=tenant_id,
+    )
 
 
-def create_default_test_key(sec_mgr: SecurityManager | None = None) -> str:
+def create_default_test_key(
+    sec_mgr: SecurityManager | None = None,
+    tenant_id: str = "default",
+) -> str:
     """Helper for test environments to generate a valid key."""
     mgr = sec_mgr or get_security_manager()
     plain, _ = mgr.create_key(
-        "test_suite_client", rate_limit=1000, scopes=["read", "write", "admin"]
+        "test_suite_client",
+        rate_limit=1000,
+        scopes=["read", "write", "admin"],
+        tenant_id=tenant_id,
     )
     return plain

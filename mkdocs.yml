@@ -1,0 +1,30 @@
+site_name: SuisenSha Documentation
+site_description: Production-grade real-time recommendation engine with Multi-tenancy, DSA explainability, SDKs, and Kubernetes deployment.
+site_author: SuisenSha Contributors
+repo_url: https://github.com/SuisenSha/SuisenSha
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+
+docs_dir: docs/site
+
+nav:
+  - Overview: index.md
+  - Architecture: architecture.md
+  - Multi-Tenancy: multitenancy.md
+  - API Reference: api.md
+  - Integration & SDKs: integration.md
+  - DSA Compliance & Explainability: compliance.md
+  - Deployment & Helm: deployment.md

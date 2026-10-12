@@ -8,7 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Multi-tenancy architecture with tenant ID isolation across database tables, Redis cache keys (`rec:{tenant_id}:{model}:{user_id}`), business rules, sessions, experiments, and model registries.
+- Per-tenant monthly request quota tracking and enforcement with administrative reset capabilities.
+- Per-tenant API key authentication and header enforcement with admin tenant switching.
+- Embeddable vanilla JavaScript recommendation carousel widget (`widget.js`, `widget.css`) with DSA explainability modal, interactive feedback, and demo page (`/widget/demo`).
+- Typed Python client SDK (`sdks/python/`) with zero external runtime dependencies.
+- Typed TypeScript client SDK (`sdks/typescript/`) for modern JavaScript and Node.js environments.
+- OpenAPI 3.1.0 specification export script (`scripts/export_openapi.py`) and schema artifact (`docs/openapi.json`).
+- Production Kubernetes Helm chart (`deploy/helm/suisensha/`) with Horizontal Pod Autoscaler (HPA) configs for API and UI, Redis deployment, Ingress, and ConfigMaps/Secrets.
+- Documentation site powered by MkDocs Material (`mkdocs.yml`, `docs/site/`) covering architecture, multi-tenancy, API reference, client SDKs, DSA compliance, and Kubernetes deployment.
+- Comprehensive platform test suite (`tests/test_platform.py`) verifying tenant isolation, quota management, and Helm chart manifests.
 - Multi-stage Dockerfile and docker-compose service configuration for API and static UI.
+
 - Sub-minute end-to-end fixture pipeline test running phases 1-5 against real FastAPI lifespan.
 - CI security audit check via `pip-audit`.
 - Minimum code coverage threshold (75%) enforced in test suite.

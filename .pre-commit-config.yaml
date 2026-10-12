@@ -8,7 +8,9 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+        exclude: "^deploy/helm/.*/templates/.*"
       - id: check-added-large-files
+
         args: ["--maxkb=500"]
 
   # Ruff — lint + auto-format
