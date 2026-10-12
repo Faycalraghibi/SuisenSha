@@ -18,6 +18,7 @@ class Session:
 
     session_id: str
     item_ids: list[int] = field(default_factory=list)
+    tenant_id: str = "default"
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     metadata: dict[str, Any] = field(default_factory=dict)
@@ -26,6 +27,7 @@ class Session:
         return {
             "session_id": self.session_id,
             "item_ids": self.item_ids,
+            "tenant_id": self.tenant_id,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
             "event_count": len(self.item_ids),
@@ -59,6 +61,7 @@ class SessionStore:
                 """
                 CREATE TABLE IF NOT EXISTS sessions (
                     session_id TEXT PRIMARY KEY,
+                    tenant_id TEXT DEFAULT 'default',
                     created_at TEXT NOT NULL,
                     updated_at TEXT NOT NULL,
                     metadata TEXT
@@ -70,6 +73,7 @@ class SessionStore:
                 CREATE TABLE IF NOT EXISTS session_events (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     session_id TEXT NOT NULL,
+                    tenant_id TEXT DEFAULT 'default',
                     item_id INTEGER NOT NULL,
                     event_type TEXT NOT NULL,
                     timestamp TEXT NOT NULL,
@@ -77,12 +81,26 @@ class SessionStore:
                 )
                 """
             )
+            try:
+                conn.execute("ALTER TABLE sessions ADD COLUMN tenant_id TEXT DEFAULT 'default'")
+            except sqlite3.OperationalError:
+                pass
+            try:
+                conn.execute(
+                    "ALTER TABLE session_events ADD COLUMN tenant_id TEXT DEFAULT 'default'"
+                )
+            except sqlite3.OperationalError:
+                pass
             conn.execute(
                 "CREATE INDEX IF NOT EXISTS idx_session_events_sid ON session_events(session_id)"
             )
             conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_session_events_tenant ON session_events(tenant_id)"
+            )
+            conn.execute(
                 "CREATE INDEX IF NOT EXISTS idx_session_events_ts ON session_events(timestamp)"
             )
+            conn.execute("CREATE INDEX IF NOT EXISTS idx_sessions_tenant ON sessions(tenant_id)")
             conn.commit()
 
     def record_event(
@@ -92,6 +110,7 @@ class SessionStore:
         event_type: str = "click",
         metadata: dict[str, Any] | None = None,
         timestamp: datetime | None = None,
+        tenant_id: str = "default",
     ) -> Session:
         """Record an interaction event for an anonymous session and update session timestamp."""
         ts = timestamp or datetime.now(timezone.utc)
@@ -101,42 +120,47 @@ class SessionStore:
         with self._get_connection() as conn:
             conn.execute(
                 """
-                INSERT INTO session_events (session_id, item_id, event_type, timestamp, metadata)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO session_events
+                (session_id, tenant_id, item_id, event_type, timestamp, metadata)
+                VALUES (?, ?, ?, ?, ?, ?)
                 """,
-                (session_id, item_id, event_type, ts_str, meta_str),
+                (session_id, tenant_id, item_id, event_type, ts_str, meta_str),
             )
             cur = conn.execute(
-                "SELECT created_at, metadata FROM sessions WHERE session_id = ?",
-                (session_id,),
+                "SELECT created_at, metadata FROM sessions WHERE session_id = ? AND tenant_id = ?",
+                (session_id, tenant_id),
             )
             row = cur.fetchone()
             if row is None:
                 conn.execute(
                     """
-                    INSERT INTO sessions (session_id, created_at, updated_at, metadata)
-                    VALUES (?, ?, ?, ?)
+                    INSERT INTO sessions (session_id, tenant_id, created_at, updated_at, metadata)
+                    VALUES (?, ?, ?, ?, ?)
                     """,
-                    (session_id, ts_str, ts_str, meta_str),
+                    (session_id, tenant_id, ts_str, ts_str, meta_str),
                 )
             else:
                 conn.execute(
-                    "UPDATE sessions SET updated_at = ? WHERE session_id = ?",
-                    (ts_str, session_id),
+                    "UPDATE sessions SET updated_at = ? WHERE session_id = ? AND tenant_id = ?",
+                    (ts_str, session_id, tenant_id),
                 )
             conn.commit()
 
-        return self.get_session(session_id) or Session(
-            session_id=session_id, item_ids=[item_id], created_at=ts, updated_at=ts
+        return self.get_session(session_id, tenant_id=tenant_id) or Session(
+            session_id=session_id,
+            item_ids=[item_id],
+            tenant_id=tenant_id,
+            created_at=ts,
+            updated_at=ts,
         )
 
-    def get_session(self, session_id: str) -> Session | None:
+    def get_session(self, session_id: str, tenant_id: str = "default") -> Session | None:
         """Retrieve session information and chronologically ordered interaction items."""
         with self._get_connection() as conn:
             cur = conn.execute(
-                "SELECT session_id, created_at, updated_at, metadata "
-                "FROM sessions WHERE session_id = ?",
-                (session_id,),
+                "SELECT session_id, tenant_id, created_at, updated_at, metadata "
+                "FROM sessions WHERE session_id = ? AND tenant_id = ?",
+                (session_id, tenant_id),
             )
             row = cur.fetchone()
             if row is None:
@@ -145,42 +169,55 @@ class SessionStore:
             c_ts = datetime.fromisoformat(row["created_at"])
             u_ts = datetime.fromisoformat(row["updated_at"])
             meta = json.loads(row["metadata"]) if row["metadata"] else {}
+            tid = row["tenant_id"] if "tenant_id" in row.keys() else tenant_id
 
             cur_ev = conn.execute(
                 """
                 SELECT item_id FROM session_events
-                WHERE session_id = ?
+                WHERE session_id = ? AND tenant_id = ?
                 ORDER BY timestamp ASC, id ASC
                 """,
-                (session_id,),
+                (session_id, tenant_id),
             )
             item_ids = [int(r["item_id"]) for r in cur_ev.fetchall()]
 
             return Session(
                 session_id=session_id,
                 item_ids=item_ids,
+                tenant_id=tid,
                 created_at=c_ts,
                 updated_at=u_ts,
                 metadata=meta,
             )
 
-    def get_session_items(self, session_id: str) -> list[int]:
+    def get_session_items(self, session_id: str, tenant_id: str = "default") -> list[int]:
         """Convenience method to retrieve item IDs in chronological order."""
-        sess = self.get_session(session_id)
+        sess = self.get_session(session_id, tenant_id=tenant_id)
         return sess.item_ids if sess else []
 
-    def clear_session(self, session_id: str) -> bool:
+    def clear_session(self, session_id: str, tenant_id: str = "default") -> bool:
         """Clear all events and metadata for an anonymous session."""
         with self._get_connection() as conn:
-            cur1 = conn.execute("DELETE FROM session_events WHERE session_id = ?", (session_id,))
-            cur2 = conn.execute("DELETE FROM sessions WHERE session_id = ?", (session_id,))
+            cur1 = conn.execute(
+                "DELETE FROM session_events WHERE session_id = ? AND tenant_id = ?",
+                (session_id, tenant_id),
+            )
+            cur2 = conn.execute(
+                "DELETE FROM sessions WHERE session_id = ? AND tenant_id = ?",
+                (session_id, tenant_id),
+            )
             conn.commit()
             return (cur1.rowcount + cur2.rowcount) > 0
 
-    def count_sessions(self) -> int:
+    def count_sessions(self, tenant_id: str | None = None) -> int:
         """Count total unique sessions tracked."""
         with self._get_connection() as conn:
-            cur = conn.execute("SELECT COUNT(*) FROM sessions")
+            if tenant_id:
+                cur = conn.execute(
+                    "SELECT COUNT(*) FROM sessions WHERE tenant_id = ?", (tenant_id,)
+                )
+            else:
+                cur = conn.execute("SELECT COUNT(*) FROM sessions")
             row = cur.fetchone()
             return int(row[0]) if row else 0
 

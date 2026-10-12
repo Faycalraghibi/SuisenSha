@@ -1,0 +1,23 @@
+{
+  "name": "@suisensha/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript / JavaScript client SDK for SuisenSha recommendation engine",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "recsys",
+    "recommendations",
+    "suisensha",
+    "personalization",
+    "client"
+  ],
+  "author": "SuisenSha Contributors",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

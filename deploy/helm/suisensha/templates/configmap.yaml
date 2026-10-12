@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "suisensha.fullname" . }}-config
+  labels:
+    {{- include "suisensha.labels" . | nindent 4 }}
+data:
+  ENVIRONMENT: {{ .Values.api.env.ENVIRONMENT | quote }}
+  LOG_LEVEL: {{ .Values.api.env.LOG_LEVEL | quote }}
+  RECOMMENDATION_MAX_N: {{ .Values.api.env.RECOMMENDATION_MAX_N | quote }}
+  CACHE_EXPIRATION_SECONDS: {{ .Values.api.env.CACHE_EXPIRATION_SECONDS | quote }}
+  RATE_LIMIT_PER_MINUTE: {{ .Values.api.env.RATE_LIMIT_PER_MINUTE | quote }}
+  DEFAULT_MONTHLY_QUOTA: {{ .Values.api.env.DEFAULT_MONTHLY_QUOTA | quote }}
+  REDIS_HOST: {{ include "suisensha.fullname" . }}-redis
+  REDIS_PORT: "6379"

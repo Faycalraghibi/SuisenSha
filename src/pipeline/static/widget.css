@@ -1,0 +1,233 @@
+/* SuisenSha Embeddable Recommendation Carousel Widget Styles */
+
+:root {
+  --ss-bg: #0f172a;
+  --ss-card-bg: #1e293b;
+  --ss-card-hover: #334155;
+  --ss-text: #f8fafc;
+  --ss-text-muted: #94a3b8;
+  --ss-accent: #6366f1;
+  --ss-accent-hover: #4f46e5;
+  --ss-badge-bg: rgba(99, 102, 241, 0.2);
+  --ss-badge-text: #a5b4fc;
+  --ss-border: #334155;
+  --ss-radius: 12px;
+}
+
+.suisensha-carousel-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 0;
+  color: var(--ss-text);
+}
+
+.suisensha-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 0 8px;
+}
+
+.suisensha-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.suisensha-nav-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.suisensha-nav-btn {
+  background: var(--ss-card-bg);
+  border: 1px solid var(--ss-border);
+  color: var(--ss-text);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.suisensha-nav-btn:hover {
+  background: var(--ss-accent);
+  border-color: var(--ss-accent);
+}
+
+.suisensha-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.suisensha-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 8px 4px;
+}
+
+.suisensha-track::-webkit-scrollbar {
+  display: none;
+}
+
+.suisensha-card {
+  flex: 0 0 200px;
+  background: var(--ss-card-bg);
+  border: 1px solid var(--ss-border);
+  border-radius: var(--ss-radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.suisensha-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ss-accent);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+}
+
+.suisensha-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.suisensha-badge {
+  background: var(--ss-badge-bg);
+  color: var(--ss-badge-text);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+}
+
+.suisensha-item-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 4px 0 6px 0;
+  line-height: 1.3;
+  color: var(--ss-text);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.suisensha-item-genres {
+  font-size: 0.78rem;
+  color: var(--ss-text-muted);
+  margin-bottom: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.suisensha-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.suisensha-btn-group {
+  display: flex;
+  gap: 6px;
+}
+
+.suisensha-action-btn {
+  background: transparent;
+  border: 1px solid var(--ss-border);
+  color: var(--ss-text-muted);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.suisensha-action-btn:hover {
+  background: var(--ss-card-hover);
+  color: var(--ss-text);
+}
+
+.suisensha-action-btn.dislike:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border-color: #ef4444;
+}
+
+/* Modal for Explainability & DSA Transparency */
+.suisensha-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.suisensha-modal {
+  background: var(--ss-card-bg);
+  border: 1px solid var(--ss-border);
+  border-radius: var(--ss-radius);
+  max-width: 500px;
+  width: 90%;
+  padding: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  color: var(--ss-text);
+}
+
+.suisensha-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.suisensha-modal-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.suisensha-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--ss-text-muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.suisensha-modal-body {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ss-text-muted);
+}
+
+.suisensha-modal-body strong {
+  color: var(--ss-text);
+}

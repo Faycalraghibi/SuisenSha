@@ -27,6 +27,7 @@ class BusinessRule:
     start_date: datetime | str | None = None
     end_date: datetime | str | None = None
     priority: int = 0  # Higher priority breaks ties in conflicts
+    tenant_id: str = "default"
 
     def __post_init__(self) -> None:
         if isinstance(self.rule_type, str) and not isinstance(self.rule_type, RuleType):
@@ -71,6 +72,16 @@ class RuleEngine:
     def add_rule(self, rule: BusinessRule) -> None:
         self.rules.append(rule)
 
+    def remove_rule(self, rule_id: str, tenant_id: str | None = None) -> bool:
+        """Remove a rule by ID, optionally restricted to a specific tenant."""
+        initial_count = len(self.rules)
+        self.rules = [
+            r
+            for r in self.rules
+            if not (r.rule_id == rule_id and (tenant_id is None or r.tenant_id == tenant_id))
+        ]
+        return len(self.rules) < initial_count
+
     def is_rule_active(self, rule: BusinessRule, now: datetime | None = None) -> bool:
         if now is None:
             now = datetime.now(timezone.utc)
@@ -87,11 +98,23 @@ class RuleEngine:
 
         return True
 
-    def get_active_rules(self, now: datetime | None = None) -> list[BusinessRule]:
-        return [r for r in self.rules if self.is_rule_active(r, now)]
+    def get_active_rules(
+        self,
+        now: datetime | None = None,
+        tenant_id: str | None = None,
+    ) -> list[BusinessRule]:
+        return [
+            r
+            for r in self.rules
+            if self.is_rule_active(r, now) and (tenant_id is None or r.tenant_id == tenant_id)
+        ]
 
-    def detect_conflicts(self, now: datetime | None = None) -> list[RuleConflict]:
-        active_rules = self.get_active_rules(now)
+    def detect_conflicts(
+        self,
+        now: datetime | None = None,
+        tenant_id: str | None = None,
+    ) -> list[RuleConflict]:
+        active_rules = self.get_active_rules(now, tenant_id=tenant_id)
         conflicts: list[RuleConflict] = []
 
         exclude_items: set[int] = set()
@@ -142,9 +165,10 @@ class RuleEngine:
         now: datetime | None = None,
         top_k: int | None = None,
         item_lookup: dict[int, dict] | None = None,
+        tenant_id: str | None = None,
     ) -> list[Any]:
         """Apply active business rules: exclusion -> boost & sort -> pinning."""
-        active_rules = self.get_active_rules(now)
+        active_rules = self.get_active_rules(now, tenant_id=tenant_id)
         if not active_rules:
             return items[:top_k] if top_k is not None else items
 

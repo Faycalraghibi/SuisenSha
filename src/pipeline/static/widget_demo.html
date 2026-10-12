@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SuisenSha Recommendation Widget Demo</title>
+  <link rel="stylesheet" href="/static/widget.css">
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 32px 20px;
+    }
+    .demo-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .controls {
+      background: #1e293b;
+      padding: 16px 20px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    label {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+    input, select {
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    button.refresh-btn {
+      background: #6366f1;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      align-self: flex-end;
+    }
+    button.refresh-btn:hover {
+      background: #4f46e5;
+    }
+    .log-box {
+      margin-top: 24px;
+      background: #1e293b;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.82rem;
+      color: #a5b4fc;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-wrapper">
+    <h1>SuisenSha Embeddable Widget Demo</h1>
+    <p style="color: #94a3b8;">
+      Interactive preview of the embeddable carousel widget with explainability badges,
+      multi-tenant isolation, and real-time interaction feedback.
+    </p>
+
+    <div class="controls">
+      <div class="control-group">
+        <label for="tenant-input">Tenant ID</label>
+        <input id="tenant-input" type="text" value="default">
+      </div>
+      <div class="control-group">
+        <label for="endpoint-select">Endpoint</label>
+        <select id="endpoint-select">
+          <option value="/v1/recommend/popular">Popular Items (/v1/recommend/popular)</option>
+          <option value="/v1/recommend/sasrec">SASRec Sequential (/v1/recommend/sasrec)</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="user-input">User ID</label>
+        <input id="user-input" type="number" value="1">
+      </div>
+      <button class="refresh-btn" id="reload-btn">Reload Widget</button>
+    </div>
+
+    <!-- Widget Container -->
+    <div id="suisensha-carousel"></div>
+
+    <div class="log-box" id="event-log">
+      > Widget initialized. Waiting for user actions...
+    </div>
+  </div>
+
+  <script src="/static/widget.js"></script>
+  <script>
+    const logBox = document.getElementById("event-log");
+    function appendLog(msg) {
+      logBox.innerHTML += "<br>> " + msg;
+      logBox.scrollTop = logBox.scrollHeight;
+    }
+
+    function initWidget() {
+      const tenant = document.getElementById("tenant-input").value;
+      const endpoint = document.getElementById("endpoint-select").value;
+      const userId = parseInt(document.getElementById("user-input").value, 10);
+
+      new SuisenShaWidget({
+        target: "#suisensha-carousel",
+        apiUrl: window.location.origin,
+        tenantId: tenant,
+        userId: userId,
+        endpoint: endpoint,
+        title: "Recommended for You",
+        k: 8,
+        onItemClick: (item) => {
+          appendLog(`Clicked item ${item.item_id}: "${item.title}" (telemetry recorded)`);
+        },
+        onExclude: (itemId) => {
+          appendLog(`Excluded item ${itemId} (not_interested recorded)`);
+        }
+      });
+      appendLog(`Reloaded widget with tenant: ${tenant}, endpoint: ${endpoint}`);
+    }
+
+    document.getElementById("reload-btn").addEventListener("click", initWidget);
+    initWidget();
+  </script>
+</body>
+</html>

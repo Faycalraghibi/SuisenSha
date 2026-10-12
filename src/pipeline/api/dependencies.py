@@ -43,6 +43,7 @@ def _augment_history_with_events(
     user_id: int,
     base_history: list[int],
     event_store: Any,
+    tenant_id: str = "default",
 ) -> list[int]:
     hist = list(base_history)
     if hasattr(event_store, "get_user_events"):
@@ -57,6 +58,7 @@ def _augment_history_with_events(
                 EventType.RATING,
                 EventType.VIEW,
             ],
+            tenant_id=tenant_id,
         )
         for ev in recent_events:
             if ev.event_type == EventType.RATING and ev.rating is not None and ev.rating < 3.0:
@@ -70,11 +72,12 @@ def get_user_history(
     sequences: dict[int, list[int]] = Depends(get_sequences),
     sec_mgr: Any = Depends(get_security_manager),
     event_store: Any = Depends(get_event_store),
+    tenant_id: str = "default",
 ) -> list[int]:
     if sec_mgr.is_user_erased(user_id):
         raise HTTPException(status_code=404, detail="User not found.")
     base = list(sequences.get(user_id, []))
-    hist = _augment_history_with_events(user_id, base, event_store)
+    hist = _augment_history_with_events(user_id, base, event_store, tenant_id=tenant_id)
     if not hist:
         raise HTTPException(status_code=404, detail="User not found.")
     return hist
@@ -85,11 +88,12 @@ def get_user_history_or_cold(
     sequences: dict[int, list[int]] = Depends(get_sequences),
     sec_mgr: Any = Depends(get_security_manager),
     event_store: Any = Depends(get_event_store),
+    tenant_id: str = "default",
 ) -> list[int] | None:
     if sec_mgr.is_user_erased(user_id):
         raise HTTPException(status_code=404, detail="User not found.")
     base = list(sequences.get(user_id, []))
-    hist = _augment_history_with_events(user_id, base, event_store)
+    hist = _augment_history_with_events(user_id, base, event_store, tenant_id=tenant_id)
     if not hist and user_id not in sequences:
         return None
     return hist

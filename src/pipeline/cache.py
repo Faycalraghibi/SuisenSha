@@ -147,11 +147,16 @@ class RedisCache:
             else:
                 raise
 
-    def _make_key(self, user_id: int, model: str) -> str:
-        return f"{self.prefix}{model.lower()}:{user_id}"
+    def _make_key(self, user_id: int, model: str, tenant_id: str = "default") -> str:
+        return f"{self.prefix}{tenant_id}:{model.lower()}:{user_id}"
 
-    def get_top_n(self, user_id: int, model: str = "sasrec") -> list[dict[str, Any]] | None:
-        key = self._make_key(user_id, model)
+    def get_top_n(
+        self,
+        user_id: int,
+        model: str = "sasrec",
+        tenant_id: str = "default",
+    ) -> list[dict[str, Any]] | None:
+        key = self._make_key(user_id, model, tenant_id=tenant_id)
         if self.is_fallback_mode or self._redis_client is None:
             entry = self._memory_store.get(key)
             if entry is None:
@@ -179,8 +184,9 @@ class RedisCache:
         items: list[dict[str, Any]],
         model: str = "sasrec",
         ttl_seconds: int = 86400,
+        tenant_id: str = "default",
     ) -> None:
-        key = self._make_key(user_id, model)
+        key = self._make_key(user_id, model, tenant_id=tenant_id)
         val_str = json.dumps(items)
         if self.is_fallback_mode or self._redis_client is None:
             exp_time = (
@@ -201,18 +207,28 @@ class RedisCache:
             )
             self._memory_store[key] = (val_str, exp_time)
 
-    def delete_user(self, user_id: int) -> int:
+    def delete_user(self, user_id: int, tenant_id: str | None = None) -> int:
         count = 0
+        suffix = f":{user_id}"
+        prefix_filter = f"{self.prefix}{tenant_id}:" if tenant_id else self.prefix
+
         if self.is_fallback_mode or self._redis_client is None:
-            keys_to_del = [k for k in self._memory_store if k.endswith(f":{user_id}")]
+            keys_to_del = [
+                k for k in self._memory_store if k.startswith(prefix_filter) and k.endswith(suffix)
+            ]
             for k in keys_to_del:
                 self._memory_store.pop(k, None)
                 count += 1
             return count
 
         try:
-            pattern = f"{self.prefix}*:{user_id}"
+            pattern = (
+                f"{self.prefix}{tenant_id}:*:{user_id}"
+                if tenant_id
+                else f"{self.prefix}*:{user_id}"
+            )
             keys = self._redis_client.keys(pattern)
+
             if keys:
                 count = self._redis_client.delete(*keys)
         except Exception as exc:

@@ -36,6 +36,7 @@ class Experiment:
     name: str
     variants: list[Variant]
     status: str = "active"  # "active", "paused", "completed"
+    tenant_id: str = "default"
     created_at: str = field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     description: str = ""
 
@@ -183,6 +184,7 @@ class ExperimentManager:
         name: str,
         variants: list[Variant],
         description: str = "",
+        tenant_id: str = "default",
     ) -> Experiment:
         """Create and store an online experiment."""
         exps = self._load_experiments()
@@ -196,12 +198,14 @@ class ExperimentManager:
             name=name,
             variants=variants,
             status="active",
+            tenant_id=tenant_id,
             description=description,
         )
         exps[exp_id] = {
             "id": exp.id,
             "name": exp.name,
             "status": exp.status,
+            "tenant_id": exp.tenant_id,
             "created_at": exp.created_at,
             "description": exp.description,
             "variants": [asdict(v) for v in exp.variants],
@@ -209,11 +213,13 @@ class ExperimentManager:
         self._save_experiments(exps)
         return exp
 
-    def get_experiment(self, exp_id: str) -> Experiment | None:
-        """Retrieve an experiment by its unique ID."""
+    def get_experiment(self, exp_id: str, tenant_id: str | None = None) -> Experiment | None:
+        """Retrieve an experiment by its unique ID, optionally matching tenant_id."""
         exps = self._load_experiments()
         raw = exps.get(exp_id)
         if not raw:
+            return None
+        if tenant_id is not None and raw.get("tenant_id", "default") != tenant_id:
             return None
         variants = [Variant(**v) for v in raw.get("variants", [])]
         return Experiment(
@@ -221,15 +227,18 @@ class ExperimentManager:
             name=raw["name"],
             variants=variants,
             status=raw["status"],
+            tenant_id=raw.get("tenant_id", "default"),
             created_at=raw["created_at"],
             description=raw.get("description", ""),
         )
 
-    def list_experiments(self) -> list[Experiment]:
-        """List all experiments."""
+    def list_experiments(self, tenant_id: str | None = None) -> list[Experiment]:
+        """List all experiments, optionally filtered by tenant."""
         exps = self._load_experiments()
         result = []
         for raw in exps.values():
+            if tenant_id is not None and raw.get("tenant_id", "default") != tenant_id:
+                continue
             variants = [Variant(**v) for v in raw.get("variants", [])]
             result.append(
                 Experiment(
@@ -237,15 +246,21 @@ class ExperimentManager:
                     name=raw["name"],
                     variants=variants,
                     status=raw["status"],
+                    tenant_id=raw.get("tenant_id", "default"),
                     created_at=raw["created_at"],
                     description=raw.get("description", ""),
                 )
             )
         return result
 
-    def assign_variant(self, exp_id: str, user_id: int | str) -> Variant:
+    def assign_variant(
+        self,
+        exp_id: str,
+        user_id: int | str,
+        tenant_id: str | None = None,
+    ) -> Variant:
         """Deterministically assign user to a variant using SHA-256 salted hash."""
-        exp = self.get_experiment(exp_id)
+        exp = self.get_experiment(exp_id, tenant_id=tenant_id)
         if not exp:
             raise ValueError(f"Experiment '{exp_id}' not found.")
         if exp.status != "active":
@@ -304,9 +319,10 @@ class ExperimentManager:
         exp_id: str,
         control_name: str = "control",
         treatment_name: str | None = None,
+        tenant_id: str | None = None,
     ) -> UpliftReport:
         """Compute live uplift report between control and treatment variants."""
-        exp = self.get_experiment(exp_id)
+        exp = self.get_experiment(exp_id, tenant_id=tenant_id)
         if not exp:
             raise ValueError(f"Experiment '{exp_id}' not found.")
 
